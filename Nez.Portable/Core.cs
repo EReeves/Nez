@@ -313,7 +313,7 @@ namespace Nez
 				TimeRuler.instance.render();
 
 			#if !FNA
-			drawCalls = graphicsDevice.Metrics.DrawCount;
+			drawCalls = (ulong)graphicsDevice.Metrics.DrawCount;
 			#endif
 			#endif
 		}
