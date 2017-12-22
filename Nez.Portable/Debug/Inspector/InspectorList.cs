@@ -2,79 +2,78 @@
 using Microsoft.Xna.Framework;
 using Nez.UI;
 
-
 #if DEBUG
 namespace Nez
 {
 	/// <summary>
-	/// container for a Component/PostProcessor/Transform and all of its inspectable properties
+	///     container for a Component/PostProcessor/Transform and all of its inspectable properties
 	/// </summary>
 	public class InspectorList
-	{
-		public object target;
-		public string name;
+    {
+        private CheckBox _enabledCheckbox;
 
-		List<Inspector> _inspectors;
-		CheckBox _enabledCheckbox;
-
-
-		public InspectorList( object target )
-		{
-			this.target = target;
-			name = target.GetType().Name;
-			_inspectors = Inspector.getInspectableProperties( target );
-		}
+        private readonly List<Inspector> _inspectors;
+        public string Name;
+        public object Target;
 
 
-		public InspectorList( Transform transform )
-		{
-			name = "Transform";
-			_inspectors = Inspector.getTransformProperties( transform );
-		}
+        public InspectorList(object target)
+        {
+            this.Target = target;
+            Name = target.GetType().Name;
+            _inspectors = Inspector.GetInspectableProperties(target);
+        }
 
 
-		public void initialize( Table table, Skin skin )
-		{
-			table.getRowDefaults().setPadTop( 10 );
-			table.add( name.Replace( "PostProcessor", string.Empty ) ).getElement<Label>().setFontScale( 1f ).setFontColor( new Color( 241, 156, 0 ) );
-
-			// if we have a component, stick a bool for enabled here
-			if( target != null )
-			{
-				_enabledCheckbox = new CheckBox( string.Empty, skin );
-				_enabledCheckbox.programmaticChangeEvents = false;
-
-				if( target is Component )
-					_enabledCheckbox.isChecked = ( (Component)target ).enabled;
-				else if( target is PostProcessor )
-					_enabledCheckbox.isChecked = ((PostProcessor)target ).enabled;
-				
-				_enabledCheckbox.onChanged += newValue =>
-				{
-					if( target is Component )
-						((Component)target).enabled = newValue;
-					else if( target is PostProcessor )
-						( (PostProcessor)target ).enabled = newValue;
-				};
-
-				table.add( _enabledCheckbox ).right();
-			}
-			table.row();
-
-			foreach( var i in _inspectors )
-			{
-				i.initialize( table, skin );
-				table.row();
-			}
-		}
+        public InspectorList(Transform transform)
+        {
+            Name = "Transform";
+            _inspectors = Inspector.GetTransformProperties(transform);
+        }
 
 
-		public void update()
-		{
-			foreach( var i in _inspectors )
-				i.update();
-		}
+        public void Initialize(Table table, Skin skin)
+        {
+            table.GetRowDefaults().SetPadTop(10);
+            table.Add(Name.Replace("PostProcessor", string.Empty)).GetElement<Label>().SetFontScale(1f)
+                .SetFontColor(new Color(241, 156, 0));
 
-	}
+            // if we have a component, stick a bool for enabled here
+            if (Target != null)
+            {
+                _enabledCheckbox = new CheckBox(string.Empty, skin);
+                _enabledCheckbox.ProgrammaticChangeEvents = false;
+
+                if (Target is Component)
+                    _enabledCheckbox.IsChecked = ((Component) Target).Enabled;
+                else if (Target is PostProcessor)
+                    _enabledCheckbox.IsChecked = ((PostProcessor) Target).Enabled;
+
+                _enabledCheckbox.OnChanged += newValue =>
+                {
+                    if (Target is Component)
+                        ((Component) Target).Enabled = newValue;
+                    else if (Target is PostProcessor)
+                        ((PostProcessor) Target).Enabled = newValue;
+                };
+
+                table.Add(_enabledCheckbox).Right();
+            }
+            table.Row();
+
+            foreach (var i in _inspectors)
+            {
+                i.Initialize(table, skin);
+                table.Row();
+            }
+        }
+
+
+        public void Update()
+        {
+            foreach (var i in _inspectors)
+                i.Update();
+        }
+    }
 }
 #endif

@@ -1,15 +1,11 @@
-﻿using System;
-
-
-namespace Nez.UI
+﻿namespace Nez.UI
 {
-	public enum Direction
-	{
-		None,
-		Up,
-		Down,
-		Left,
-		Right
-	}
+    public enum Direction
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    }
 }
-

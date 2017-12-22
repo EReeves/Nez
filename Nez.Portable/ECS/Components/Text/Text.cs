@@ -1,151 +1,151 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez.Sprites;
 
-
 namespace Nez
 {
-	public class Text : Sprite
-	{
-		public override RectangleF bounds
-		{
-			get
-			{
-				if( _areBoundsDirty )
-				{
-					_bounds.calculateBounds( entity.transform.position, _localOffset, _origin, entity.transform.scale, entity.transform.rotation, _size.X, _size.Y );
-					_areBoundsDirty = false;
-				}
-
-				return _bounds;
-			}
-		}
-
-		/// <summary>
-		/// text to draw
-		/// </summary>
-		/// <value>The text.</value>
-		public string text
-		{
-			get { return _text; }
-			set { setText( value ); }
-		}
-
-		/// <summary>
-		/// horizontal alignment of the text
-		/// </summary>
-		/// <value>The horizontal origin.</value>
-		public HorizontalAlign horizontalOrigin
-		{
-			get { return _horizontalAlign; }
-			set { setHorizontalAlign( value ); }
-		}
-
-		/// <summary>
-		/// vertical alignment of the text
-		/// </summary>
-		/// <value>The vertical origin.</value>
-		public VerticalAlign verticalOrigin
-		{
-			get { return _verticalAlign; }
-			set { setVerticalAlign( value ); }
-		}
+    public class Text : Sprite
+    {
+        protected IFont Font;
 
 
-		protected HorizontalAlign _horizontalAlign;
-		protected VerticalAlign _verticalAlign;
-		protected IFont _font;
-		protected string _text;
-		Vector2 _size;
+        protected HorizontalAlign HorizontalAlign;
+        private Vector2 _size;
+        protected string text;
+        protected VerticalAlign VerticalAlign;
 
 
-		public Text( IFont font, string text, Vector2 localOffset, Color color )
-		{
-			_font = font;
-			_text = text;
-			_localOffset = localOffset;
-			this.color = color;
-			_horizontalAlign = HorizontalAlign.Left;
-			_verticalAlign = VerticalAlign.Top;
+        public Text(IFont font, string text, Vector2 localOffset, Color color)
+        {
+            Font = font;
+            this.text = text;
+            this.localOffset = localOffset;
+            this.Color = color;
+            HorizontalAlign = HorizontalAlign.Left;
+            VerticalAlign = VerticalAlign.Top;
 
-			updateSize();
-		}
+            UpdateSize();
+        }
 
+        public override RectangleF Bounds
+        {
+            get
+            {
+                if (AreBoundsDirty)
+                {
+                    Bounds.CalculateBounds(Entity.Transform.Position, localOffset, Origin, Entity.Transform.Scale,
+                        Entity.Transform.Rotation, _size.X, _size.Y);
+                    AreBoundsDirty = false;
+                }
 
-		#region Fluent setters
+                return Bounds;
+            }
+        }
 
-		public Text setFont( IFont font )
-		{
-			_font = font;
-			updateSize();
+	    /// <summary>
+	    ///     text to draw
+	    /// </summary>
+	    /// <value>The text.</value>
+	    public string Value
+        {
+            get => text;
+            set => SetText(value);
+        }
 
-			return this;
-		}
+	    /// <summary>
+	    ///     horizontal alignment of the text
+	    /// </summary>
+	    /// <value>The horizontal origin.</value>
+	    public HorizontalAlign HorizontalOrigin
+        {
+            get => HorizontalAlign;
+            set => SetHorizontalAlign(value);
+        }
 
-
-		public Text setText( string text )
-		{
-			_text = text;
-			updateSize();
-			updateCentering();
-
-			return this;
-		}
-
-
-		public Text setHorizontalAlign( HorizontalAlign hAlign )
-		{
-			_horizontalAlign = hAlign;
-			updateCentering();
-
-			return this;
-		}
-
-
-		public Text setVerticalAlign( VerticalAlign vAlign )
-		{
-			_verticalAlign = vAlign;
-			updateCentering();
-
-			return this;
-		}
-
-		#endregion
-
-
-		void updateSize()
-		{
-			_size = _font.measureString( _text );
-			updateCentering();
-		}
+	    /// <summary>
+	    ///     vertical alignment of the text
+	    /// </summary>
+	    /// <value>The vertical origin.</value>
+	    public VerticalAlign VerticalOrigin
+        {
+            get => VerticalAlign;
+            set => SetVerticalAlign(value);
+        }
 
 
-		void updateCentering()
-		{
-			var oldOrigin = _origin;
-
-			if( _horizontalAlign == HorizontalAlign.Left )
-				oldOrigin.X = 0;
-			else if( _horizontalAlign == HorizontalAlign.Center )
-				oldOrigin.X = _size.X / 2;
-			else
-				oldOrigin.X = _size.X;
-
-			if( _verticalAlign == VerticalAlign.Top )
-				oldOrigin.Y = 0;
-			else if( _verticalAlign == VerticalAlign.Center )
-				oldOrigin.Y = _size.Y / 2;
-			else
-				oldOrigin.Y = _size.Y;
-
-			origin = new Vector2( (int)oldOrigin.X, (int)oldOrigin.Y );
-		}
+        private void UpdateSize()
+        {
+            _size = Font.MeasureString(text);
+            UpdateCentering();
+        }
 
 
-		public override void render( Graphics graphics, Camera camera )
-		{
-			graphics.batcher.drawString( _font, _text, entity.transform.position + _localOffset, color, entity.transform.rotation, origin, entity.transform.scale, spriteEffects, layerDepth );
-		}
+        private void UpdateCentering()
+        {
+            var oldOrigin = Origin;
 
-	}
+            if (HorizontalAlign == HorizontalAlign.Left)
+                oldOrigin.X = 0;
+            else if (HorizontalAlign == HorizontalAlign.Center)
+                oldOrigin.X = _size.X / 2;
+            else
+                oldOrigin.X = _size.X;
+
+            if (VerticalAlign == VerticalAlign.Top)
+                oldOrigin.Y = 0;
+            else if (VerticalAlign == VerticalAlign.Center)
+                oldOrigin.Y = _size.Y / 2;
+            else
+                oldOrigin.Y = _size.Y;
+
+            origin = new Vector2((int) oldOrigin.X, (int) oldOrigin.Y);
+        }
+
+
+        public override void Render(Graphics graphics, Camera camera)
+        {
+            BatcherIFontExt.DrawString(graphics.Batcher, Font, (string) text, Entity.Transform.Position + localOffset, Color,
+                Entity.Transform.Rotation, origin, Entity.Transform.Scale, SpriteEffects, ((RenderableComponent) this).LayerDepth);
+        }
+
+
+        #region Fluent setters
+
+        public Text SetFont(IFont font)
+        {
+            Font = font;
+            UpdateSize();
+
+            return this;
+        }
+
+
+        public Text SetText(string text)
+        {
+            this.text = text;
+            UpdateSize();
+            UpdateCentering();
+
+            return this;
+        }
+
+
+        public Text SetHorizontalAlign(HorizontalAlign hAlign)
+        {
+            HorizontalAlign = hAlign;
+            UpdateCentering();
+
+            return this;
+        }
+
+
+        public Text SetVerticalAlign(VerticalAlign vAlign)
+        {
+            VerticalAlign = vAlign;
+            UpdateCentering();
+
+            return this;
+        }
+
+        #endregion
+    }
 }
-

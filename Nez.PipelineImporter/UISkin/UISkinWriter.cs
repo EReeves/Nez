@@ -7,44 +7,44 @@ using Microsoft.Xna.Framework.Content.Pipeline;
 namespace Nez.UISkinImporter
 {
 	[ContentTypeWriter]
-	public class UISkinWriter : ContentTypeWriter<UISkinConfig>
+	public class UISkinWriter : ContentTypeWriter<UiSkinConfig>
 	{
-		protected override void Write( ContentWriter writer, UISkinConfig data )
+		protected override void Write( ContentWriter writer, UiSkinConfig data )
 		{
-			if( data.colors != null )
+			if( data.Colors != null )
 			{
 				writer.Write( true );
-				writer.WriteObject( data.colors );
+				writer.WriteObject( data.Colors );
 			}
 			else
 			{
 				writer.Write( false );
 			}
 
-			if( data.textureAtlases != null )
+			if( data.TextureAtlases != null )
 			{
 				writer.Write( true );
-				writer.WriteObject( data.textureAtlases );
+				writer.WriteObject( data.TextureAtlases );
 			}
 			else
 			{
 				writer.Write( false );
 			}
 
-			if( data.libGdxAtlases != null )
+			if( data.LibGdxAtlases != null )
 			{
 				writer.Write( true );
-				writer.WriteObject( data.libGdxAtlases );
+				writer.WriteObject( data.LibGdxAtlases );
 			}
 			else
 			{
 				writer.Write( false );
 			}
 
-			if( data.styles != null )
+			if( data.Styles != null )
 			{
 				writer.Write( true );
-				writer.WriteObject( data.styles );
+				writer.WriteObject( data.Styles );
 			}
 			else
 			{
@@ -55,13 +55,13 @@ namespace Nez.UISkinImporter
 
 		public override string GetRuntimeType( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.UI.UISkinConfig ).AssemblyQualifiedName;
+			return typeof( Nez.UI.UiSkinConfig ).AssemblyQualifiedName;
 		}
 
 
 		public override string GetRuntimeReader( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.UI.UISkinConfigReader ).AssemblyQualifiedName;
+			return typeof( Nez.UI.UiSkinConfigReader ).AssemblyQualifiedName;
 		}
 	}
 }

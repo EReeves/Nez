@@ -1,11 +1,7 @@
-﻿using System;
-
-
-namespace Nez.AI.UtilityAI
+﻿namespace Nez.AI.UtilityAI
 {
-	public interface IAction<T>
-	{
-		void execute( T context );
-	}
+    public interface IAction<T>
+    {
+        void Execute(T context);
+    }
 }
-

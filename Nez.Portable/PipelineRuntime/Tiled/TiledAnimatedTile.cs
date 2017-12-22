@@ -1,34 +1,30 @@
-﻿using System;
-
-
-namespace Nez.Tiled
+﻿namespace Nez.Tiled
 {
-	public class TiledAnimatedTile : TiledTile
-	{
-		public new TiledTilesetTile tilesetTile;
+    public class TiledAnimatedTile : TiledTile
+    {
+        private int _currentFrame;
 
-		float _elapsedTime;
-		int _currentFrame;
-
-
-		public TiledAnimatedTile( int id, TiledTilesetTile tilesetTile ) : base( id )
-		{
-			this.tilesetTile = tilesetTile;
-		}
+        private float _elapsedTime;
+        public new TiledTilesetTile TilesetTile;
 
 
-		public void update()
-		{
-			_elapsedTime += Time.deltaTime;
+        public TiledAnimatedTile(int id, TiledTilesetTile tilesetTile) : base(id)
+        {
+            this.TilesetTile = tilesetTile;
+        }
 
-			if( _elapsedTime > tilesetTile.animationFrames[_currentFrame].duration )
-			{
-				_currentFrame = Mathf.incrementWithWrap( _currentFrame, tilesetTile.animationFrames.Count );
-				// HACK: still not quite sure why we have to resolve the global tildId with the tileset.firstId here...
-				id = tilesetTile.animationFrames[_currentFrame].tileId + tileset.firstId;
-				_elapsedTime = 0;
-			}
-		}
-	}
+
+        public void Update()
+        {
+            _elapsedTime += Time.DeltaTime;
+
+            if (_elapsedTime > TilesetTile.AnimationFrames[_currentFrame].Duration)
+            {
+                _currentFrame = Mathf.IncrementWithWrap(_currentFrame, TilesetTile.AnimationFrames.Count);
+                // HACK: still not quite sure why we have to resolve the global tildId with the tileset.firstId here...
+                Id = TilesetTile.AnimationFrames[_currentFrame].TileId + Tileset.FirstId;
+                _elapsedTime = 0;
+            }
+        }
+    }
 }
-

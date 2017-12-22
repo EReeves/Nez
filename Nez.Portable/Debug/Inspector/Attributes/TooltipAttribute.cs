@@ -1,20 +1,18 @@
 ﻿using System;
 
-
 namespace Nez
 {
 	/// <summary>
-	/// displays a tooltip when hovering over the label of any inspectable elements
+	///     displays a tooltip when hovering over the label of any inspectable elements
 	/// </summary>
-	[AttributeUsage( AttributeTargets.Property | AttributeTargets.Field )]
-	public class TooltipAttribute : InspectableAttribute
-	{
-		public string tooltip;
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class TooltipAttribute : InspectableAttribute
+    {
+        public string Tooltip;
 
-		public TooltipAttribute( string tooltip )
-		{
-			this.tooltip = tooltip;
-		}
-	}
+        public TooltipAttribute(string tooltip)
+        {
+            this.Tooltip = tooltip;
+        }
+    }
 }
-

@@ -1,66 +1,64 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez.UI;
 
-
 #if DEBUG
 namespace Nez
 {
-	public class Vector2Inspector : Inspector
-	{
-		TextField _textFieldX, _textFieldY;
+    public class Vector2Inspector : Inspector
+    {
+        private TextField _textFieldX, _textFieldY;
 
 
-		public override void initialize( Table table, Skin skin )
-		{
-			var value = getValue<Vector2>();
-			var label = createNameLabel( table, skin );
+        public override void Initialize(Table table, Skin skin)
+        {
+            var value = GetValue<Vector2>();
+            var label = CreateNameLabel(table, skin);
 
-			var labelX = new Label( "x", skin );
-			_textFieldX = new TextField( value.X.ToString(), skin );
-			_textFieldX.setTextFieldFilter( new FloatFilter() ).setPreferredWidth( 50 );
-			_textFieldX.onTextChanged += ( field, str ) =>
-			{
-				float newX;
-				if( float.TryParse( str, out newX ) )
-				{
-					var newValue = getValue<Vector2>();
-					newValue.X = newX;
-					setValue( newValue );
-				}
-			};
+            var labelX = new Label("x", skin);
+            _textFieldX = new TextField(value.X.ToString(), skin);
+            _textFieldX.SetTextFieldFilter(new FloatFilter()).SetPreferredWidth(50);
+            _textFieldX.OnTextChanged += (field, str) =>
+            {
+                float newX;
+                if (float.TryParse(str, out newX))
+                {
+                    var newValue = GetValue<Vector2>();
+                    newValue.X = newX;
+                    SetValue(newValue);
+                }
+            };
 
-			var labelY = new Label( "y", skin );
-			_textFieldY = new TextField( value.Y.ToString(), skin );
-			_textFieldY.setTextFieldFilter( new FloatFilter() ).setPreferredWidth( 50 );
-			_textFieldY.onTextChanged += ( field, str ) =>
-			{
-				float newY;
-				if( float.TryParse( str, out newY ) )
-				{
-					var newValue = getValue<Vector2>();
-					newValue.Y = newY;
-					setValue( newValue );
-				}
-			};
+            var labelY = new Label("y", skin);
+            _textFieldY = new TextField(value.Y.ToString(), skin);
+            _textFieldY.SetTextFieldFilter(new FloatFilter()).SetPreferredWidth(50);
+            _textFieldY.OnTextChanged += (field, str) =>
+            {
+                float newY;
+                if (float.TryParse(str, out newY))
+                {
+                    var newValue = GetValue<Vector2>();
+                    newValue.Y = newY;
+                    SetValue(newValue);
+                }
+            };
 
-			var hBox = new HorizontalGroup( 5 );
-			hBox.addElement( labelX );
-			hBox.addElement( _textFieldX );
-			hBox.addElement( labelY );
-			hBox.addElement( _textFieldY );
+            var hBox = new HorizontalGroup(5);
+            hBox.AddElement(labelX);
+            hBox.AddElement(_textFieldX);
+            hBox.AddElement(labelY);
+            hBox.AddElement(_textFieldY);
 
-			table.add( label );
-			table.add( hBox );
-		}
+            table.Add(label);
+            table.Add(hBox);
+        }
 
 
-		public override void update()
-		{
-			var value = getValue<Vector2>();
-			_textFieldX.setText( value.X.ToString() );
-			_textFieldY.setText( value.Y.ToString() );
-		}
-
-	}
+        public override void Update()
+        {
+            var value = GetValue<Vector2>();
+            _textFieldX.SetText(value.X.ToString());
+            _textFieldY.SetText(value.Y.ToString());
+        }
+    }
 }
 #endif

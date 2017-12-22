@@ -1,30 +1,25 @@
-﻿using System;
-
-
-namespace Nez
+﻿namespace Nez
 {
-	public interface ITimer
-	{
-		object context { get; }
+    public interface ITimer
+    {
+        object Context { get; }
 
 
-		/// <summary>
-		/// call stop to stop this timer from being run again. This has no effect on a non-repeating timer.
-		/// </summary>
-		void stop();
+	    /// <summary>
+	    ///     call stop to stop this timer from being run again. This has no effect on a non-repeating timer.
+	    /// </summary>
+	    void Stop();
 
-		/// <summary>
-		/// resets the elapsed time of the timer to 0
-		/// </summary>
-		void reset();
+	    /// <summary>
+	    ///     resets the elapsed time of the timer to 0
+	    /// </summary>
+	    void Reset();
 
-		/// <summary>
-		/// returns the context casted to T as a convenience
-		/// </summary>
-		/// <returns>The context.</returns>
-		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		T getContext<T>();
-
-	}
+	    /// <summary>
+	    ///     returns the context casted to T as a convenience
+	    /// </summary>
+	    /// <returns>The context.</returns>
+	    /// <typeparam name="T">The 1st type parameter.</typeparam>
+	    T GetContext<T>();
+    }
 }
-

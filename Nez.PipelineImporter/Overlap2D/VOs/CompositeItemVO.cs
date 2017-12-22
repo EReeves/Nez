@@ -40,7 +40,7 @@ namespace Nez.Overlap2D.Runtime
 			var ourLayerDepth = calculateLayerDepth( zIndexMin, zIndexMax, null );
 			var childLayerDepth = child.calculateLayerDepth( zIndexMin, zIndexMax, null );
 
-			return Mathf.clamp01( ourLayerDepth + childLayerDepth );
+			return Mathf.Clamp01( ourLayerDepth + childLayerDepth );
 			//return calculateLayerDepth( zIndexMin, zIndexMax, null ) - ( 1 - child.calculateLayerDepth( zIndexMin, zIndexMax, null ) );
 		}
 

@@ -1,159 +1,162 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace Nez.Textures
 {
 	/// <summary>
-	/// wrapper for a RenderTarget2D that optionally takes care of resizing itself automatcially when the screen size changes
+	///     wrapper for a RenderTarget2D that optionally takes care of resizing itself automatcially when the screen size
+	///     changes
 	/// </summary>
 	public class RenderTexture : IDisposable
-	{
-		/// <summary>
-		/// handles what should happen when onSceneBackBufferSizeChanged. Defaults to SizeToSceneRenderTarget
-		/// </summary>
-		public enum RenderTextureResizeBehavior
-		{
-			None,
-			SizeToSceneRenderTarget,
-			SizeToScreen
-		}
+    {
+	    /// <summary>
+	    ///     handles what should happen when onSceneBackBufferSizeChanged. Defaults to SizeToSceneRenderTarget
+	    /// </summary>
+	    public enum RenderTextureResizeBehavior
+        {
+            None,
+            SizeToSceneRenderTarget,
+            SizeToScreen
+        }
 
-		/// <summary>
-		/// the RenderTarget2D this RenderTexture manages
-		/// </summary>
-		public RenderTarget2D renderTarget;
+	    /// <summary>
+	    ///     the RenderTarget2D this RenderTexture manages
+	    /// </summary>
+	    public RenderTarget2D RenderTarget;
 
-		/// <summary>
-		/// resize behavior that should occur when onSceneBackBufferSizeChanged is called
-		/// </summary>
-		public RenderTextureResizeBehavior resizeBehavior = RenderTextureResizeBehavior.SizeToSceneRenderTarget;
-
-
-		#region constructors
-
-		/// <summary>
-		/// helper for creating a full screen RenderTarget2D
-		/// </summary>
-		public RenderTexture()
-		{
-			renderTarget = RenderTarget.create( Screen.width, Screen.height, Screen.backBufferFormat, Screen.preferredDepthStencilFormat );
-		}
+	    /// <summary>
+	    ///     resize behavior that should occur when onSceneBackBufferSizeChanged is called
+	    /// </summary>
+	    public RenderTextureResizeBehavior ResizeBehavior = RenderTextureResizeBehavior.SizeToSceneRenderTarget;
 
 
-		/// <summary>
-		/// helper for creating a full screen RenderTarget2D with a specific DepthFormat
-		/// </summary>
-		/// <param name="preferredDepthFormat">Preferred depth format.</param>
-		public RenderTexture( DepthFormat preferredDepthFormat )
-		{
-			renderTarget = RenderTarget.create( Screen.width, Screen.height, Screen.backBufferFormat, preferredDepthFormat );
-		}
+        public void Dispose()
+        {
+            if (RenderTarget != null && !RenderTarget.IsDisposed)
+            {
+                RenderTarget.Dispose();
+                RenderTarget = null;
+            }
+        }
 
 
-		/// <summary>
-		/// helper for creating a RenderTarget2D
-		/// </summary>
-		/// <param name="width">Width.</param>
-		/// <param name="height">Height.</param>
-		public RenderTexture( int width, int height )
-		{
-			renderTarget = RenderTarget.create( width, height, Screen.backBufferFormat, Screen.preferredDepthStencilFormat );
-		}
+	    /// <summary>
+	    ///     called by Renderers automatically when appropriate. Lets the resizeBehavior kick in so auto resizing can occur
+	    /// </summary>
+	    /// <param name="newWidth">New width.</param>
+	    /// <param name="newHeight">New height.</param>
+	    public void OnSceneBackBufferSizeChanged(int newWidth, int newHeight)
+        {
+            switch (ResizeBehavior)
+            {
+                case RenderTextureResizeBehavior.None:
+                    break;
+                case RenderTextureResizeBehavior.SizeToSceneRenderTarget:
+                    Resize(newWidth, newHeight);
+                    break;
+                case RenderTextureResizeBehavior.SizeToScreen:
+                    Resize(Screen.Width, Screen.Height);
+                    break;
+            }
+        }
 
 
-		/// <summary>
-		/// helper for creating a RenderTarget2D
-		/// </summary>
-		/// <param name="width">Width.</param>
-		/// <param name="height">Height.</param>
-		/// <param name="preferredDepthFormat">Preferred depth format.</param>
-		public RenderTexture( int width, int height, DepthFormat preferredDepthFormat )
-		{
-			renderTarget = RenderTarget.create( width, height, Screen.backBufferFormat, preferredDepthFormat );
-		}
+	    /// <summary>
+	    ///     resizes the RenderTarget2D to match the back buffer size
+	    /// </summary>
+	    public void ResizeToFitBackbuffer()
+        {
+            Resize(Screen.Width, Screen.Height);
+        }
 
 
-		/// <summary>
-		/// helper for creating a RenderTarget2D
-		/// </summary>
-		/// <param name="width">Width.</param>
-		/// <param name="height">Height.</param>
-		/// <param name="preferredFormat">Preferred format.</param>
-		/// <param name="preferredDepthFormat">Preferred depth format.</param>
-		public RenderTexture( int width, int height, SurfaceFormat preferredFormat, DepthFormat preferredDepthFormat )
-		{
-			renderTarget = new RenderTarget2D( Core.graphicsDevice, width, height, false, preferredFormat, preferredDepthFormat, 0, RenderTargetUsage.PreserveContents );
-		}
+	    /// <summary>
+	    ///     resizes the RenderTarget2D to the specified size
+	    /// </summary>
+	    /// <param name="width">Width.</param>
+	    /// <param name="height">Height.</param>
+	    public void Resize(int width, int height)
+        {
+            // no need to resize if we are already the right size
+            if (RenderTarget.Width == width && RenderTarget.Height == height && !RenderTarget.IsDisposed)
+                return;
 
-		#endregion
+            // retain the same DepthFormat when we recreate the RenderTarget2D
+            var depthFormat = RenderTarget.DepthStencilFormat;
 
+            // unload if necessary
+            Dispose();
 
-		/// <summary>
-		/// called by Renderers automatically when appropriate. Lets the resizeBehavior kick in so auto resizing can occur
-		/// </summary>
-		/// <param name="newWidth">New width.</param>
-		/// <param name="newHeight">New height.</param>
-		public void onSceneBackBufferSizeChanged( int newWidth, int newHeight )
-		{
-			switch( resizeBehavior )
-			{
-				case RenderTextureResizeBehavior.None:
-					break;
-				case RenderTextureResizeBehavior.SizeToSceneRenderTarget:
-					resize( newWidth, newHeight );
-					break;
-				case RenderTextureResizeBehavior.SizeToScreen:
-					resize( Screen.width, Screen.height );
-					break;
-			}
-		}
+            RenderTarget = Textures.RenderTarget.Create(width, height, depthFormat);
+        }
 
 
-		/// <summary>
-		/// resizes the RenderTarget2D to match the back buffer size
-		/// </summary>
-		public void resizeToFitBackbuffer()
-		{
-			resize( Screen.width, Screen.height );
-		}
+        public static implicit operator RenderTarget2D(RenderTexture tex)
+        {
+            return tex.RenderTarget;
+        }
 
 
-		/// <summary>
-		/// resizes the RenderTarget2D to the specified size
-		/// </summary>
-		/// <param name="width">Width.</param>
-		/// <param name="height">Height.</param>
-		public void resize( int width, int height )
-		{
-			// no need to resize if we are already the right size
-			if( renderTarget.Width == width && renderTarget.Height == height && !renderTarget.IsDisposed )
-				return;
+        #region constructors
 
-			// retain the same DepthFormat when we recreate the RenderTarget2D
-			var depthFormat = renderTarget.DepthStencilFormat;
-
-			// unload if necessary
-			Dispose();
-
-			renderTarget = RenderTarget.create( width, height, depthFormat );
-		}
+	    /// <summary>
+	    ///     helper for creating a full screen RenderTarget2D
+	    /// </summary>
+	    public RenderTexture()
+        {
+            RenderTarget = Textures.RenderTarget.Create(Screen.Width, Screen.Height, Screen.BackBufferFormat,
+                Screen.PreferredDepthStencilFormat);
+        }
 
 
-		public void Dispose()
-		{
-			if( renderTarget != null && !renderTarget.IsDisposed )
-			{
-				renderTarget.Dispose();
-				renderTarget = null;
-			}
-		}
+	    /// <summary>
+	    ///     helper for creating a full screen RenderTarget2D with a specific DepthFormat
+	    /// </summary>
+	    /// <param name="preferredDepthFormat">Preferred depth format.</param>
+	    public RenderTexture(DepthFormat preferredDepthFormat)
+        {
+            RenderTarget =
+                Textures.RenderTarget.Create(Screen.Width, Screen.Height, Screen.BackBufferFormat, preferredDepthFormat);
+        }
 
 
-		public static implicit operator RenderTarget2D( RenderTexture tex )
-		{
-			return tex.renderTarget;
-		}
-	}
+	    /// <summary>
+	    ///     helper for creating a RenderTarget2D
+	    /// </summary>
+	    /// <param name="width">Width.</param>
+	    /// <param name="height">Height.</param>
+	    public RenderTexture(int width, int height)
+        {
+            RenderTarget =
+                Textures.RenderTarget.Create(width, height, Screen.BackBufferFormat, Screen.PreferredDepthStencilFormat);
+        }
+
+
+	    /// <summary>
+	    ///     helper for creating a RenderTarget2D
+	    /// </summary>
+	    /// <param name="width">Width.</param>
+	    /// <param name="height">Height.</param>
+	    /// <param name="preferredDepthFormat">Preferred depth format.</param>
+	    public RenderTexture(int width, int height, DepthFormat preferredDepthFormat)
+        {
+            RenderTarget = Textures.RenderTarget.Create(width, height, Screen.BackBufferFormat, preferredDepthFormat);
+        }
+
+
+	    /// <summary>
+	    ///     helper for creating a RenderTarget2D
+	    /// </summary>
+	    /// <param name="width">Width.</param>
+	    /// <param name="height">Height.</param>
+	    /// <param name="preferredFormat">Preferred format.</param>
+	    /// <param name="preferredDepthFormat">Preferred depth format.</param>
+	    public RenderTexture(int width, int height, SurfaceFormat preferredFormat, DepthFormat preferredDepthFormat)
+        {
+            RenderTarget = new RenderTarget2D(Core.GraphicsDevice, width, height, false, preferredFormat,
+                preferredDepthFormat, 0, RenderTargetUsage.PreserveContents);
+        }
+
+        #endregion
+    }
 }
-

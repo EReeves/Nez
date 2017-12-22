@@ -1,160 +1,159 @@
 ﻿using Microsoft.Xna.Framework;
 
-
 namespace Nez.UI
 {
 	/// <summary>
-	/// A listener that shows a tooltip Element when another Element is hovered over with the mouse.
+	///     A listener that shows a tooltip Element when another Element is hovered over with the mouse.
 	/// </summary>
 	public class Tooltip : Element
-	{
-		protected Container _container;
-		protected Element _targetElement;
+    {
+        protected Container Container;
+        private bool _instant, _always;
+        private bool _isMouseOver;
 
-		TooltipManager _manager;
-		bool _instant, _always;
-		bool _isMouseOver;
-
-
-		public Tooltip( Element contents, Element targetElement )
-		{
-			_manager = TooltipManager.getInstance();
-
-			_container = new Container( contents );
-			_container.setOrigin( AlignInternal.center );
-			_targetElement = targetElement;
-			_container.setTouchable( Touchable.Disabled );
-		}
+        private readonly TooltipManager _manager;
+        protected Element TargetElement;
 
 
-		#region config
+        public Tooltip(Element contents, Element targetElement)
+        {
+            _manager = TooltipManager.GetInstance();
 
-		public TooltipManager getManager()
-		{
-			return _manager;
-		}
-
-
-		public Container getContainer()
-		{
-			return _container;
-		}
+            Container = new Container(contents);
+            Container.SetOrigin(AlignInternal.Center);
+            TargetElement = targetElement;
+            Container.SetTouchable(Touchable.Disabled);
+        }
 
 
-		public Tooltip setElement( Element contents )
-		{
-			_container.setElement( contents );
-			return this;
-		}
+        public override Element Hit(Vector2 point)
+        {
+            // we do some rejiggering here by checking for hits on our target and using that
+            var local = TargetElement.ScreenToLocalCoordinates(point);
+            if (TargetElement.Hit(local) != null)
+            {
+                if (!_isMouseOver)
+                {
+                    _isMouseOver = true;
+                    _manager.Enter(this);
+                }
+                SetContainerPosition(local.X, local.Y);
+            }
+            else if (_isMouseOver)
+            {
+                _isMouseOver = false;
+                _manager.Hide(this);
+            }
+            return null;
+        }
 
 
-		public Element getElement()
-		{
-			return _container.getElement();
-		}
+        private void SetContainerPosition(float x, float y)
+        {
+            var stage = TargetElement.GetStage();
+            if (stage == null)
+                return;
+
+            Container.Pack();
+            float offsetX = _manager.OffsetX, offsetY = _manager.OffsetY, dist = _manager.EdgeDistance;
+            var point = TargetElement.LocalToStageCoordinates(new Vector2(x + offsetX - Container.GetWidth() / 2,
+                y - offsetY - Container.GetHeight()));
+            if (point.Y < dist)
+                point = TargetElement.LocalToStageCoordinates(new Vector2(x + offsetX, y + offsetY));
+            if (point.X < dist)
+                point.X = dist;
+            if (point.X + Container.GetWidth() > stage.GetWidth() - dist)
+                point.X = stage.GetWidth() - dist - Container.GetWidth();
+            if (point.Y + Container.GetHeight() > stage.GetHeight() - dist)
+                point.Y = stage.GetHeight() - dist - Container.GetHeight();
+            Container.SetPosition(point.X, point.Y);
+
+            point = TargetElement.LocalToStageCoordinates(new Vector2(TargetElement.GetWidth() / 2,
+                TargetElement.GetHeight() / 2));
+            point -= new Vector2(Container.GetX(), Container.GetY());
+            Container.SetOrigin(point.X, point.Y);
+        }
 
 
-		public T getElement<T>() where T : Element
-		{
-			return _container.getElement<T>();
-		}
+        #region config
+
+        public TooltipManager GetManager()
+        {
+            return _manager;
+        }
 
 
-		public Tooltip setTargetElement( Element targetElement )
-		{
-			_targetElement = targetElement;
-			return this;
-		}
+        public Container GetContainer()
+        {
+            return Container;
+        }
 
 
-		public Element getTargetElement()
-		{
-			return _targetElement;
-		}
+        public Tooltip SetElement(Element contents)
+        {
+            Container.SetElement(contents);
+            return this;
+        }
 
 
-		/// <summary>
-		/// If true, this tooltip is shown without delay when hovered
-		/// </summary>
-		/// <param name="instant">Instant.</param>
-		public Tooltip setInstant( bool instant )
-		{
-			_instant = instant;
-			return this;
-		}
+        public Element GetElement()
+        {
+            return Container.GetElement();
+        }
 
 
-		public bool getInstant()
-		{
-			return _instant;
-		}
+        public T GetElement<T>() where T : Element
+        {
+            return Container.GetElement<T>();
+        }
 
 
-		/// <summary>
-		/// If true, this tooltip is shown even when tooltips are not TooltipManager#enabled
-		/// </summary>
-		/// <param name="always">Always.</param>
-		public Tooltip setAlways( bool always )
-		{
-			_always = always;
-			return this;
-		}
+        public Tooltip SetTargetElement(Element targetElement)
+        {
+            TargetElement = targetElement;
+            return this;
+        }
 
 
-		public bool getAlways()
-		{
-			return _always;
-		}
-
-		#endregion
+        public Element GetTargetElement()
+        {
+            return TargetElement;
+        }
 
 
-		public override Element hit( Vector2 point )
-		{
-			// we do some rejiggering here by checking for hits on our target and using that
-			var local = _targetElement.screenToLocalCoordinates( point );
-			if( _targetElement.hit( local ) != null )
-			{
-				if( !_isMouseOver )
-				{
-					_isMouseOver = true;
-					_manager.enter( this );
-				}
-				setContainerPosition( local.X, local.Y );
-			}
-			else if( _isMouseOver )
-			{
-				_isMouseOver = false;
-				_manager.hide( this );
-			}
-			return null;
-		}
+	    /// <summary>
+	    ///     If true, this tooltip is shown without delay when hovered
+	    /// </summary>
+	    /// <param name="instant">Instant.</param>
+	    public Tooltip SetInstant(bool instant)
+        {
+            _instant = instant;
+            return this;
+        }
 
 
-		void setContainerPosition( float x, float y )
-		{
-			var stage = _targetElement.getStage();
-			if( stage == null )
-				return;
+        public bool GetInstant()
+        {
+            return _instant;
+        }
 
-			_container.pack();
-			float offsetX = _manager.offsetX, offsetY = _manager.offsetY, dist = _manager.edgeDistance;
-			var point = _targetElement.localToStageCoordinates( new Vector2( x + offsetX - _container.getWidth() / 2, y - offsetY - _container.getHeight() ) );
-			if( point.Y < dist )
-				point = _targetElement.localToStageCoordinates( new Vector2( x + offsetX, y + offsetY ) );
-			if( point.X < dist )
-				point.X = dist;
-			if( point.X + _container.getWidth() > stage.getWidth() - dist )
-				point.X = stage.getWidth() - dist - _container.getWidth();
-			if( point.Y + _container.getHeight() > stage.getHeight() - dist )
-				point.Y = stage.getHeight() - dist - _container.getHeight();
-			_container.setPosition( point.X, point.Y );
 
-			point = _targetElement.localToStageCoordinates( new Vector2( _targetElement.getWidth() / 2, _targetElement.getHeight() / 2 ) );
-			point -= new Vector2( _container.getX(), _container.getY() );
-			_container.setOrigin( point.X, point.Y );
-		}
+	    /// <summary>
+	    ///     If true, this tooltip is shown even when tooltips are not TooltipManager#enabled
+	    /// </summary>
+	    /// <param name="always">Always.</param>
+	    public Tooltip SetAlways(bool always)
+        {
+            _always = always;
+            return this;
+        }
 
-	}
+
+        public bool GetAlways()
+        {
+            return _always;
+        }
+
+        #endregion
+    }
 }
-

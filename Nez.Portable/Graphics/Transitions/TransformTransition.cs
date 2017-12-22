@@ -1,115 +1,123 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using System.Collections;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez.Tweens;
 
-
 namespace Nez
 {
-	public class TransformTransition : SceneTransition
-	{
-		public enum TransformTransitionType
-		{
-			ZoomOut,
-			ZoomIn,
-			SlideRight,
-			SlideLeft,
-			SlideUp,
-			SlideDown,
-			SlideBottomRight,
-			SlideBottomLeft,
-			SlideTopRight,
-			SlideTopLeft
-		}
+    public class TransformTransition : SceneTransition
+    {
+        public enum TransformTransitionType
+        {
+            ZoomOut,
+            ZoomIn,
+            SlideRight,
+            SlideLeft,
+            SlideUp,
+            SlideDown,
+            SlideBottomRight,
+            SlideBottomLeft,
+            SlideTopRight,
+            SlideTopLeft
+        }
 
-		/// <summary>
-		/// duration for the animation
-		/// </summary>
-		public float duration = 1f;
+        private Rectangle _destinationRect;
+        private Rectangle _finalRenderRect;
+        private Rectangle _textureBounds;
 
-		/// <summary>
-		/// ease equation for the transition
-		/// </summary>
-		public EaseType transitionEaseType = EaseType.QuartIn;
+	    /// <summary>
+	    ///     duration for the animation
+	    /// </summary>
+	    public float Duration = 1f;
 
-		Rectangle _destinationRect;
-		Rectangle _finalRenderRect;
-		Rectangle _textureBounds;
-
-
-		public TransformTransition( Func<Scene> sceneLoadAction, TransformTransitionType transitionType = TransformTransitionType.ZoomOut ) : base( sceneLoadAction, true )
-		{
-			_destinationRect = previousSceneRender.Bounds;
-			_textureBounds = _destinationRect;
-
-			switch( transitionType )
-			{
-				case TransformTransitionType.ZoomOut:
-					_finalRenderRect = new Rectangle( Screen.width / 2, Screen.height / 2, 0, 0 );
-					break;
-				case TransformTransitionType.ZoomIn:
-					_finalRenderRect = new Rectangle( -Screen.width * 5, -Screen.height * 5, _destinationRect.Width * 10, _destinationRect.Height * 10 );
-					break;
-				case TransformTransitionType.SlideRight:
-					_finalRenderRect = new Rectangle( Screen.width, 0, _destinationRect.Width, _destinationRect.Height );
-				break;
-				case TransformTransitionType.SlideLeft:
-					_finalRenderRect = new Rectangle( -Screen.width, 0, _destinationRect.Width, _destinationRect.Height );
-				break;
-				case TransformTransitionType.SlideUp:
-					_finalRenderRect = new Rectangle( 0, -Screen.height, _destinationRect.Width, _destinationRect.Height );
-				break;
-				case TransformTransitionType.SlideDown:
-					_finalRenderRect = new Rectangle( 0, Screen.height, _destinationRect.Width, _destinationRect.Height );
-				break;
-				case TransformTransitionType.SlideBottomRight:
-					_finalRenderRect = new Rectangle( Screen.width, Screen.height, _destinationRect.Width, _destinationRect.Height );
-				break;
-				case TransformTransitionType.SlideBottomLeft:
-					_finalRenderRect = new Rectangle( -Screen.width, Screen.height, _destinationRect.Width, _destinationRect.Height );
-				break;
-				case TransformTransitionType.SlideTopRight:
-					_finalRenderRect = new Rectangle( Screen.width, -Screen.height, _destinationRect.Width, _destinationRect.Height );
-				break;
-				case TransformTransitionType.SlideTopLeft:
-					_finalRenderRect = new Rectangle( -Screen.width, -Screen.height, _destinationRect.Width, _destinationRect.Height );
-				break;
-			}
-		}
+	    /// <summary>
+	    ///     ease equation for the transition
+	    /// </summary>
+	    public EaseType TransitionEaseType = EaseType.QuartIn;
 
 
-		public TransformTransition( TransformTransitionType transitionType = TransformTransitionType.ZoomOut ) : this( null, transitionType )
-		{}
+        public TransformTransition(Func<Scene> sceneLoadAction,
+            TransformTransitionType transitionType = TransformTransitionType.ZoomOut) : base(sceneLoadAction, true)
+        {
+            _destinationRect = PreviousSceneRender.Bounds;
+            _textureBounds = _destinationRect;
+
+            switch (transitionType)
+            {
+                case TransformTransitionType.ZoomOut:
+                    _finalRenderRect = new Rectangle(Screen.Width / 2, Screen.Height / 2, 0, 0);
+                    break;
+                case TransformTransitionType.ZoomIn:
+                    _finalRenderRect = new Rectangle(-Screen.Width * 5, -Screen.Height * 5, _destinationRect.Width * 10,
+                        _destinationRect.Height * 10);
+                    break;
+                case TransformTransitionType.SlideRight:
+                    _finalRenderRect = new Rectangle(Screen.Width, 0, _destinationRect.Width, _destinationRect.Height);
+                    break;
+                case TransformTransitionType.SlideLeft:
+                    _finalRenderRect = new Rectangle(-Screen.Width, 0, _destinationRect.Width, _destinationRect.Height);
+                    break;
+                case TransformTransitionType.SlideUp:
+                    _finalRenderRect =
+                        new Rectangle(0, -Screen.Height, _destinationRect.Width, _destinationRect.Height);
+                    break;
+                case TransformTransitionType.SlideDown:
+                    _finalRenderRect = new Rectangle(0, Screen.Height, _destinationRect.Width, _destinationRect.Height);
+                    break;
+                case TransformTransitionType.SlideBottomRight:
+                    _finalRenderRect = new Rectangle(Screen.Width, Screen.Height, _destinationRect.Width,
+                        _destinationRect.Height);
+                    break;
+                case TransformTransitionType.SlideBottomLeft:
+                    _finalRenderRect = new Rectangle(-Screen.Width, Screen.Height, _destinationRect.Width,
+                        _destinationRect.Height);
+                    break;
+                case TransformTransitionType.SlideTopRight:
+                    _finalRenderRect = new Rectangle(Screen.Width, -Screen.Height, _destinationRect.Width,
+                        _destinationRect.Height);
+                    break;
+                case TransformTransitionType.SlideTopLeft:
+                    _finalRenderRect = new Rectangle(-Screen.Width, -Screen.Height, _destinationRect.Width,
+                        _destinationRect.Height);
+                    break;
+            }
+        }
 
 
-		public override IEnumerator onBeginTransition()
-		{
-			yield return null;
-
-			// load up the new Scene
-			yield return Core.startCoroutine( loadNextScene() );
-
-			var elapsed = 0f;
-			while( elapsed < duration )
-			{
-				elapsed += Time.deltaTime;
-				_destinationRect = Lerps.ease( transitionEaseType, ref _textureBounds, ref _finalRenderRect, elapsed, duration );
-
-				yield return null;
-			}
-
-			transitionComplete();
-		}
+        public TransformTransition(TransformTransitionType transitionType = TransformTransitionType.ZoomOut) : this(
+            null, transitionType)
+        {
+        }
 
 
-		public override void render( Graphics graphics )
-		{
-			Core.graphicsDevice.setRenderTarget( null );
-			graphics.batcher.begin( BlendState.NonPremultiplied, Core.defaultSamplerState, DepthStencilState.None, null );
-			graphics.batcher.draw( previousSceneRender, _destinationRect, Color.White );
-			graphics.batcher.end();
-		}
-	}
+        public override IEnumerator OnBeginTransition()
+        {
+            yield return null;
+
+            // load up the new Scene
+            yield return Core.StartCoroutine(LoadNextScene());
+
+            var elapsed = 0f;
+            while (elapsed < Duration)
+            {
+                elapsed += Time.DeltaTime;
+                _destinationRect = Lerps.Ease(TransitionEaseType, ref _textureBounds, ref _finalRenderRect, elapsed,
+                    Duration);
+
+                yield return null;
+            }
+
+            TransitionComplete();
+        }
+
+
+        public override void Render(Graphics graphics)
+        {
+            GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, null);
+            graphics.Batcher.Begin(BlendState.NonPremultiplied, Core.DefaultSamplerState, DepthStencilState.None, null);
+            graphics.Batcher.Draw(PreviousSceneRender, _destinationRect, Color.White);
+            graphics.Batcher.End();
+        }
+    }
 }
-

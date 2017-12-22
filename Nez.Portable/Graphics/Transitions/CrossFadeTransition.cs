@@ -1,67 +1,68 @@
 ﻿using System;
 using System.Collections;
 using Microsoft.Xna.Framework;
-using Nez.Tweens;
 using Microsoft.Xna.Framework.Graphics;
-
+using Nez.Tweens;
 
 namespace Nez
 {
 	/// <summary>
-	/// fades from the current Scene to the new Scene
+	///     fades from the current Scene to the new Scene
 	/// </summary>
 	public class CrossFadeTransition : SceneTransition
-	{
-		/// <summary>
-		/// duration for the fade
-		/// </summary>
-		public float fadeDuration = 1f;
+    {
+        private Color _color = Color.White;
 
-		/// <summary>
-		/// ease equation to use for the cross fade
-		/// </summary>
-		public EaseType fadeEaseType = EaseType.QuartIn;
+        private Color _fromColor = Color.White;
+        private Color _toColor = Color.Transparent;
 
-		Color _fromColor = Color.White;
-		Color _toColor = Color.Transparent;
-		Color _color = Color.White;
+	    /// <summary>
+	    ///     duration for the fade
+	    /// </summary>
+	    public float FadeDuration = 1f;
 
-
-		public CrossFadeTransition( Func<Scene> sceneLoadAction ) : base( sceneLoadAction, true )
-		{}
+	    /// <summary>
+	    ///     ease equation to use for the cross fade
+	    /// </summary>
+	    public EaseType FadeEaseType = EaseType.QuartIn;
 
 
-		public CrossFadeTransition() : this( null )
-		{}
+        public CrossFadeTransition(Func<Scene> sceneLoadAction) : base(sceneLoadAction, true)
+        {
+        }
 
 
-		public override IEnumerator onBeginTransition()
-		{
-			yield return null;
-
-			// load up the new Scene
-			yield return Core.startCoroutine( loadNextScene() );
-
-			var elapsed = 0f;
-			while( elapsed < fadeDuration )
-			{
-				elapsed += Time.deltaTime;
-				_color = Lerps.ease( fadeEaseType, ref _fromColor, ref _toColor, elapsed, fadeDuration );
-
-				yield return null;
-			}
-
-			transitionComplete();
-		}
+        public CrossFadeTransition() : this(null)
+        {
+        }
 
 
-		public override void render( Graphics graphics )
-		{
-			Core.graphicsDevice.setRenderTarget( null );
-			graphics.batcher.begin( BlendState.NonPremultiplied, Core.defaultSamplerState, DepthStencilState.None, null );
-			graphics.batcher.draw( previousSceneRender, Vector2.Zero, _color );
-			graphics.batcher.end();
-		}
-	}
+        public override IEnumerator OnBeginTransition()
+        {
+            yield return null;
+
+            // load up the new Scene
+            yield return Core.StartCoroutine(LoadNextScene());
+
+            var elapsed = 0f;
+            while (elapsed < FadeDuration)
+            {
+                elapsed += Time.DeltaTime;
+                _color = Lerps.Ease(FadeEaseType, ref _fromColor, ref _toColor, elapsed, FadeDuration);
+
+                yield return null;
+            }
+
+            TransitionComplete();
+        }
+
+
+        public override void Render(Graphics graphics)
+        {
+            GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, null);
+            graphics.Batcher.Begin(BlendState.NonPremultiplied, Core.DefaultSamplerState, DepthStencilState.None, null);
+            graphics.Batcher.Draw(PreviousSceneRender, Vector2.Zero, _color);
+            graphics.Batcher.End();
+        }
+    }
 }
-

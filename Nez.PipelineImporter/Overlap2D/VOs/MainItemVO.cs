@@ -59,7 +59,7 @@ namespace Nez.Overlap2D.Runtime
 			if( compositeItem != null )
 				return compositeItem.calculateLayerDepthForChild( zIndexMin, zIndexMax, this );
 
-			return Mathf.map01( (float)zIndex, zIndexMin, zIndexMax );
+			return Mathf.Map01( (float)zIndex, zIndexMin, zIndexMax );
 		}
 
 

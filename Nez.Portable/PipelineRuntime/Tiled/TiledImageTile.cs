@@ -1,19 +1,15 @@
-﻿using System;
-
-
-namespace Nez.Tiled
+﻿namespace Nez.Tiled
 {
-	public class TiledImageTile : TiledTile
-	{
-		public new TiledTilesetTile tilesetTile;
-		public string imageSource;
+    public class TiledImageTile : TiledTile
+    {
+        public string ImageSource;
+        public new TiledTilesetTile TilesetTile;
 
 
-		public TiledImageTile( int id, TiledTilesetTile tilesetTile, string imageSource ) : base( id )
-		{
-			this.tilesetTile = tilesetTile;
-			this.imageSource = imageSource;
-		}
-	}
+        public TiledImageTile(int id, TiledTilesetTile tilesetTile, string imageSource) : base(id)
+        {
+            this.TilesetTile = tilesetTile;
+            this.ImageSource = imageSource;
+        }
+    }
 }
-

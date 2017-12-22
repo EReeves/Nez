@@ -1,46 +1,45 @@
 ﻿using System.Globalization;
 
-
 namespace Nez.Svg
 {
-	public class SvgRotate : SvgTransform
-	{
-		public float angle;
-		public float centerX;
-		public float centerY;
+    public class SvgRotate : SvgTransform
+    {
+        public float Angle;
+        public float CenterX;
+        public float CenterY;
 
 
-		public SvgRotate( float angle )
-		{
-			this.angle = angle;
+        public SvgRotate(float angle)
+        {
+            this.Angle = angle;
 
-			calculateMatrix();
-		}
-
-
-		public SvgRotate( float angle, float centerX, float centerY )
-		{
-			this.angle = angle;
-			this.centerX = centerX;
-			this.centerY = centerY;
-
-			calculateMatrix();
-		}
+            CalculateMatrix();
+        }
 
 
-		void calculateMatrix()
-		{
-			var mat = Matrix2D.createTranslation( -centerX, -centerY );
-			mat.multiplyRotation( angle * Mathf.deg2Rad );
-			mat.multiplyTranslation( centerX, centerY );
+        public SvgRotate(float angle, float centerX, float centerY)
+        {
+            this.Angle = angle;
+            this.CenterX = centerX;
+            this.CenterY = centerY;
 
-			matrix = mat;
-		}
+            CalculateMatrix();
+        }
 
 
-		public override string ToString()
-		{
-			return string.Format( CultureInfo.InvariantCulture, "rotate({0}, {1}, {2})", angle, centerX, centerY );
-		}
-	}
+        private void CalculateMatrix()
+        {
+            var mat = Matrix2D.CreateTranslation(-CenterX, -CenterY);
+            mat.MultiplyRotation(Angle * Mathf.Deg2Rad);
+            mat.MultiplyTranslation(CenterX, CenterY);
+
+            Matrix = mat;
+        }
+
+
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "rotate({0}, {1}, {2})", Angle, CenterX, CenterY);
+        }
+    }
 }

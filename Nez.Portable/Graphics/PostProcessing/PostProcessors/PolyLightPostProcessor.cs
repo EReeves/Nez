@@ -1,189 +1,192 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Nez.Textures;
-
 
 namespace Nez
 {
 	/// <summary>
-	/// post processor to assist with making blended poly lights. Usage is as follows:
-	/// - render all sprite lights with a separate Renderer to a RenderTarget. The clear color of the Renderer is your ambient light color.
-	/// - render all normal objects in standard fashion
-	/// - add this PostProcessor with the RenderTarget from your lights Renderer
+	///     post processor to assist with making blended poly lights. Usage is as follows:
+	///     - render all sprite lights with a separate Renderer to a RenderTarget. The clear color of the Renderer is your
+	///     ambient light color.
+	///     - render all normal objects in standard fashion
+	///     - add this PostProcessor with the RenderTarget from your lights Renderer
 	/// </summary>
 	public class PolyLightPostProcessor : PostProcessor
-	{
-		/// <summary>
-		/// multiplicative factor for the blend of the base and light render targets. Defaults to 1.
-		/// </summary>
-		/// <value>The multiplicative factor.</value>
-		public float multiplicativeFactor
-		{
-			get { return _multiplicativeFactor; }
-			set { setMultiplicativeFactor( value ); }
-		}
+    {
+        private GaussianBlurEffect _blurEffect;
+        private bool _blurEnabled;
+        private float _blurRenderTargetScale = 0.5f;
+        private readonly RenderTexture _lightsRenderTexture;
 
-		/// <summary>
-		/// enables/disables a gaussian blur of the light texture before it is combined with the scene render
-		/// </summary>
-		/// <value><c>true</c> if enable blur; otherwise, <c>false</c>.</value>
-		public bool enableBlur
-		{
-			get { return _blurEnabled; }
-			set { setEnableBlur( value ); }
-		}
-
-		/// <summary>
-		/// scale of the internal RenderTargets used for the blur. For high resolution renders a half sized RT is usually more than enough.
-		/// Defaults to 0.5.
-		/// </summary>
-		public float blurRenderTargetScale
-		{
-			get { return _blurRenderTargetScale; }
-			set { setBlurRenderTargetScale( value ); }
-		}
-
-		/// <summary>
-		/// amount to blur. A range of 0.5 - 6 works well. Defaults to 2.
-		/// </summary>
-		/// <value>The blur amount.</value>
-		public float blurAmount
-		{
-			get { return _blurEffect != null ? _blurEffect.blurAmount : -1; }
-			set
-			{
-				if( _blurEffect != null )
-					_blurEffect.blurAmount = value;
-			}
-		}
-
-		float _multiplicativeFactor = 1f;
-		bool _blurEnabled;
-		float _blurRenderTargetScale = 0.5f;
-
-		GaussianBlurEffect _blurEffect;
-		RenderTexture _lightsRenderTexture;
+        private float _multiplicativeFactor = 1f;
 
 
-		public PolyLightPostProcessor( int executionOrder, RenderTexture lightsRenderTexture ) : base( executionOrder )
-		{
-			_lightsRenderTexture = lightsRenderTexture;
-		}
+        public PolyLightPostProcessor(int executionOrder, RenderTexture lightsRenderTexture) : base(executionOrder)
+        {
+            _lightsRenderTexture = lightsRenderTexture;
+        }
+
+	    /// <summary>
+	    ///     multiplicative factor for the blend of the base and light render targets. Defaults to 1.
+	    /// </summary>
+	    /// <value>The multiplicative factor.</value>
+	    public float MultiplicativeFactor
+        {
+            get => _multiplicativeFactor;
+            set => SetMultiplicativeFactor(value);
+        }
+
+	    /// <summary>
+	    ///     enables/disables a gaussian blur of the light texture before it is combined with the scene render
+	    /// </summary>
+	    /// <value><c>true</c> if enable blur; otherwise, <c>false</c>.</value>
+	    public bool EnableBlur
+        {
+            get => _blurEnabled;
+            set => SetEnableBlur(value);
+        }
+
+	    /// <summary>
+	    ///     scale of the internal RenderTargets used for the blur. For high resolution renders a half sized RT is usually more
+	    ///     than enough.
+	    ///     Defaults to 0.5.
+	    /// </summary>
+	    public float BlurRenderTargetScale
+        {
+            get => _blurRenderTargetScale;
+            set => SetBlurRenderTargetScale(value);
+        }
+
+	    /// <summary>
+	    ///     amount to blur. A range of 0.5 - 6 works well. Defaults to 2.
+	    /// </summary>
+	    /// <value>The blur amount.</value>
+	    public float BlurAmount
+        {
+            get => _blurEffect != null ? _blurEffect.BlurAmount : -1;
+            set
+            {
+                if (_blurEffect != null)
+                    _blurEffect.BlurAmount = value;
+            }
+        }
 
 
-		/// <summary>
-		/// updates the GaussianBlurEffect with the new vertical and horizontal deltas after a back buffer size or blurRenderTargetScale change
-		/// </summary>
-		void updateBlurEffectDeltas()
-		{
-			var sceneRenderTargetSize = scene.sceneRenderTargetSize;
-			_blurEffect.horizontalBlurDelta = 1f / ( sceneRenderTargetSize.X * _blurRenderTargetScale );
-			_blurEffect.verticalBlurDelta = 1f / ( sceneRenderTargetSize.Y * _blurRenderTargetScale );
-		}
+	    /// <summary>
+	    ///     updates the GaussianBlurEffect with the new vertical and horizontal deltas after a back buffer size or
+	    ///     blurRenderTargetScale change
+	    /// </summary>
+	    private void UpdateBlurEffectDeltas()
+        {
+            var sceneRenderTargetSize = Scene.SceneRenderTargetSize;
+            _blurEffect.HorizontalBlurDelta = 1f / (sceneRenderTargetSize.X * _blurRenderTargetScale);
+            _blurEffect.VerticalBlurDelta = 1f / (sceneRenderTargetSize.Y * _blurRenderTargetScale);
+        }
 
 
-		#region chainable setters
+        public override void OnAddedToScene()
+        {
+            Effect = Scene.Content.LoadEffect<Effect>("spriteLightMultiply", EffectResource.SpriteLightMultiplyBytes);
+            Effect.Parameters["_lightTexture"].SetValue(_lightsRenderTexture);
+            Effect.Parameters["_multiplicativeFactor"].SetValue(_multiplicativeFactor);
 
-		public PolyLightPostProcessor setMultiplicativeFactor( float multiplicativeFactor )
-		{
-			_multiplicativeFactor = multiplicativeFactor;
-			if( effect != null )
-				effect.Parameters["_multiplicativeFactor"].SetValue( multiplicativeFactor );
-			
-			return this;
-		}
-
-
-		public PolyLightPostProcessor setEnableBlur( bool enableBlur )
-		{
-			if( enableBlur != _blurEnabled )
-			{
-				_blurEnabled = enableBlur;
-
-				if( _blurEnabled && _blurEffect == null && scene != null )
-				{
-					_blurEffect = scene.content.loadNezEffect<GaussianBlurEffect>();
-					if( scene.sceneRenderTarget != null )
-						updateBlurEffectDeltas();
-				}
-			}
-
-			return this;
-		}
+            if (_blurEnabled)
+                _blurEffect = Scene.Content.LoadNezEffect<GaussianBlurEffect>();
+        }
 
 
-		public PolyLightPostProcessor setBlurRenderTargetScale( float blurRenderTargetScale )
-		{
-			if( _blurRenderTargetScale != blurRenderTargetScale )
-			{
-				_blurRenderTargetScale = blurRenderTargetScale;
-				if( _blurEffect != null && scene.sceneRenderTarget != null )
-					updateBlurEffectDeltas();
-			}
-
-			return this;
-		}
-
-
-		public PolyLightPostProcessor setBlurAmount( float blurAmount )
-		{
-			if( _blurEffect != null )
-				_blurEffect.blurAmount = blurAmount;
-
-			return this;
-		}
-
-		#endregion
+        public override void Process(RenderTarget2D source, RenderTarget2D destination)
+        {
+            if (_blurEnabled)
+            {
+                // aquire a temporary rendertarget for the processing. It can be scaled via renderTargetScale in order to minimize fillrate costs. Reducing
+                // the resolution in this way doesn't hurt quality, because we are going to be blurring the images in any case.
+                var sceneRenderTargetSize = Scene.SceneRenderTargetSize;
+                var tempRenderTarget = RenderTarget.GetTemporary(
+                    (int) (sceneRenderTargetSize.X * _blurRenderTargetScale),
+                    (int) (sceneRenderTargetSize.Y * _blurRenderTargetScale), DepthFormat.None);
 
 
-		public override void onAddedToScene()
-		{
-			effect = scene.content.loadEffect<Effect>( "spriteLightMultiply", EffectResource.spriteLightMultiplyBytes );
-			effect.Parameters["_lightTexture"].SetValue( _lightsRenderTexture );
-			effect.Parameters["_multiplicativeFactor"].SetValue( _multiplicativeFactor );
+                // Pass 1: draw from _lightsRenderTexture into tempRenderTarget, applying a horizontal gaussian blur filter
+                _blurEffect.PrepareForHorizontalBlur();
+                DrawFullscreenQuad(_lightsRenderTexture, tempRenderTarget, _blurEffect);
 
-			if( _blurEnabled )
-				_blurEffect = scene.content.loadNezEffect<GaussianBlurEffect>();
-		}
+                // Pass 2: draw from tempRenderTarget back into _lightsRenderTexture, applying a vertical gaussian blur filter
+                _blurEffect.PrepareForVerticalBlur();
+                DrawFullscreenQuad(tempRenderTarget, _lightsRenderTexture, _blurEffect);
 
+                RenderTarget.ReleaseTemporary(tempRenderTarget);
+            }
 
-		public override void process( RenderTarget2D source, RenderTarget2D destination )
-		{
-			if( _blurEnabled )
-			{
-				// aquire a temporary rendertarget for the processing. It can be scaled via renderTargetScale in order to minimize fillrate costs. Reducing
-				// the resolution in this way doesn't hurt quality, because we are going to be blurring the images in any case.
-				var sceneRenderTargetSize = scene.sceneRenderTargetSize;
-				var tempRenderTarget = RenderTarget.getTemporary( (int)( sceneRenderTargetSize.X * _blurRenderTargetScale ), (int)( sceneRenderTargetSize.Y * _blurRenderTargetScale ), DepthFormat.None );
+            GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, destination);
+            Graphics.Instance.Batcher.Begin(Effect);
+            Graphics.Instance.Batcher.Draw(source, new Rectangle(0, 0, destination.Width, destination.Height),
+                Color.White);
+            Graphics.Instance.Batcher.End();
+        }
 
 
-				// Pass 1: draw from _lightsRenderTexture into tempRenderTarget, applying a horizontal gaussian blur filter
-				_blurEffect.prepareForHorizontalBlur();
-				drawFullscreenQuad( _lightsRenderTexture, tempRenderTarget, _blurEffect );
+        public override void OnSceneBackBufferSizeChanged(int newWidth, int newHeight)
+        {
+            // when the RenderTexture changes we have to reset the shader param since the underlying RenderTarget will be different
+            Effect.Parameters["_lightTexture"].SetValue(_lightsRenderTexture);
 
-				// Pass 2: draw from tempRenderTarget back into _lightsRenderTexture, applying a vertical gaussian blur filter
-				_blurEffect.prepareForVerticalBlur();
-				drawFullscreenQuad( tempRenderTarget, _lightsRenderTexture, _blurEffect );
-
-				RenderTarget.releaseTemporary( tempRenderTarget );
-			}
-			
-			Core.graphicsDevice.setRenderTarget( destination );
-			Graphics.instance.batcher.begin( effect );
-			Graphics.instance.batcher.draw( source, new Rectangle( 0, 0, destination.Width, destination.Height ), Color.White );
-			Graphics.instance.batcher.end();
-		}
+            if (_blurEnabled)
+                UpdateBlurEffectDeltas();
+        }
 
 
-		public override void onSceneBackBufferSizeChanged( int newWidth, int newHeight )
-		{
-			// when the RenderTexture changes we have to reset the shader param since the underlying RenderTarget will be different
-			effect.Parameters["_lightTexture"].SetValue( _lightsRenderTexture );
+        #region chainable setters
 
-			if( _blurEnabled )
-				updateBlurEffectDeltas();
-		}
+        public PolyLightPostProcessor SetMultiplicativeFactor(float multiplicativeFactor)
+        {
+            _multiplicativeFactor = multiplicativeFactor;
+            if (Effect != null)
+                Effect.Parameters["_multiplicativeFactor"].SetValue(multiplicativeFactor);
 
-	}
+            return this;
+        }
+
+
+        public PolyLightPostProcessor SetEnableBlur(bool enableBlur)
+        {
+            if (enableBlur != _blurEnabled)
+            {
+                _blurEnabled = enableBlur;
+
+                if (_blurEnabled && _blurEffect == null && Scene != null)
+                {
+                    _blurEffect = Scene.Content.LoadNezEffect<GaussianBlurEffect>();
+                    if (Scene.SceneRenderTarget != null)
+                        UpdateBlurEffectDeltas();
+                }
+            }
+
+            return this;
+        }
+
+
+        public PolyLightPostProcessor SetBlurRenderTargetScale(float blurRenderTargetScale)
+        {
+            if (_blurRenderTargetScale != blurRenderTargetScale)
+            {
+                _blurRenderTargetScale = blurRenderTargetScale;
+                if (_blurEffect != null && Scene.SceneRenderTarget != null)
+                    UpdateBlurEffectDeltas();
+            }
+
+            return this;
+        }
+
+
+        public PolyLightPostProcessor SetBlurAmount(float blurAmount)
+        {
+            if (_blurEffect != null)
+                _blurEffect.BlurAmount = blurAmount;
+
+            return this;
+        }
+
+        #endregion
+    }
 }
-

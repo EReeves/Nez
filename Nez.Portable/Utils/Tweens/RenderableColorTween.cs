@@ -1,41 +1,39 @@
 ﻿using Microsoft.Xna.Framework;
 
-
 namespace Nez.Tweens
 {
-	public class RenderableColorTween : ColorTween, ITweenTarget<Color>
-	{
-		RenderableComponent _renderable;
+    public class RenderableColorTween : ColorTween, ITweenTarget<Color>
+    {
+        private RenderableComponent _renderable;
 
 
-		public void setTweenedValue( Color value )
-		{
-			_renderable.color = value;
-		}
+        public void SetTweenedValue(Color value)
+        {
+            _renderable.Color = value;
+        }
 
 
-		public Color getTweenedValue()
-		{
-			return _renderable.color;
-		}
+        public Color GetTweenedValue()
+        {
+            return _renderable.Color;
+        }
 
 
-		public new object getTargetObject()
-		{
-			return _renderable;
-		}
+        public new object GetTargetObject()
+        {
+            return _renderable;
+        }
 
 
-		protected override void updateValue()
-		{
-			setTweenedValue( Lerps.ease( _easeType, _fromValue, _toValue, _elapsedTime, _duration ) );
-		}
+        protected override void UpdateValue()
+        {
+            SetTweenedValue(Lerps.Ease(EaseType, FromValue, ToValue, ElapsedTime, Duration));
+        }
 
 
-		public void setTarget( RenderableComponent renderable )
-		{
-			_renderable = renderable;
-		}
-
-	}
+        public void SetTarget(RenderableComponent renderable)
+        {
+            _renderable = renderable;
+        }
+    }
 }

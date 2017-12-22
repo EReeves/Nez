@@ -1,29 +1,28 @@
 ﻿namespace Nez.Spatial
 {
 	/// <summary>
-	/// Used internally to attach an Owner to each object stored in the QuadTree
+	///     Used internally to attach an Owner to each object stored in the QuadTree
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	class QuadTreeObject<T> where T : IQuadTreeStorable
-	{
-		/// <summary>
-		/// The wrapped data value
-		/// </summary>
-		public T data;
+	internal class QuadTreeObject<T> where T : IQuadTreeStorable
+    {
+	    /// <summary>
+	    ///     The wrapped data value
+	    /// </summary>
+	    public T Data;
 
-		/// <summary>
-		/// The QuadTreeNode that owns this object
-		/// </summary>
-		internal QuadTreeNode<T> owner;
+	    /// <summary>
+	    ///     The QuadTreeNode that owns this object
+	    /// </summary>
+	    internal QuadTreeNode<T> Owner;
 
-		/// <summary>
-		/// Wraps the data value
-		/// </summary>
-		/// <param name="data">The data value to wrap</param>
-		public QuadTreeObject( T data )
-		{
-			this.data = data;
-		}
-	}
+	    /// <summary>
+	    ///     Wraps the data value
+	    /// </summary>
+	    /// <param name="data">The data value to wrap</param>
+	    public QuadTreeObject(T data)
+        {
+            this.Data = data;
+        }
+    }
 }
-

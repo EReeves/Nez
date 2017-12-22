@@ -1,14 +1,10 @@
-﻿using System;
-
-
-namespace Nez.AI.UtilityAI
+﻿namespace Nez.AI.UtilityAI
 {
 	/// <summary>
-	/// Appraisal for use with an ActionWithOptions
+	///     Appraisal for use with an ActionWithOptions
 	/// </summary>
-	public interface IActionOptionAppraisal<T,U>
-	{
-		float getScore( T context, U option );
-	}
+	public interface IActionOptionAppraisal<T, TU>
+    {
+        float GetScore(T context, TU option);
+    }
 }
-

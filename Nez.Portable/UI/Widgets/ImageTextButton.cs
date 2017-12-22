@@ -1,187 +1,190 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using Nez.BitmapFonts;
-using Microsoft.Xna.Framework;
-
 
 namespace Nez.UI
 {
-	public class ImageTextButton : Button
-	{
-		Image image;
-		Label label;
-		ImageTextButtonStyle style;
+    public class ImageTextButton : Button
+    {
+        private readonly Image _image;
+        private readonly Label _label;
+        private readonly ImageTextButtonStyle _style;
 
 
-		public ImageTextButton( string text, ImageTextButtonStyle style ) : base( style )
-		{
-			this.style = style;
+        public ImageTextButton(string text, ImageTextButtonStyle style) : base(style)
+        {
+            this._style = style;
 
-			defaults().space( 3 );
+            Defaults().Space(3);
 
-			image = new Image();
-			image.setScaling( Scaling.Fit );
+            _image = new Image();
+            _image.SetScaling(Scaling.Fit);
 
-			label = new Label( text, style.font, style.fontColor );
-			label.setAlignment( Align.center );
+            _label = new Label(text, style.Font, style.FontColor);
+            _label.SetAlignment(UI.Align.Center);
 
-			add( image );
-			add( label );
+            Add(_image);
+            Add(_label);
 
-			setStyle( style );
+            SetStyle(style);
 
-			setSize( preferredWidth, preferredHeight );
-		}
-
-
-		public ImageTextButton( string text, Skin skin, string styleName = null ) : this( text, skin.get<ImageTextButtonStyle>( styleName ) )
-		{}
+            SetSize(PreferredWidth, PreferredHeight);
+        }
 
 
-		public void setStyle( ImageTextButtonStyle style )
-		{
-			Assert.isTrue( style is ImageTextButtonStyle, "style must be a ImageTextButtonStyle" );
-
-			base.setStyle( style );
-
-			if( image != null )
-				updateImage();
-			
-			if( label != null )
-			{
-				var labelStyle = label.getStyle();
-				labelStyle.font = style.font;
-				labelStyle.fontColor = style.fontColor;
-				label.setStyle( labelStyle );
-			}
-		}
+        public ImageTextButton(string text, Skin skin, string styleName = null) : this(text,
+            skin.Get<ImageTextButtonStyle>(styleName))
+        {
+        }
 
 
-		public new ImageTextButtonStyle getStyle()
-		{
-			return style;
-		}
+        public void SetStyle(ImageTextButtonStyle style)
+        {
+            Assert.IsTrue(style is ImageTextButtonStyle, "style must be a ImageTextButtonStyle");
+
+            base.SetStyle(style);
+
+            if (_image != null)
+                UpdateImage();
+
+            if (_label != null)
+            {
+                var labelStyle = _label.GetStyle();
+                labelStyle.Font = style.Font;
+                labelStyle.FontColor = style.FontColor;
+                _label.SetStyle(labelStyle);
+            }
+        }
 
 
-		private void updateImage()
-		{
-			IDrawable drawable = null;
-			if( _isDisabled && style.imageDisabled != null )
-				drawable = style.imageDisabled;
-			else if( _mouseDown && style.imageDown != null )
-				drawable = style.imageDown;
-			else if( isChecked && style.imageChecked != null )
-				drawable = ( style.imageCheckedOver != null && _mouseOver ) ? style.imageCheckedOver : style.imageChecked;
-			else if( _mouseOver && style.imageOver != null )
-				drawable = style.imageOver;
-			else if( style.imageUp != null ) //
-				drawable = style.imageUp;
-			image.setDrawable( drawable );
-		}
+        public new ImageTextButtonStyle GetStyle()
+        {
+            return _style;
+        }
 
 
-		public override void draw( Graphics graphics, float parentAlpha )
-		{
-			updateImage();
-
-			Color? fontColor;
-			if( _isDisabled && style.disabledFontColor.HasValue )
-				fontColor = style.disabledFontColor;
-			else if( _mouseDown && style.downFontColor.HasValue )
-				fontColor = style.downFontColor;
-			else if( isChecked && style.checkedFontColor.HasValue )
-				fontColor = ( _mouseOver && style.checkedOverFontColor.HasValue ) ? style.checkedOverFontColor : style.checkedFontColor;
-			else if( _mouseOver && style.overFontColor.HasValue )
-				fontColor = style.overFontColor;
-			else
-				fontColor = style.fontColor;
-			
-			if( fontColor.HasValue )
-				label.getStyle().fontColor = fontColor.Value;
-			
-			base.draw( graphics, parentAlpha );
-		}
+        private void UpdateImage()
+        {
+            IDrawable drawable = null;
+            if (isDisabled && _style.ImageDisabled != null)
+                drawable = _style.ImageDisabled;
+            else if (MouseDown && _style.ImageDown != null)
+                drawable = _style.ImageDown;
+            else if (isChecked && _style.ImageChecked != null)
+                drawable = _style.ImageCheckedOver != null && MouseOver ? _style.ImageCheckedOver : _style.ImageChecked;
+            else if (MouseOver && _style.ImageOver != null)
+                drawable = _style.ImageOver;
+            else if (_style.ImageUp != null) //
+                drawable = _style.ImageUp;
+            _image.SetDrawable(drawable);
+        }
 
 
-		public Image getImage()
-		{
-			return image;
-		}
+        public override void Draw(Graphics graphics, float parentAlpha)
+        {
+            UpdateImage();
+
+            Color? fontColor;
+            if (isDisabled && _style.DisabledFontColor.HasValue)
+                fontColor = _style.DisabledFontColor;
+            else if (MouseDown && _style.DownFontColor.HasValue)
+                fontColor = _style.DownFontColor;
+            else if (isChecked && _style.CheckedFontColor.HasValue)
+                fontColor = MouseOver && _style.CheckedOverFontColor.HasValue
+                    ? _style.CheckedOverFontColor
+                    : _style.CheckedFontColor;
+            else if (MouseOver && _style.OverFontColor.HasValue)
+                fontColor = _style.OverFontColor;
+            else
+                fontColor = _style.FontColor;
+
+            if (fontColor.HasValue)
+                _label.GetStyle().FontColor = fontColor.Value;
+
+            base.Draw(graphics, parentAlpha);
+        }
 
 
-		public Cell getImageCell()
-		{
-			return getCell( image );
-		}
+        public Image GetImage()
+        {
+            return _image;
+        }
 
 
-		public Label getLabel()
-		{
-			return label;
-		}
+        public Cell GetImageCell()
+        {
+            return GetCell(_image);
+        }
 
 
-		public Cell getLabelCell()
-		{
-			return getCell( label );
-		}
+        public Label GetLabel()
+        {
+            return _label;
+        }
 
 
-		public void setText( string text )
-		{
-			label.setText( text );
-		}
+        public Cell GetLabelCell()
+        {
+            return GetCell(_label);
+        }
 
 
-		public string getText()
-		{
-			return label.getText();
-		}
-	}
+        public void SetText(string text)
+        {
+            _label.SetText(text);
+        }
 
 
-	public class ImageTextButtonStyle : TextButtonStyle
-	{
-		/** Optional. */
-		public IDrawable imageUp, imageDown, imageOver, imageChecked, imageCheckedOver, imageDisabled;
+        public string GetText()
+        {
+            return _label.GetText();
+        }
+    }
 
 
-		public ImageTextButtonStyle()
-		{
-			font = Graphics.instance.bitmapFont;
-		}
+    public class ImageTextButtonStyle : TextButtonStyle
+    {
+        /** Optional. */
+        public IDrawable ImageUp, ImageDown, ImageOver, ImageChecked, ImageCheckedOver, ImageDisabled;
 
 
-		public ImageTextButtonStyle( IDrawable up, IDrawable down, IDrawable over, BitmapFont font ) : base( up, down, over, font )
-		{
-		}
+        public ImageTextButtonStyle()
+        {
+            Font = Graphics.Instance.BitmapFont;
+        }
 
 
-		public new ImageTextButtonStyle clone()
-		{
-			return new ImageTextButtonStyle {
-				up = up,
-				down = down,
-				over = over,
-				checkked = checkked,
-				checkedOver = checkedOver,
-				disabled = disabled,
-					
-				font = font,
-				fontColor = fontColor,
-				downFontColor = downFontColor,
-				overFontColor = overFontColor,
-				checkedFontColor = checkedFontColor,
-				checkedOverFontColor = checkedOverFontColor,
-				disabledFontColor = disabledFontColor,
+        public ImageTextButtonStyle(IDrawable up, IDrawable down, IDrawable over, BitmapFont font) : base(up, down,
+            over, font)
+        {
+        }
 
-				imageUp = imageUp,
-				imageDown = imageDown,
-				imageOver = imageOver,
-				imageChecked = imageChecked,
-				imageCheckedOver = imageCheckedOver,
-				imageDisabled = imageDisabled
-			};
-		}
-	}
+
+        public new ImageTextButtonStyle Clone()
+        {
+            return new ImageTextButtonStyle
+            {
+                Up = Up,
+                Down = Down,
+                Over = Over,
+                Checkked = Checkked,
+                CheckedOver = CheckedOver,
+                Disabled = Disabled,
+
+                Font = Font,
+                FontColor = FontColor,
+                DownFontColor = DownFontColor,
+                OverFontColor = OverFontColor,
+                CheckedFontColor = CheckedFontColor,
+                CheckedOverFontColor = CheckedOverFontColor,
+                DisabledFontColor = DisabledFontColor,
+
+                ImageUp = ImageUp,
+                ImageDown = ImageDown,
+                ImageOver = ImageOver,
+                ImageChecked = ImageChecked,
+                ImageCheckedOver = ImageCheckedOver,
+                ImageDisabled = ImageDisabled
+            };
+        }
+    }
 }
-

@@ -1,18 +1,16 @@
 ﻿namespace Nez
 {
-	public class PaletteCyclerMaterial : Material<PaletteCyclerEffect>
-	{
-		public PaletteCyclerMaterial()
-		{
-			effect = new PaletteCyclerEffect();
-		}
+    public class PaletteCyclerMaterial : Material<PaletteCyclerEffect>
+    {
+        public PaletteCyclerMaterial()
+        {
+            Effect = new PaletteCyclerEffect();
+        }
 
 
-		public override void onPreRender( Camera camera )
-		{
-			effect.updateTime();
-		}
-
-	}
+        public override void OnPreRender(Camera camera)
+        {
+            Effect.UpdateTime();
+        }
+    }
 }
-

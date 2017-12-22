@@ -1,70 +1,67 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-
 namespace Nez
 {
-	public static class ComponentExt
-	{
-		#region Entity Component management
-		
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static T addComponent<T>( this Component self, T component ) where T : Component
-		{
-			return self.entity.addComponent( component );
-		}
+    public static class ComponentExt
+    {
+        #region Entity Component management
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T AddComponent<T>(this Component self, T component) where T : Component
+        {
+            return self.Entity.AddComponent(component);
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static T addComponent<T>( this Component self ) where T : Component, new()
-		{
-			return self.entity.addComponent<T>();
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T AddComponent<T>(this Component self) where T : Component, new()
+        {
+            return self.Entity.AddComponent<T>();
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static T getComponent<T>( this Component self ) where T : Component
-		{
-			return self.entity.getComponent<T>();
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetComponent<T>(this Component self) where T : Component
+        {
+            return self.Entity.GetComponent<T>();
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static void getComponents<T>( this Component self, List<T> componentList ) where T : class
-		{
-			self.entity.getComponents<T>( componentList );
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void GetComponents<T>(this Component self, List<T> componentList) where T : class
+        {
+            self.Entity.GetComponents(componentList);
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static List<T> getComponents<T>( this Component self ) where T : Component
-		{
-			return self.entity.getComponents<T>();
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<T> GetComponents<T>(this Component self) where T : Component
+        {
+            return self.Entity.GetComponents<T>();
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static bool removeComponent<T>( this Component self ) where T : Component
-		{
-			return self.entity.removeComponent<T>();
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool RemoveComponent<T>(this Component self) where T : Component
+        {
+            return self.Entity.RemoveComponent<T>();
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static void removeComponent( this Component self, Component component )
-		{
-			self.entity.removeComponent( component );
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void RemoveComponent(this Component self, Component component)
+        {
+            self.Entity.RemoveComponent(component);
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static void removeComponent( this Component self )
-		{
-			self.entity.removeComponent( self );
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void RemoveComponent(this Component self)
+        {
+            self.Entity.RemoveComponent(self);
+        }
 
-		#endregion
-
-	}
+        #endregion
+    }
 }
-

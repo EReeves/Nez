@@ -1,75 +1,75 @@
-﻿
-
-namespace Nez.Tweens
+﻿namespace Nez.Tweens
 {
 	/// <summary>
-	/// AbstractTweenable serves as a base for any custom classes you might want to make that can be ticked. These differ from
-	/// ITweens in that they dont implement the ITweenT interface. What does that mean? It just says that an AbstractTweenable
-	/// is not just moving a value from start to finish. It can do anything at all that requires a tick each frame.
-	/// 
-	/// The TweenChain is one example of AbstractTweenable for reference.
+	///     AbstractTweenable serves as a base for any custom classes you might want to make that can be ticked. These differ
+	///     from
+	///     ITweens in that they dont implement the ITweenT interface. What does that mean? It just says that an
+	///     AbstractTweenable
+	///     is not just moving a value from start to finish. It can do anything at all that requires a tick each frame.
+	///     The TweenChain is one example of AbstractTweenable for reference.
 	/// </summary>
 	public abstract class AbstractTweenable : ITweenable
-	{
-		protected bool _isPaused;
+    {
+	    /// <summary>
+	    ///     AbstractTweenable are often kept around after they complete. This flag lets them know internally if they are
+	    ///     currently
+	    ///     being tweened by TweenManager so that they can re-add themselves if necessary.
+	    /// </summary>
+	    protected bool IsCurrentlyManagedByTweenManager;
 
-		/// <summary>
-		/// AbstractTweenable are often kept around after they complete. This flag lets them know internally if they are currently
-		/// being tweened by TweenManager so that they can re-add themselves if necessary.
-		/// </summary>
-		protected bool _isCurrentlyManagedByTweenManager;
-
-
-		#region ITweenable
-
-		public abstract bool tick();
+        protected bool IsPaused;
 
 
-		public virtual void recycleSelf()
-		{}
+        #region ITweenable
+
+        public abstract bool Tick();
 
 
-		public bool isRunning()
-		{
-			return _isCurrentlyManagedByTweenManager && !_isPaused;
-		}
+        public virtual void RecycleSelf()
+        {
+        }
 
 
-		public virtual void start()
-		{
-			// dont add ourself twice!
-			if( _isCurrentlyManagedByTweenManager )
-			{
-				_isPaused = false;
-				return;
-			}
-			
-			TweenManager.addTween( this );
-			_isCurrentlyManagedByTweenManager = true;
-			_isPaused = false;
-		}
+        public bool IsRunning()
+        {
+            return IsCurrentlyManagedByTweenManager && !IsPaused;
+        }
 
 
-		public void pause()
-		{
-			_isPaused = true;
-		}
+        public virtual void Start()
+        {
+            // dont add ourself twice!
+            if (IsCurrentlyManagedByTweenManager)
+            {
+                IsPaused = false;
+                return;
+            }
+
+            TweenManager.AddTween(this);
+            IsCurrentlyManagedByTweenManager = true;
+            IsPaused = false;
+        }
 
 
-		public void resume()
-		{
-			_isPaused = false;
-		}
+        public void Pause()
+        {
+            IsPaused = true;
+        }
 
 
-		public virtual void stop( bool bringToCompletion = false )
-		{
-			TweenManager.removeTween( this );
-			_isCurrentlyManagedByTweenManager = false;
-			_isPaused = true;
-		}
+        public void Resume()
+        {
+            IsPaused = false;
+        }
 
-		#endregion
 
-	}
+        public virtual void Stop(bool bringToCompletion = false)
+        {
+            TweenManager.RemoveTween(this);
+            IsCurrentlyManagedByTweenManager = false;
+            IsPaused = true;
+        }
+
+        #endregion
+    }
 }

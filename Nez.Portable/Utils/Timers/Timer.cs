@@ -1,76 +1,73 @@
 ﻿using System;
 
-
 namespace Nez.Timers
 {
 	/// <summary>
-	/// private class hiding the implementation of ITimer
+	///     private class hiding the implementation of ITimer
 	/// </summary>
-	class Timer : ITimer
-	{
-		public object context { get; set; }
+	internal class Timer : ITimer
+    {
+        private float _elapsedTime;
+        private bool _isDone;
+        private Action<ITimer> _onTime;
+        private bool _repeats;
 
-		float _timeInSeconds;
-		bool _repeats;
-		Action<ITimer> _onTime;
-		bool _isDone;
-		float _elapsedTime;
-
-
-		public void stop()
-		{
-			_isDone = true;
-		}
+        private float _timeInSeconds;
+        public object Context { get; set; }
 
 
-		public void reset()
-		{
-			_elapsedTime = 0f;
-		}
+        public void Stop()
+        {
+            _isDone = true;
+        }
 
 
-		public T getContext<T>()
-		{
-			return (T)context;
-		}
+        public void Reset()
+        {
+            _elapsedTime = 0f;
+        }
 
 
-		internal bool tick()
-		{
-			// if stop was called before the tick then isDone will be true and we should not tick again no matter what
-			if( !_isDone && _elapsedTime > _timeInSeconds )
-			{
-				_elapsedTime -= _timeInSeconds;
-				_onTime( this );
-
-				if( !_isDone && !_repeats )
-					_isDone = true;
-			}
-
-			_elapsedTime += Time.deltaTime;
-
-			return _isDone;
-		}
+        public T GetContext<T>()
+        {
+            return (T) Context;
+        }
 
 
-		internal void initialize( float timeInSeconds, bool repeats, object context, Action<ITimer> onTime )
-		{
-			_timeInSeconds = timeInSeconds;
-			_repeats = repeats;
-			this.context = context;
-			_onTime = onTime;
-		}
+        internal bool Tick()
+        {
+            // if stop was called before the tick then isDone will be true and we should not tick again no matter what
+            if (!_isDone && _elapsedTime > _timeInSeconds)
+            {
+                _elapsedTime -= _timeInSeconds;
+                _onTime(this);
+
+                if (!_isDone && !_repeats)
+                    _isDone = true;
+            }
+
+            _elapsedTime += Time.DeltaTime;
+
+            return _isDone;
+        }
 
 
-		/// <summary>
-		/// nulls out the object references so the GC can pick them up if needed
-		/// </summary>
-		internal void unload()
-		{
-			context = null;
-			_onTime = null;
-		}
+        internal void Initialize(float timeInSeconds, bool repeats, object context, Action<ITimer> onTime)
+        {
+            _timeInSeconds = timeInSeconds;
+            _repeats = repeats;
+            this.Context = context;
+            _onTime = onTime;
+        }
 
-	}
+
+	    /// <summary>
+	    ///     nulls out the object references so the GC can pick them up if needed
+	    /// </summary>
+	    internal void Unload()
+        {
+            Context = null;
+            _onTime = null;
+        }
+    }
 }
-

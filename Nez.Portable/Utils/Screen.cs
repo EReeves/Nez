@@ -1,135 +1,124 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace Nez
 {
-	public static class Screen
-	{
-		static internal GraphicsDeviceManager _graphicsManager;
+    public static class Screen
+    {
+        internal static GraphicsDeviceManager GraphicsManager;
 
 
-		internal static void initialize( GraphicsDeviceManager graphicsManager )
-		{
-			_graphicsManager = graphicsManager;
-		}
+	    /// <summary>
+	    ///     width of the GraphicsDevice back buffer
+	    /// </summary>
+	    /// <value>The width.</value>
+	    public static int Width
+        {
+            get => GraphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth;
+            set => GraphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth = value;
+        }
 
 
-		/// <summary>
-		/// width of the GraphicsDevice back buffer
-		/// </summary>
-		/// <value>The width.</value>
-		public static int width
-		{
-			get { return _graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth; }
-			set { _graphicsManager.GraphicsDevice.PresentationParameters.BackBufferWidth = value; }
-		}
+	    /// <summary>
+	    ///     height of the GraphicsDevice back buffer
+	    /// </summary>
+	    /// <value>The height.</value>
+	    public static int Height
+        {
+            get => GraphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight;
+            set => GraphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight = value;
+        }
 
 
-		/// <summary>
-		/// height of the GraphicsDevice back buffer
-		/// </summary>
-		/// <value>The height.</value>
-		public static int height
-		{
-			get { return _graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight; }
-			set { _graphicsManager.GraphicsDevice.PresentationParameters.BackBufferHeight = value; }
-		}
+	    /// <summary>
+	    ///     gets the Screen's center
+	    /// </summary>
+	    /// <value>The center.</value>
+	    public static Vector2 Center => new Vector2(Width / 2, Height / 2);
 
 
-		/// <summary>
-		/// gets the Screen's center
-		/// </summary>
-		/// <value>The center.</value>
-		public static Vector2 center { get { return new Vector2( width / 2, height / 2 ); } }
+        public static int PreferredBackBufferWidth
+        {
+            get => GraphicsManager.PreferredBackBufferWidth;
+            set => GraphicsManager.PreferredBackBufferWidth = value;
+        }
 
 
-		public static int preferredBackBufferWidth
-		{
-			get { return _graphicsManager.PreferredBackBufferWidth; }
-			set { _graphicsManager.PreferredBackBufferWidth = value; }
-		}
+        public static int PreferredBackBufferHeight
+        {
+            get => GraphicsManager.PreferredBackBufferHeight;
+            set => GraphicsManager.PreferredBackBufferHeight = value;
+        }
 
 
-		public static int preferredBackBufferHeight
-		{
-			get { return _graphicsManager.PreferredBackBufferHeight; }
-			set { _graphicsManager.PreferredBackBufferHeight = value; }
-		}
+        public static int MonitorWidth => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 
 
-		public static int monitorWidth
-		{
-			get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width; }
-		}
+        public static int MonitorHeight => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
 
-		public static int monitorHeight
-		{
-			get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; }
-		}
+        public static SurfaceFormat BackBufferFormat =>
+            GraphicsManager.GraphicsDevice.PresentationParameters.BackBufferFormat;
 
 
-		public static SurfaceFormat backBufferFormat
-		{
-			get { return _graphicsManager.GraphicsDevice.PresentationParameters.BackBufferFormat; }
-		}
+        public static SurfaceFormat PreferredBackBufferFormat
+        {
+            get => GraphicsManager.PreferredBackBufferFormat;
+            set => GraphicsManager.PreferredBackBufferFormat = value;
+        }
 
 
-		public static SurfaceFormat preferredBackBufferFormat
-		{
-			get { return _graphicsManager.PreferredBackBufferFormat; }
-			set { _graphicsManager.PreferredBackBufferFormat = value; }
-		}
+        public static bool SynchronizeWithVerticalRetrace
+        {
+            get => GraphicsManager.SynchronizeWithVerticalRetrace;
+            set => GraphicsManager.SynchronizeWithVerticalRetrace = value;
+        }
 
 
-		public static bool synchronizeWithVerticalRetrace
-		{
-			get { return _graphicsManager.SynchronizeWithVerticalRetrace; }
-			set { _graphicsManager.SynchronizeWithVerticalRetrace = value; }
-		}
+        // defaults to Depth24Stencil8
+        public static DepthFormat PreferredDepthStencilFormat
+        {
+            get => GraphicsManager.PreferredDepthStencilFormat;
+            set => GraphicsManager.PreferredDepthStencilFormat = value;
+        }
 
 
-		// defaults to Depth24Stencil8
-		public static DepthFormat preferredDepthStencilFormat
-		{
-			get { return _graphicsManager.PreferredDepthStencilFormat; }
-			set { _graphicsManager.PreferredDepthStencilFormat = value;	}
-		}
+        public static bool IsFullscreen
+        {
+            get => GraphicsManager.IsFullScreen;
+            set => GraphicsManager.IsFullScreen = value;
+        }
 
 
-		public static bool isFullscreen
-		{
-			get { return _graphicsManager.IsFullScreen; }
-			set { _graphicsManager.IsFullScreen = value; }
-		}
+        public static DisplayOrientation SupportedOrientations
+        {
+            get => GraphicsManager.SupportedOrientations;
+            set => GraphicsManager.SupportedOrientations = value;
+        }
 
 
-		public static DisplayOrientation supportedOrientations
-		{
-			get { return _graphicsManager.SupportedOrientations; }
-			set { _graphicsManager.SupportedOrientations = value; }
-		}
+        internal static void Initialize(GraphicsDeviceManager graphicsManager)
+        {
+            GraphicsManager = graphicsManager;
+        }
 
 
-		public static void applyChanges()
-		{
-			_graphicsManager.ApplyChanges();
-		}
+        public static void ApplyChanges()
+        {
+            GraphicsManager.ApplyChanges();
+        }
 
 
-		/// <summary>
-		/// sets the preferredBackBuffer then applies the changes
-		/// </summary>
-		/// <param name="width">Width.</param>
-		/// <param name="height">Height.</param>
-		public static void setSize( int width, int height )
-		{
-			preferredBackBufferWidth = width;
-			preferredBackBufferHeight = height;
-			applyChanges();
-		}
-
-	}
+	    /// <summary>
+	    ///     sets the preferredBackBuffer then applies the changes
+	    /// </summary>
+	    /// <param name="width">Width.</param>
+	    /// <param name="height">Height.</param>
+	    public static void SetSize(int width, int height)
+        {
+            PreferredBackBufferWidth = width;
+            PreferredBackBufferHeight = height;
+            ApplyChanges();
+        }
+    }
 }
-

@@ -1,183 +1,188 @@
 ﻿using System;
+using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez.Tweens;
-using System.Collections;
-using Nez.Textures;
-
 
 namespace Nez
 {
 	/// <summary>
-	/// uses an image to mask out part of the scene scaling it from max-to-min then from min-to-max with rotation. Note that the Texture
-	/// should be loaded in the main Core.contentManager, not a Scene contentManager. The transition will unload it for you. The Texture
-	/// should be transparent where it should be masked out and white where it should be masked in.
+	///     uses an image to mask out part of the scene scaling it from max-to-min then from min-to-max with rotation. Note
+	///     that the Texture
+	///     should be loaded in the main Core.contentManager, not a Scene contentManager. The transition will unload it for
+	///     you. The Texture
+	///     should be transparent where it should be masked out and white where it should be masked in.
 	/// </summary>
 	public class ImageMaskTransition : SceneTransition
-	{
-		/// <summary>
-		/// duration of the transition both in and out
-		/// </summary>
-		public float duration = 1f;
+    {
+	    /// <summary>
+	    ///     multiplicative BlendState used for rendering the mask
+	    /// </summary>
+	    private readonly BlendState _blendState;
 
-		/// <summary>
-		/// delay after the mask-in before the mark-out begins
-		/// </summary>
-		public float delayBeforeMaskOut = 0.2f;
+	    /// <summary>
+	    ///     origin of the mask, the center of the Texture
+	    /// </summary>
+	    private readonly Vector2 _maskOrigin;
 
-		/// <summary>
-		/// minimum scale of the mask
-		/// </summary>
-		public float minScale = 0.01f;
+	    /// <summary>
+	    ///     position of the mask, the center of the screen
+	    /// </summary>
+	    private readonly Vector2 _maskPosition;
 
-		/// <summary>
-		/// maximum scale of the mask
-		/// </summary>
-		public float maxScale = 10f;
+	    /// <summary>
+	    ///     the mask is first rendered into a RenderTarget
+	    /// </summary>
+	    private readonly RenderTarget2D _maskRenderTarget;
 
-		/// <summary>
-		/// ease equation to use for the scale animation
-		/// </summary>
-		public EaseType scaleEaseType = EaseType.ExpoOut;
+	    /// <summary>
+	    ///     the Texture used as a mask. It should be white where the mask shows the underlying Scene and transparent elsewhere
+	    /// </summary>
+	    private readonly Texture2D _maskTexture;
 
-		/// <summary>
-		/// minimum rotation of the mask animation
-		/// </summary>
-		public float minRotation = 0;
-
-		/// <summary>
-		/// maximum rotation of the mask animation
-		/// </summary>
-		public float maxRotation = MathHelper.TwoPi;
-
-		/// <summary>
-		/// ease equation to use for the rotation animation
-		/// </summary>
-		public EaseType rotationEaseType = EaseType.Linear;
+        private float _renderRotation;
 
 
-		float _renderScale;
-		float _renderRotation;
+        private float _renderScale;
 
-		/// <summary>
-		/// the Texture used as a mask. It should be white where the mask shows the underlying Scene and transparent elsewhere
-		/// </summary>
-		Texture2D _maskTexture;
+	    /// <summary>
+	    ///     delay after the mask-in before the mark-out begins
+	    /// </summary>
+	    public float DelayBeforeMaskOut = 0.2f;
 
-		/// <summary>
-		/// position of the mask, the center of the screen
-		/// </summary>
-		Vector2 _maskPosition;
+	    /// <summary>
+	    ///     duration of the transition both in and out
+	    /// </summary>
+	    public float Duration = 1f;
 
-		/// <summary>
-		/// origin of the mask, the center of the Texture
-		/// </summary>
-		Vector2 _maskOrigin;
+	    /// <summary>
+	    ///     maximum rotation of the mask animation
+	    /// </summary>
+	    public float MaxRotation = MathHelper.TwoPi;
 
-		/// <summary>
-		/// multiplicative BlendState used for rendering the mask
-		/// </summary>
-		BlendState _blendState;
+	    /// <summary>
+	    ///     maximum scale of the mask
+	    /// </summary>
+	    public float MaxScale = 10f;
 
-		/// <summary>
-		/// the mask is first rendered into a RenderTarget
-		/// </summary>
-		RenderTarget2D _maskRenderTarget;
+	    /// <summary>
+	    ///     minimum rotation of the mask animation
+	    /// </summary>
+	    public float MinRotation = 0;
 
+	    /// <summary>
+	    ///     minimum scale of the mask
+	    /// </summary>
+	    public float MinScale = 0.01f;
 
-		public ImageMaskTransition( Func<Scene> sceneLoadAction, Texture2D maskTexture ) : base( sceneLoadAction, true )
-		{
-			_maskPosition = new Vector2( Screen.width / 2, Screen.height / 2 );
-			_maskRenderTarget = new RenderTarget2D( Core.graphicsDevice, Screen.width, Screen.height, false, SurfaceFormat.Color, DepthFormat.None );
-			_maskTexture = maskTexture;
-			_maskOrigin = new Vector2( _maskTexture.Bounds.Width / 2, _maskTexture.Bounds.Height / 2 );
+	    /// <summary>
+	    ///     ease equation to use for the rotation animation
+	    /// </summary>
+	    public EaseType RotationEaseType = EaseType.Linear;
 
-			_blendState = new BlendState {
-				ColorSourceBlend = Blend.DestinationColor,
-				ColorDestinationBlend = Blend.Zero,
-				ColorBlendFunction = BlendFunction.Add
-			};
-		}
-
-
-		public ImageMaskTransition( Texture2D maskTexture ) : this( null, maskTexture )
-		{}
+	    /// <summary>
+	    ///     ease equation to use for the scale animation
+	    /// </summary>
+	    public EaseType ScaleEaseType = EaseType.ExpoOut;
 
 
-		public override IEnumerator onBeginTransition()
-		{
-			yield return null;
+        public ImageMaskTransition(Func<Scene> sceneLoadAction, Texture2D maskTexture) : base(sceneLoadAction, true)
+        {
+            _maskPosition = new Vector2(Screen.Width / 2, Screen.Height / 2);
+            _maskRenderTarget = new RenderTarget2D(Core.GraphicsDevice, Screen.Width, Screen.Height, false,
+                SurfaceFormat.Color, DepthFormat.None);
+            _maskTexture = maskTexture;
+            _maskOrigin = new Vector2(_maskTexture.Bounds.Width / 2, _maskTexture.Bounds.Height / 2);
 
-			var elapsed = 0f;
-			while( elapsed < duration )
-			{
-				elapsed += Time.deltaTime;
-				_renderScale = Lerps.ease( scaleEaseType, maxScale, minScale, elapsed, duration );
-				_renderRotation = Lerps.ease( rotationEaseType, minRotation, maxRotation, elapsed, duration );
-
-				yield return null;
-			}
-
-			// load up the new Scene
-			yield return Core.startCoroutine( loadNextScene() );
-
-			// dispose of our previousSceneRender. We dont need it anymore.
-			previousSceneRender.Dispose();
-			previousSceneRender = null;
-
-			yield return Coroutine.waitForSeconds( delayBeforeMaskOut );
-
-			elapsed = 0f;
-			while( elapsed < duration )
-			{
-				elapsed += Time.deltaTime;
-				_renderScale = Lerps.ease( EaseHelper.oppositeEaseType( scaleEaseType ), minScale, maxScale, elapsed, duration );
-				_renderRotation = Lerps.ease( EaseHelper.oppositeEaseType( rotationEaseType ), maxRotation, minRotation, elapsed, duration );
-
-				yield return null;
-			}
-
-			transitionComplete();
-		}
+            _blendState = new BlendState
+            {
+                ColorSourceBlend = Blend.DestinationColor,
+                ColorDestinationBlend = Blend.Zero,
+                ColorBlendFunction = BlendFunction.Add
+            };
+        }
 
 
-		public override void preRender( Graphics graphics )
-		{
-			Core.graphicsDevice.setRenderTarget( _maskRenderTarget );
-			graphics.batcher.begin( BlendState.AlphaBlend, Core.defaultSamplerState, DepthStencilState.None, null );
-			graphics.batcher.draw( _maskTexture, _maskPosition, null, Color.White, _renderRotation, _maskOrigin, _renderScale, SpriteEffects.None, 0 );
-			graphics.batcher.end();
-			Core.graphicsDevice.setRenderTarget( null );
-		}
+        public ImageMaskTransition(Texture2D maskTexture) : this(null, maskTexture)
+        {
+        }
 
 
-		protected override void transitionComplete()
-		{
-			base.transitionComplete();
+        public override IEnumerator OnBeginTransition()
+        {
+            yield return null;
 
-			Core.content.unloadAsset<Texture2D>( _maskTexture.Name );
-			_maskRenderTarget.Dispose();
-			_blendState.Dispose();
-		}
+            var elapsed = 0f;
+            while (elapsed < Duration)
+            {
+                elapsed += Time.DeltaTime;
+                _renderScale = Lerps.Ease(ScaleEaseType, MaxScale, MinScale, elapsed, Duration);
+                _renderRotation = Lerps.Ease(RotationEaseType, MinRotation, MaxRotation, elapsed, Duration);
+
+                yield return null;
+            }
+
+            // load up the new Scene
+            yield return Core.StartCoroutine(LoadNextScene());
+
+            // dispose of our previousSceneRender. We dont need it anymore.
+            PreviousSceneRender.Dispose();
+            PreviousSceneRender = null;
+
+            yield return Coroutine.WaitForSeconds(DelayBeforeMaskOut);
+
+            elapsed = 0f;
+            while (elapsed < Duration)
+            {
+                elapsed += Time.DeltaTime;
+                _renderScale = Lerps.Ease(EaseHelper.OppositeEaseType(ScaleEaseType), MinScale, MaxScale, elapsed,
+                    Duration);
+                _renderRotation = Lerps.Ease(EaseHelper.OppositeEaseType(RotationEaseType), MaxRotation, MinRotation,
+                    elapsed, Duration);
+
+                yield return null;
+            }
+
+            TransitionComplete();
+        }
 
 
-		public override void render( Graphics graphics )
-		{
-			Core.graphicsDevice.setRenderTarget( null );
+        public override void PreRender(Graphics graphics)
+        {
+            GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, _maskRenderTarget);
+            graphics.Batcher.Begin(BlendState.AlphaBlend, Core.DefaultSamplerState, DepthStencilState.None, null);
+            graphics.Batcher.Draw(_maskTexture, _maskPosition, null, Color.White, _renderRotation, _maskOrigin,
+                _renderScale, SpriteEffects.None, 0);
+            graphics.Batcher.End();
+            GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, null);
+        }
 
-			// if we are scaling out we dont need to render the previous scene anymore since we want the new scene to be visible
-			if( !_isNewSceneLoaded )
-			{
-				graphics.batcher.begin( BlendState.Opaque, Core.defaultSamplerState, DepthStencilState.None, null );
-				graphics.batcher.draw( previousSceneRender, Vector2.Zero, Color.White );
-				graphics.batcher.end();
-			}
 
-			graphics.batcher.begin( _blendState, Core.defaultSamplerState, DepthStencilState.None, null );
-			graphics.batcher.draw( _maskRenderTarget, Vector2.Zero, Color.White );
-			graphics.batcher.end();
-		}
+        protected override void TransitionComplete()
+        {
+            base.TransitionComplete();
 
-	}
+            Core.Content.UnloadAsset<Texture2D>(_maskTexture.Name);
+            _maskRenderTarget.Dispose();
+            _blendState.Dispose();
+        }
+
+
+        public override void Render(Graphics graphics)
+        {
+            GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, null);
+
+            // if we are scaling out we dont need to render the previous scene anymore since we want the new scene to be visible
+            if (!IsNewSceneLoaded)
+            {
+                graphics.Batcher.Begin(BlendState.Opaque, Core.DefaultSamplerState, DepthStencilState.None, null);
+                graphics.Batcher.Draw(PreviousSceneRender, Vector2.Zero, Color.White);
+                graphics.Batcher.End();
+            }
+
+            graphics.Batcher.Begin(_blendState, Core.DefaultSamplerState, DepthStencilState.None, null);
+            graphics.Batcher.Draw(_maskRenderTarget, Vector2.Zero, Color.White);
+            graphics.Batcher.End();
+        }
+    }
 }
-

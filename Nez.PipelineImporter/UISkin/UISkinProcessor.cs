@@ -8,30 +8,30 @@ using System;
 namespace Nez.UISkinImporter
 {
 	[ContentProcessor( DisplayName = "UISkin Processor" )]
-	public class UISkinProcessor : ContentProcessor<Dictionary<string, object>, UISkinConfig>
+	public class UISkinProcessor : ContentProcessor<Dictionary<string, object>, UiSkinConfig>
 	{
-		public override UISkinConfig Process( Dictionary<string, object> input, ContentProcessorContext context )
+		public override UiSkinConfig Process( Dictionary<string, object> input, ContentProcessorContext context )
 		{
-			var skinConfig = new UISkinConfig();
-			var styleConfig = new UISkinStyleConfig();
+			var skinConfig = new UiSkinConfig();
+			var styleConfig = new UiSkinStyleConfig();
 
 			foreach( var key in input.Keys )
 			{
 				// special cases first
 				if( key == "colors" )
 				{
-					skinConfig.colors = parseColors( input[key] as Dictionary<string, object> );
+					skinConfig.Colors = parseColors( input[key] as Dictionary<string, object> );
 				}
 				else if( key == "libGdxAtlases" )
 				{
 					var jArr = input[key] as JArray;
-					skinConfig.libGdxAtlases = jArr.ToObject<string[]>();
+					skinConfig.LibGdxAtlases = jArr.ToObject<string[]>();
 					UISkinImporter.logger.LogMessage( "added {0} LibGdxAtlases\n", jArr.Count );
 				}
 				else if( key == "textureAtlases" )
 				{
 					var jArr = input[key] as JArray;
-					skinConfig.textureAtlases = jArr.ToObject<string[]>();
+					skinConfig.TextureAtlases = jArr.ToObject<string[]>();
 					UISkinImporter.logger.LogMessage( "added {0} TextureAtlases\n", jArr.Count );
 				}
 				else
@@ -42,7 +42,7 @@ namespace Nez.UISkinImporter
 			}
 
 			if( styleConfig.Keys.Count > 0 )
-				skinConfig.styles = styleConfig;
+				skinConfig.Styles = styleConfig;
 
 			return skinConfig;
 		}
@@ -68,9 +68,9 @@ namespace Nez.UISkinImporter
 
 					// we could have hex or hex
 					if( val.StartsWith( "#" ) )
-						color = ColorExt.hexToColor( val.Substring( 1 ) );
+						color = ColorExt.HexToColor( val.Substring( 1 ) );
 					else if( val.StartsWith( "0x" ) )
-						color = ColorExt.hexToColor( val.Substring( 2 ) );
+						color = ColorExt.HexToColor( val.Substring( 2 ) );
 					else
 					{
 						UISkinImporter.logger.LogMessage( "unsupported color definition {0}: {1}", key, val );

@@ -1,31 +1,28 @@
-﻿using System;
-using Microsoft.Xna.Framework.Content;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Content;
 
 namespace Nez.UI
 {
-	public class UISkinConfigReader : ContentTypeReader<UISkinConfig>
-	{
-		protected override UISkinConfig Read( ContentReader reader, UISkinConfig existingInstance )
-		{
-			var skinConfig = new UISkinConfig();
+    public class UiSkinConfigReader : ContentTypeReader<UiSkinConfig>
+    {
+        protected override UiSkinConfig Read(ContentReader reader, UiSkinConfig existingInstance)
+        {
+            var skinConfig = new UiSkinConfig();
 
-			if( reader.ReadBoolean() )
-				skinConfig.colors = reader.ReadObject<Dictionary<string,Color>>();
+            if (reader.ReadBoolean())
+                skinConfig.Colors = reader.ReadObject<Dictionary<string, Color>>();
 
-			if( reader.ReadBoolean() )
-				skinConfig.textureAtlases = reader.ReadObject<string[]>();
+            if (reader.ReadBoolean())
+                skinConfig.TextureAtlases = reader.ReadObject<string[]>();
 
-			if( reader.ReadBoolean() )
-				skinConfig.libGdxAtlases = reader.ReadObject<string[]>();
+            if (reader.ReadBoolean())
+                skinConfig.LibGdxAtlases = reader.ReadObject<string[]>();
 
-			if( reader.ReadBoolean() )
-				skinConfig.styles = reader.ReadObject<UISkinStyleConfig>();
+            if (reader.ReadBoolean())
+                skinConfig.Styles = reader.ReadObject<UiSkinStyleConfig>();
 
-			return skinConfig;
-		}
-	}
+            return skinConfig;
+        }
+    }
 }
-

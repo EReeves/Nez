@@ -1,41 +1,30 @@
 ﻿using System.Xml.Serialization;
 
-
 namespace Nez.Svg
 {
 	/// <summary>
-	/// container in SVG. The 'g' XML tag.
+	///     container in SVG. The 'g' XML tag.
 	/// </summary>
 	public class SvgGroup : SvgElement
-	{
-		[XmlElement( "title" )]
-		public string title;
+    {
+        [XmlElement("path")] public SvgPath[] Paths;
 
-		[XmlElement( "g" )]
-		public SvgGroup[] groups;
+        [XmlElement("rect")] public SvgRectangle[] Rectangles;
 
-		[XmlElement( "path" )]
-		public SvgPath[] paths;
+        [XmlElement("line")] public SvgLine[] Lines;
 
-		[XmlElement( "rect" )]
-		public SvgRectangle[] rectangles;
+        [XmlElement("circle")] public SvgCircle[] Circles;
 
-		[XmlElement( "line" )]
-		public SvgLine[] lines;
+        [XmlElement("ellipse")] public SvgEllipse[] Ellipses;
 
-		[XmlElement( "circle" )]
-		public SvgCircle[] circles;
+        [XmlElement("title")] public string Title;
 
-		[XmlElement( "ellipse" )]
-		public SvgEllipse[] ellipses;
+        [XmlElement("g")] public SvgGroup[] Groups;
 
-		[XmlElement( "polygon" )]
-		public SvgPolygon[] polygons;
+        [XmlElement("polygon")] public SvgPolygon[] Polygons;
 
-		[XmlElement( "polyline" )]
-		public SvgPolyline[] polylines;
+        [XmlElement("polyline")] public SvgPolyline[] Polylines;
 
-		[XmlElement( "image" )]
-		public SvgImage[] images;
-	}
+        [XmlElement("image")] public SvgImage[] Images;
+    }
 }

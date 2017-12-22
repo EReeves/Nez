@@ -1,52 +1,54 @@
 ﻿namespace Nez
 {
 	/// <summary>
-	/// Renderer that only renders all but one renderLayer. Useful to keep UI rendering separate from the rest of the game when used in conjunction
-	/// with a RenderLayerRenderer. Note that UI would most likely want to be rendered in screen space so the camera matrix shouldn't be passed to
-	/// Batcher.Begin.
+	///     Renderer that only renders all but one renderLayer. Useful to keep UI rendering separate from the rest of the game
+	///     when used in conjunction
+	///     with a RenderLayerRenderer. Note that UI would most likely want to be rendered in screen space so the camera matrix
+	///     shouldn't be passed to
+	///     Batcher.Begin.
 	/// </summary>
 	public class RenderLayerExcludeRenderer : Renderer
-	{
-		public int[] excludedRenderLayers;
+    {
+        public int[] ExcludedRenderLayers;
 
 
-		public RenderLayerExcludeRenderer( int renderOrder, params int[] excludedRenderLayers ) : base( renderOrder, null )
-		{
-			this.excludedRenderLayers = excludedRenderLayers;
-		}
+        public RenderLayerExcludeRenderer(int renderOrder, params int[] excludedRenderLayers) : base(renderOrder, null)
+        {
+            this.ExcludedRenderLayers = excludedRenderLayers;
+        }
 
 
-		public override void render( Scene scene )
-		{
-			var cam = camera ?? scene.camera;
-			beginRender( cam );
+        public override void Render(Scene scene)
+        {
+            var cam = Camera ?? scene.Camera;
+            BeginRender(cam);
 
-			for( var i = 0; i < scene.renderableComponents.count; i++ )
-			{
-				var renderable = scene.renderableComponents[i];
-				if( !excludedRenderLayers.contains( renderable.renderLayer ) && renderable.enabled && renderable.isVisibleFromCamera( cam ) )
-					renderAfterStateCheck( renderable, cam );
-			}
+            for (var i = 0; i < scene.RenderableComponents.Count; i++)
+            {
+                var renderable = scene.RenderableComponents[i];
+                if (!ExcludedRenderLayers.Contains(renderable.RenderLayer) && renderable.Enabled &&
+                    renderable.IsVisibleFromCamera(cam))
+                    RenderAfterStateCheck(renderable, cam);
+            }
 
-			if( shouldDebugRender && Core.debugRenderEnabled )
-				debugRender( scene, cam );
+            if (ShouldDebugRender && Core.DebugRenderEnabled)
+                DebugRender(scene, cam);
 
-			endRender();
-		}
+            EndRender();
+        }
 
 
-		protected override void debugRender( Scene scene, Camera cam )
-		{
-			base.debugRender( scene, cam );
+        protected override void DebugRender(Scene scene, Camera cam)
+        {
+            base.DebugRender(scene, cam);
 
-			for( var i = 0; i < scene.renderableComponents.count; i++ )
-			{
-				var renderable = scene.renderableComponents[i];
-				if( !excludedRenderLayers.contains( renderable.renderLayer ) && renderable.enabled && renderable.isVisibleFromCamera( cam ) )
-					renderable.debugRender( Graphics.instance );
-			}
-		}
-
-	}
+            for (var i = 0; i < scene.RenderableComponents.Count; i++)
+            {
+                var renderable = scene.RenderableComponents[i];
+                if (!ExcludedRenderLayers.Contains(renderable.RenderLayer) && renderable.Enabled &&
+                    renderable.IsVisibleFromCamera(cam))
+                    renderable.DebugRender(Graphics.Instance);
+            }
+        }
+    }
 }
-

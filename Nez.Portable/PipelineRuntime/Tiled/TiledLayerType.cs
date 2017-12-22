@@ -1,12 +1,8 @@
-﻿using System;
-
-
-namespace Nez.Tiled
+﻿namespace Nez.Tiled
 {
-	public enum TiledLayerType
-	{
-		Tile,
-		Image
-	}
+    public enum TiledLayerType
+    {
+        Tile,
+        Image
+    }
 }
-

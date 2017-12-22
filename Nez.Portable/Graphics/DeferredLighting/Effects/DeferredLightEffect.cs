@@ -1,351 +1,359 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Nez.DeferredLighting
 {
-	public class DeferredLightEffect : Effect
-	{
-		EffectPass clearGBufferPass;
-		EffectPass pointLightPass;
-		EffectPass spotLightPass;
-		EffectPass areaLightPass;
-		EffectPass directionalLightPass;
-		EffectPass finalCombinePass;
-
-		#region EffectParameter caches
-
-		// gBuffer
-		EffectParameter _clearColorParam;
-
-		// matrices
-		EffectParameter _objectToWorldParam;
-		EffectParameter _worldToViewParam;
-		EffectParameter _projectionParam;
-		EffectParameter _screenToWorldParam;
-
-		// common
-		EffectParameter _normalMapParam;
-		EffectParameter _lightPositionParam;
-		EffectParameter _colorParam;
-		EffectParameter _lightRadiusParam;
-		EffectParameter _lightIntensityParam;
-
-		// spot
-		EffectParameter _lightDirectionParam;
-		EffectParameter _coneAngleParam;
-
-		// directional
-		EffectParameter _specularIntensityParam;
-		EffectParameter _specularPowerParam;
-		EffectParameter _dirAreaLightDirectionParam; // shared with area light
-
-		// final combine
-		EffectParameter _ambientColorParam;
-		EffectParameter _colorMapParam;
-		EffectParameter _lightMapParam;
-
-		#endregion
-
-
-		public DeferredLightEffect() : base( Core.graphicsDevice, EffectResource.deferredLightBytes )
-		{
-			clearGBufferPass = Techniques["ClearGBuffer"].Passes[0];
-			pointLightPass = Techniques["DeferredPointLight"].Passes[0];
-			spotLightPass = Techniques["DeferredSpotLight"].Passes[0];
-			areaLightPass = Techniques["DeferredAreaLight"].Passes[0];
-			directionalLightPass = Techniques["DeferredDirectionalLight"].Passes[0];
-			finalCombinePass = Techniques["FinalCombine"].Passes[0];
-
-			cacheEffectParameters();
-		}
-
-
-		void cacheEffectParameters()
-		{
-			// gBuffer
-			_clearColorParam = Parameters["_clearColor"];
-
-			// matrices
-			_objectToWorldParam = Parameters["_objectToWorld"];
-			_worldToViewParam = Parameters["_worldToView"];
-			_projectionParam = Parameters["_projection"];
-			_screenToWorldParam = Parameters["_screenToWorld"];
-
-			// common
-			_normalMapParam = Parameters["_normalMap"];
-			_lightPositionParam = Parameters["_lightPosition"];
-			_colorParam = Parameters["_color"];
-			_lightRadiusParam = Parameters["_lightRadius"];
-			_lightIntensityParam = Parameters["_lightIntensity"];
-
-			// spot
-			_lightDirectionParam = Parameters["_lightDirection"];
-			_coneAngleParam = Parameters["_coneAngle"];
-
-			// directional
-			_specularIntensityParam = Parameters["_specularIntensity"];
-			_specularPowerParam = Parameters["_specularPower"];
-			_dirAreaLightDirectionParam = Parameters["_dirAreaLightDirection"];
-
-			// final combine
-			_ambientColorParam = Parameters["_ambientColor"];
-			_colorMapParam = Parameters["_colorMap"];
-			_lightMapParam = Parameters["_lightMap"];
-		}
-
-
-		public void prepareClearGBuffer()
-		{
-			clearGBufferPass.Apply();
-		}
-
-
-		/// <summary>
-		/// updates the camera matrixes in the Effect
-		/// </summary>
-		/// <param name="camera">Camera.</param>
-		public void updateForCamera( Camera camera )
-		{
-			setWorldToViewMatrix( camera.transformMatrix );
-			setProjectionMatrix( camera.projectionMatrix );
-			setScreenToWorld( Matrix.Invert( camera.viewProjectionMatrix ) );
-		}
-
-
-		/// <summary>
-		/// updates the shader values for the light and sets the appropriate CurrentTechnique
-		/// </summary>
-		/// <param name="light">Light.</param>
-		public void updateForLight( DeferredLight light )
-		{
-			// check SpotLight first because it is a subclass of PointLight!
-			if( light is SpotLight )
-				updateForLight( light as SpotLight );
-			else if( light is PointLight )
-				updateForLight( light as PointLight );
-			else if( light is AreaLight )
-				updateForLight( light as AreaLight );
-			else if( light is DirLight )
-				updateForLight( light as DirLight );
-		}
-
-
-		/// <summary>
-		/// updates the shader values for the light and sets the appropriate CurrentTechnique
-		/// </summary>
-		/// <param name="light">Light.</param>
-		public void updateForLight( PointLight light )
-		{
-			setLightPosition( new Vector3( light.entity.transform.position + light.localOffset, light.zPosition ) );
-			setColor( light.color );
-			setLightRadius( light.radius * light.entity.transform.scale.X );
-			setLightIntensity( light.intensity );
-
-			var objToWorld = Matrix.CreateScale( light.radius * light.entity.transform.scale.X ) * Matrix.CreateTranslation( light.entity.transform.position.X + light.localOffset.X, light.entity.transform.position.Y + light.localOffset.Y, 0 );
-			setObjectToWorldMatrix( objToWorld );
-
-			pointLightPass.Apply();
-		}
-
-
-		/// <summary>
-		/// updates the shader values for the light and sets the appropriate CurrentTechnique
-		/// </summary>
-		/// <param name="light">Light.</param>
-		public void updateForLight( SpotLight light )
-		{
-			updateForLight( light as PointLight );
-			setSpotLightDirection( light.direction );
-			setSpotConeAngle( light.coneAngle );
-
-			spotLightPass.Apply();
-		}
-
-
-		/// <summary>
-		/// updates the shader values for the light and sets the appropriate CurrentTechnique
-		/// </summary>
-		/// <param name="light">Light.</param>
-		public void updateForLight( AreaLight light )
-		{
-			setColor( light.color );
-			setAreaDirectionalLightDirection( light.direction );
-			setLightIntensity( light.intensity );
+    public class DeferredLightEffect : Effect
+    {
+        private readonly EffectPass _areaLightPass;
+        private readonly EffectPass _clearGBufferPass;
+        private readonly EffectPass _directionalLightPass;
+        private readonly EffectPass _finalCombinePass;
+        private readonly EffectPass _pointLightPass;
+        private readonly EffectPass _spotLightPass;
+
+
+        public DeferredLightEffect() : base(Core.GraphicsDevice, EffectResource.DeferredLightBytes)
+        {
+            _clearGBufferPass = Techniques["ClearGBuffer"].Passes[0];
+            _pointLightPass = Techniques["DeferredPointLight"].Passes[0];
+            _spotLightPass = Techniques["DeferredSpotLight"].Passes[0];
+            _areaLightPass = Techniques["DeferredAreaLight"].Passes[0];
+            _directionalLightPass = Techniques["DeferredDirectionalLight"].Passes[0];
+            _finalCombinePass = Techniques["FinalCombine"].Passes[0];
+
+            CacheEffectParameters();
+        }
+
+
+        private void CacheEffectParameters()
+        {
+            // gBuffer
+            _clearColorParam = Parameters["_clearColor"];
+
+            // matrices
+            _objectToWorldParam = Parameters["_objectToWorld"];
+            _worldToViewParam = Parameters["_worldToView"];
+            _projectionParam = Parameters["_projection"];
+            _screenToWorldParam = Parameters["_screenToWorld"];
+
+            // common
+            _normalMapParam = Parameters["_normalMap"];
+            _lightPositionParam = Parameters["_lightPosition"];
+            _colorParam = Parameters["_color"];
+            _lightRadiusParam = Parameters["_lightRadius"];
+            _lightIntensityParam = Parameters["_lightIntensity"];
+
+            // spot
+            _lightDirectionParam = Parameters["_lightDirection"];
+            _coneAngleParam = Parameters["_coneAngle"];
+
+            // directional
+            _specularIntensityParam = Parameters["_specularIntensity"];
+            _specularPowerParam = Parameters["_specularPower"];
+            _dirAreaLightDirectionParam = Parameters["_dirAreaLightDirection"];
+
+            // final combine
+            _ambientColorParam = Parameters["_ambientColor"];
+            _colorMapParam = Parameters["_colorMap"];
+            _lightMapParam = Parameters["_lightMap"];
+        }
+
+
+        public void PrepareClearGBuffer()
+        {
+            _clearGBufferPass.Apply();
+        }
+
+
+	    /// <summary>
+	    ///     updates the camera matrixes in the Effect
+	    /// </summary>
+	    /// <param name="camera">Camera.</param>
+	    public void UpdateForCamera(Camera camera)
+        {
+            SetWorldToViewMatrix(camera.TransformMatrix);
+            SetProjectionMatrix(camera.ProjectionMatrix);
+            SetScreenToWorld(Matrix.Invert(camera.ViewProjectionMatrix));
+        }
+
+
+	    /// <summary>
+	    ///     updates the shader values for the light and sets the appropriate CurrentTechnique
+	    /// </summary>
+	    /// <param name="light">Light.</param>
+	    public void UpdateForLight(DeferredLight light)
+        {
+            // check SpotLight first because it is a subclass of PointLight!
+            if (light is SpotLight)
+                UpdateForLight(light as SpotLight);
+            else if (light is PointLight)
+                UpdateForLight(light as PointLight);
+            else if (light is AreaLight)
+                UpdateForLight(light as AreaLight);
+            else if (light is DirLight)
+                UpdateForLight(light as DirLight);
+        }
+
+
+	    /// <summary>
+	    ///     updates the shader values for the light and sets the appropriate CurrentTechnique
+	    /// </summary>
+	    /// <param name="light">Light.</param>
+	    public void UpdateForLight(PointLight light)
+        {
+            SetLightPosition(new Vector3(light.Entity.Transform.Position + light.LocalOffset, light.ZPosition));
+            SetColor(light.Color);
+            SetLightRadius(light.Radius * light.Entity.Transform.Scale.X);
+            SetLightIntensity(light.Intensity);
 
-			var objToWorld = Matrix.CreateScale( light.bounds.width * light.entity.transform.scale.X, light.bounds.height * light.entity.transform.scale.Y, 1f ) * Matrix.CreateTranslation( light.bounds.x - light.bounds.width * 0.5f, light.bounds.y - light.bounds.height * 0.5f, 0 );
-			setObjectToWorldMatrix( objToWorld );
+            var objToWorld = Matrix.CreateScale(light.Radius * light.Entity.Transform.Scale.X) *
+                             Matrix.CreateTranslation(light.Entity.Transform.Position.X + light.LocalOffset.X,
+                                 light.Entity.Transform.Position.Y + light.LocalOffset.Y, 0);
+            SetObjectToWorldMatrix(objToWorld);
 
-			areaLightPass.Apply();
-		}
+            _pointLightPass.Apply();
+        }
 
 
-		/// <summary>
-		/// updates the shader values for the light and sets the appropriate CurrentTechnique
-		/// </summary>
-		/// <param name="light">Light.</param>
-		public void updateForLight( DirLight light )
-		{
-			setColor( light.color );
-			setAreaDirectionalLightDirection( light.direction );
-			setSpecularPower( light.specularPower );
-			setSpecularIntensity( light.specularIntensity );
-
-			directionalLightPass.Apply();
-		}
-
-
-		#region Matrix properties
+	    /// <summary>
+	    ///     updates the shader values for the light and sets the appropriate CurrentTechnique
+	    /// </summary>
+	    /// <param name="light">Light.</param>
+	    public void UpdateForLight(SpotLight light)
+        {
+            UpdateForLight(light as PointLight);
+            SetSpotLightDirection(light.Direction);
+            SetSpotConeAngle(light.ConeAngle);
 
-		public void setClearColor( Color color )
-		{
-			_clearColorParam.SetValue( color.ToVector3() );
-		}
+            _spotLightPass.Apply();
+        }
 
 
-		public void setObjectToWorldMatrix( Matrix objToWorld )
-		{
-			_objectToWorldParam.SetValue( objToWorld );
-		}
+	    /// <summary>
+	    ///     updates the shader values for the light and sets the appropriate CurrentTechnique
+	    /// </summary>
+	    /// <param name="light">Light.</param>
+	    public void UpdateForLight(AreaLight light)
+        {
+            SetColor(light.Color);
+            SetAreaDirectionalLightDirection(light.Direction);
+            SetLightIntensity(light.Intensity);
 
+            var objToWorld =
+                Matrix.CreateScale(light.Bounds.Width * light.Entity.Transform.Scale.X,
+                    light.Bounds.Height * light.Entity.Transform.Scale.Y, 1f) * Matrix.CreateTranslation(
+                    light.Bounds.X - light.Bounds.Width * 0.5f, light.Bounds.Y - light.Bounds.Height * 0.5f, 0);
+            SetObjectToWorldMatrix(objToWorld);
 
-		public void setWorldToViewMatrix( Matrix worldToView )
-		{
-			_worldToViewParam.SetValue( worldToView );
-		}
+            _areaLightPass.Apply();
+        }
 
 
-		public void setProjectionMatrix( Matrix projection )
-		{
-			_projectionParam.SetValue( projection );
-		}
+	    /// <summary>
+	    ///     updates the shader values for the light and sets the appropriate CurrentTechnique
+	    /// </summary>
+	    /// <param name="light">Light.</param>
+	    public void UpdateForLight(DirLight light)
+        {
+            SetColor(light.Color);
+            SetAreaDirectionalLightDirection(light.Direction);
+            SetSpecularPower(light.SpecularPower);
+            SetSpecularIntensity(light.SpecularIntensity);
 
+            _directionalLightPass.Apply();
+        }
 
-		/// <summary>
-		/// inverse of Camera.getViewProjectionMatrix
-		/// </summary>
-		/// <param name="screenToWorld">screenToWorld.</param>
-		public void setScreenToWorld( Matrix screenToWorld )
-		{
-			_screenToWorldParam.SetValue( screenToWorld );
-		}
+        #region EffectParameter caches
 
-		#endregion
+        // gBuffer
+        private EffectParameter _clearColorParam;
 
+        // matrices
+        private EffectParameter _objectToWorldParam;
 
-		#region Point/Spot common properties
+        private EffectParameter _worldToViewParam;
+        private EffectParameter _projectionParam;
+        private EffectParameter _screenToWorldParam;
 
-		public void setNormalMap( Texture2D normalMap )
-		{
-			_normalMapParam.SetValue( normalMap );
-		}
+        // common
+        private EffectParameter _normalMapParam;
 
+        private EffectParameter _lightPositionParam;
+        private EffectParameter _colorParam;
+        private EffectParameter _lightRadiusParam;
+        private EffectParameter _lightIntensityParam;
 
-		public void setLightPosition( Vector3 lightPosition )
-		{
-			_lightPositionParam.SetValue( lightPosition );
-		}
+        // spot
+        private EffectParameter _lightDirectionParam;
 
+        private EffectParameter _coneAngleParam;
 
-		public void setColor( Color color )
-		{
-			_colorParam.SetValue( color.ToVector3() );
-		}
+        // directional
+        private EffectParameter _specularIntensityParam;
 
+        private EffectParameter _specularPowerParam;
+        private EffectParameter _dirAreaLightDirectionParam; // shared with area light
 
-		public void setLightRadius( float radius )
-		{
-			_lightRadiusParam.SetValue( radius );
-		}
+        // final combine
+        private EffectParameter _ambientColorParam;
 
+        private EffectParameter _colorMapParam;
+        private EffectParameter _lightMapParam;
 
-		public void setLightIntensity( float intensity )
-		{
-			_lightIntensityParam.SetValue( intensity );
-		}
+        #endregion
 
-		#endregion
 
+        #region Matrix properties
 
-		#region Spot properties
+        public void SetClearColor(Color color)
+        {
+            _clearColorParam.SetValue(color.ToVector3());
+        }
 
-		/// <summary>
-		/// directly sets the light direction
-		/// </summary>
-		/// <param name="lightDirection">Light direction.</param>
-		public void setSpotLightDirection( Vector2 lightDirection )
-		{
-			_lightDirectionParam.SetValue( lightDirection );
-		}
 
+        public void SetObjectToWorldMatrix(Matrix objToWorld)
+        {
+            _objectToWorldParam.SetValue(objToWorld);
+        }
 
-		/// <summary>
-		/// sets the light direction using just an angle in degrees. 0 degrees points to theright, 90 degrees would be straight down, etc
-		/// </summary>
-		/// <param name="degrees">Degrees.</param>
-		public void setSpotLightDirection( float degrees )
-		{
-			var radians = MathHelper.ToRadians( degrees );
-			var dir = new Vector2( (float)Math.Cos( radians ), (float)Math.Sin( radians ) );
-			setSpotLightDirection( dir );
-		}
 
+        public void SetWorldToViewMatrix(Matrix worldToView)
+        {
+            _worldToViewParam.SetValue(worldToView);
+        }
 
-		public void setSpotConeAngle( float coneAngle )
-		{
-			_coneAngleParam.SetValue( coneAngle );
-		}
 
-		#endregion
+        public void SetProjectionMatrix(Matrix projection)
+        {
+            _projectionParam.SetValue(projection);
+        }
 
 
-		#region Directional light properties
+	    /// <summary>
+	    ///     inverse of Camera.getViewProjectionMatrix
+	    /// </summary>
+	    /// <param name="screenToWorld">screenToWorld.</param>
+	    public void SetScreenToWorld(Matrix screenToWorld)
+        {
+            _screenToWorldParam.SetValue(screenToWorld);
+        }
 
-		public void setSpecularIntensity( float specIntensity )
-		{
-			_specularIntensityParam.SetValue( specIntensity );
-		}
+        #endregion
 
 
-		public void setSpecularPower( float specPower )
-		{
-			_specularPowerParam.SetValue( specPower );
-		}
+        #region Point/Spot common properties
 
+        public void SetNormalMap(Texture2D normalMap)
+        {
+            _normalMapParam.SetValue(normalMap);
+        }
 
-		public void setAreaDirectionalLightDirection( Vector3 lightDir )
-		{
-			_dirAreaLightDirectionParam.SetValue( lightDir );
-		}
 
-		#endregion
+        public void SetLightPosition(Vector3 lightPosition)
+        {
+            _lightPositionParam.SetValue(lightPosition);
+        }
 
 
-		#region Final combine properties
+        public void SetColor(Color color)
+        {
+            _colorParam.SetValue(color.ToVector3());
+        }
 
-		public void setAmbientColor( Color color )
-		{
-			_ambientColorParam.SetValue( color.ToVector3() );
-		}
 
+        public void SetLightRadius(float radius)
+        {
+            _lightRadiusParam.SetValue(radius);
+        }
 
-		/// <summary>
-		/// sets the two textures required for the final combine and applies the pass
-		/// </summary>
-		/// <param name="diffuse">Diffuse.</param>
-		/// <param name="lightMap">Light map.</param>
-		public void prepareForFinalCombine( Texture2D diffuse, Texture2D lightMap, Texture2D normalMap )
-		{
-			_colorMapParam.SetValue( diffuse );
-			_lightMapParam.SetValue( lightMap );
-			_normalMapParam.SetValue( normalMap );
 
-			finalCombinePass.Apply();
-		}
+        public void SetLightIntensity(float intensity)
+        {
+            _lightIntensityParam.SetValue(intensity);
+        }
 
-		#endregion
+        #endregion
 
-	}
+
+        #region Spot properties
+
+	    /// <summary>
+	    ///     directly sets the light direction
+	    /// </summary>
+	    /// <param name="lightDirection">Light direction.</param>
+	    public void SetSpotLightDirection(Vector2 lightDirection)
+        {
+            _lightDirectionParam.SetValue(lightDirection);
+        }
+
+
+	    /// <summary>
+	    ///     sets the light direction using just an angle in degrees. 0 degrees points to theright, 90 degrees would be straight
+	    ///     down, etc
+	    /// </summary>
+	    /// <param name="degrees">Degrees.</param>
+	    public void SetSpotLightDirection(float degrees)
+        {
+            var radians = MathHelper.ToRadians(degrees);
+            var dir = new Vector2((float) Math.Cos(radians), (float) Math.Sin(radians));
+            SetSpotLightDirection(dir);
+        }
+
+
+        public void SetSpotConeAngle(float coneAngle)
+        {
+            _coneAngleParam.SetValue(coneAngle);
+        }
+
+        #endregion
+
+
+        #region Directional light properties
+
+        public void SetSpecularIntensity(float specIntensity)
+        {
+            _specularIntensityParam.SetValue(specIntensity);
+        }
+
+
+        public void SetSpecularPower(float specPower)
+        {
+            _specularPowerParam.SetValue(specPower);
+        }
+
+
+        public void SetAreaDirectionalLightDirection(Vector3 lightDir)
+        {
+            _dirAreaLightDirectionParam.SetValue(lightDir);
+        }
+
+        #endregion
+
+
+        #region Final combine properties
+
+        public void SetAmbientColor(Color color)
+        {
+            _ambientColorParam.SetValue(color.ToVector3());
+        }
+
+
+	    /// <summary>
+	    ///     sets the two textures required for the final combine and applies the pass
+	    /// </summary>
+	    /// <param name="diffuse">Diffuse.</param>
+	    /// <param name="lightMap">Light map.</param>
+	    public void PrepareForFinalCombine(Texture2D diffuse, Texture2D lightMap, Texture2D normalMap)
+        {
+            _colorMapParam.SetValue(diffuse);
+            _lightMapParam.SetValue(lightMap);
+            _normalMapParam.SetValue(normalMap);
+
+            _finalCombinePass.Apply();
+        }
+
+        #endregion
+    }
 }
-

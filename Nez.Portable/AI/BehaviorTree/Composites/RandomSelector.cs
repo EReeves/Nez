@@ -1,17 +1,13 @@
-﻿using System;
-
-
-namespace Nez.AI.BehaviorTrees
+﻿namespace Nez.AI.BehaviorTrees
 {
 	/// <summary>
-	/// Same as Selector except it shuffles the children when started
+	///     Same as Selector except it shuffles the children when started
 	/// </summary>
 	public class RandomSelector<T> : Selector<T>
-	{
-		public override void onStart()
-		{
-			_children.shuffle();
-		}
-	}
+    {
+        public override void OnStart()
+        {
+            Children.Shuffle();
+        }
+    }
 }
-

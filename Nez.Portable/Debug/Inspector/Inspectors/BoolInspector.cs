@@ -1,34 +1,30 @@
 ﻿using Nez.UI;
 
-
 #if DEBUG
 namespace Nez
 {
-	public class BoolInspector : Inspector
-	{
-		CheckBox _checkbox;
+    public class BoolInspector : Inspector
+    {
+        private CheckBox _checkbox;
 
 
-		public override void initialize( Table table, Skin skin )
-		{
-			var label = createNameLabel( table, skin );
-			_checkbox = new CheckBox( string.Empty, skin );
-			_checkbox.programmaticChangeEvents = false;
-			_checkbox.isChecked = getValue<bool>();
-			_checkbox.onChanged += newValue =>
-			{
-				setValue( newValue );
-			};
+        public override void Initialize(Table table, Skin skin)
+        {
+            var label = CreateNameLabel(table, skin);
+            _checkbox = new CheckBox(string.Empty, skin);
+            _checkbox.ProgrammaticChangeEvents = false;
+            _checkbox.IsChecked = GetValue<bool>();
+            _checkbox.OnChanged += newValue => { SetValue(newValue); };
 
-			table.add( label );
-			table.add( _checkbox );
-		}
+            table.Add(label);
+            table.Add(_checkbox);
+        }
 
 
-		public override void update()
-		{
-			_checkbox.isChecked = getValue<bool>();
-		}
-	}
+        public override void Update()
+        {
+            _checkbox.IsChecked = GetValue<bool>();
+        }
+    }
 }
 #endif

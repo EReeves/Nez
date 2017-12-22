@@ -1,106 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 
 namespace Nez
 {
-	public class EntitySystem
-	{
-		public Matcher matcher
-		{
-			get { return _matcher; }
-		}
+    public class EntitySystem
+    {
+        protected List<Entity> Entities = new List<Entity>();
 
-		public Scene scene
-		{
-			get { return _scene; }
-			set
-			{
-				_scene = value;
-				_entities = new List<Entity>();
-			}
-		}
-
-		protected Matcher _matcher;
-		protected List<Entity> _entities = new List<Entity>();
-		protected Scene _scene;
+        protected Matcher matcher;
+        protected Scene scene;
 
 
-		public EntitySystem()
-		{
-			_matcher = Matcher.empty();
-		}
-
-
-		public EntitySystem( Matcher matcher )
-		{
-			_matcher = matcher;
-		}
-
-
-		public virtual void onChange( Entity entity )
-		{
-			var contains = _entities.Contains( entity );
-			var interest = _matcher.isInterested( entity );
-
-			if( interest && !contains )
-				add( entity );
-			else if( !interest && contains )
-				remove( entity );
-		}
-
-
-		public virtual void add( Entity entity )
-		{
-			_entities.Add( entity );
-			onAdded( entity );
-		}
-
-
-		public virtual void remove( Entity entity )
-		{
-			_entities.Remove( entity );
-			onRemoved( entity );
-		}
-
-
-		public virtual void onAdded( Entity entity )
-		{}
-
-
-		public virtual void onRemoved( Entity entity )
-		{}
-
-
-		protected virtual void process( List<Entity> entities )
-		{}
-
-
-        protected virtual void lateProcess( List<Entity> entities )
-        {}
-
-
-        protected virtual void begin()
-		{}
-
-
-		public void update()
-		{
-			begin();
-			process( _entities );
-		}
-
-
-        public void lateUpdate()
+        public EntitySystem()
         {
-            lateProcess( _entities );
-            end();
+            matcher = Nez.Matcher.Empty();
         }
 
 
-        protected virtual void end()
-		{}
+        public EntitySystem(Matcher matcher)
+        {
+            this.matcher = matcher;
+        }
 
-	}
+        public Matcher Matcher => matcher;
+
+        public Scene Scene
+        {
+            get => scene;
+            set
+            {
+                scene = value;
+                Entities = new List<Entity>();
+            }
+        }
+
+
+        public virtual void OnChange(Entity entity)
+        {
+            var contains = Entities.Contains(entity);
+            var interest = Matcher.IsInterested(entity);
+
+            if (interest && !contains)
+                Add(entity);
+            else if (!interest && contains)
+                Remove(entity);
+        }
+
+
+        public virtual void Add(Entity entity)
+        {
+            Entities.Add(entity);
+            OnAdded(entity);
+        }
+
+
+        public virtual void Remove(Entity entity)
+        {
+            Entities.Remove(entity);
+            OnRemoved(entity);
+        }
+
+
+        public virtual void OnAdded(Entity entity)
+        {
+        }
+
+
+        public virtual void OnRemoved(Entity entity)
+        {
+        }
+
+
+        protected virtual void Process(List<Entity> entities)
+        {
+        }
+
+
+        protected virtual void LateProcess(List<Entity> entities)
+        {
+        }
+
+
+        protected virtual void Begin()
+        {
+        }
+
+
+        public void Update()
+        {
+            Begin();
+            Process(Entities);
+        }
+
+
+        public void LateUpdate()
+        {
+            LateProcess(Entities);
+            End();
+        }
+
+
+        protected virtual void End()
+        {
+        }
+    }
 }
-

@@ -1,51 +1,50 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-
 namespace Nez
 {
-	public class DotsEffect : Effect
-	{
-		public float scale
-		{
-			get { return _scale; }
-			set
-			{
-				if( _scale != value )
-				{
-					_scale = value;
-					_scaleParam.SetValue( _scale );
-				}
-			}
-		}
+    public class DotsEffect : Effect
+    {
+        private float _angle = 0.5f;
+        private readonly EffectParameter _angleParam;
 
-		public float angle
-		{
-			get { return _angle; }
-			set
-			{
-				if( _angle != value )
-				{
-					_angle = value;
-					_angleParam.SetValue( _angle );
-				}
-			}
-		}
+        private float _scale = 0.5f;
 
-		float _scale = 0.5f;
-		float _angle = 0.5f;
-
-		EffectParameter _scaleParam;
-		EffectParameter _angleParam;
+        private readonly EffectParameter _scaleParam;
 
 
-		public DotsEffect() : base( Core.graphicsDevice, EffectResource.dotsBytes )
-		{
-			_scaleParam = Parameters["scale"];
-			_angleParam = Parameters["angle"];
+        public DotsEffect() : base(Core.GraphicsDevice, EffectResource.DotsBytes)
+        {
+            _scaleParam = Parameters["scale"];
+            _angleParam = Parameters["angle"];
 
-			_scaleParam.SetValue( _scale );
-			_angleParam.SetValue( _angle );
-		}
-	}
+            _scaleParam.SetValue(_scale);
+            _angleParam.SetValue(_angle);
+        }
+
+        public float Scale
+        {
+            get => _scale;
+            set
+            {
+                if (_scale != value)
+                {
+                    _scale = value;
+                    _scaleParam.SetValue(_scale);
+                }
+            }
+        }
+
+        public float Angle
+        {
+            get => _angle;
+            set
+            {
+                if (_angle != value)
+                {
+                    _angle = value;
+                    _angleParam.SetValue(_angle);
+                }
+            }
+        }
+    }
 }
-

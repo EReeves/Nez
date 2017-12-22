@@ -1,141 +1,144 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-
-
-namespace Nez.UI
+﻿namespace Nez.UI
 {
 	/// <summary>
-	/// A button with a child {@link Image} to display an image. This is useful when the button must be larger than the image and the
-	/// image centered on the button. If the image is the size of the button, a {@link Button} without any children can be used, where
-	/// the {@link Button.ButtonStyle#up}, {@link Button.ButtonStyle#down}, and {@link Button.ButtonStyle#checked} nine patches define
-	/// the image.
+	///     A button with a child {@link Image} to display an image. This is useful when the button must be larger than the
+	///     image and the
+	///     image centered on the button. If the image is the size of the button, a {@link Button} without any children can be
+	///     used, where
+	///     the {@link Button.ButtonStyle#up}, {@link Button.ButtonStyle#down}, and {@link Button.ButtonStyle#checked} nine
+	///     patches define
+	///     the image.
 	/// </summary>
 	public class ImageButton : Button
-	{
-		Image image;
-		ImageButtonStyle style;
+    {
+        private readonly Image _image;
+        private ImageButtonStyle _style;
 
 
-		public ImageButton( ImageButtonStyle style ) : base( style )
-		{
-			image = new Image();
-			image.setScaling( Scaling.Fit );
-			add( image );
-			setStyle( style );
-			setSize( preferredWidth, preferredHeight );
-		}
+        public ImageButton(ImageButtonStyle style) : base(style)
+        {
+            _image = new Image();
+            _image.SetScaling(Scaling.Fit);
+            Add(_image);
+            SetStyle(style);
+            SetSize(PreferredWidth, PreferredHeight);
+        }
 
-		public ImageButton( Skin skin, string styleName = null ) : this( skin.get<ImageButtonStyle>( styleName ) )
-		{}
-
-
-		public ImageButton( IDrawable imageUp ) : this( new ImageButtonStyle( null, null, null, imageUp, null, null ) )
-		{
-		}
+        public ImageButton(Skin skin, string styleName = null) : this(skin.Get<ImageButtonStyle>(styleName))
+        {
+        }
 
 
-		public ImageButton( IDrawable imageUp, IDrawable imageDown ) : this( new ImageButtonStyle( null, null, null, imageUp, imageDown, null ) )
-		{
-		}
+        public ImageButton(IDrawable imageUp) : this(new ImageButtonStyle(null, null, null, imageUp, null, null))
+        {
+        }
 
 
-		public ImageButton( IDrawable imageUp, IDrawable imageDown, IDrawable imageOver ) : this( new ImageButtonStyle( null, null, null, imageUp, imageDown, imageOver ) )
-		{
-		}
+        public ImageButton(IDrawable imageUp, IDrawable imageDown) : this(new ImageButtonStyle(null, null, null,
+            imageUp, imageDown, null))
+        {
+        }
 
 
-		public override void setStyle( ButtonStyle style )
-		{
-			Assert.isTrue( style is ImageButtonStyle, "style must be a ImageButtonStyle" );
-
-			base.setStyle( style );
-			this.style = (ImageButtonStyle)style;
-			if( image != null )
-				updateImage();
-		}
+        public ImageButton(IDrawable imageUp, IDrawable imageDown, IDrawable imageOver) : this(
+            new ImageButtonStyle(null, null, null, imageUp, imageDown, imageOver))
+        {
+        }
 
 
-		public new ImageButtonStyle getStyle()
-		{
-			return style;
-		}
+        public override void SetStyle(ButtonStyle style)
+        {
+            Assert.IsTrue(style is ImageButtonStyle, "style must be a ImageButtonStyle");
+
+            base.SetStyle(style);
+            this._style = (ImageButtonStyle) style;
+            if (_image != null)
+                UpdateImage();
+        }
 
 
-		public Image getImage()
-		{
-			return image;
-		}
+        public new ImageButtonStyle GetStyle()
+        {
+            return _style;
+        }
 
 
-		public Cell getImageCell()
-		{
-			return getCell( image );
-		}
+        public Image GetImage()
+        {
+            return _image;
+        }
 
 
-		private void updateImage()
-		{
-			IDrawable drawable = null;
-			if( _isDisabled && style.imageDisabled != null )
-				drawable = style.imageDisabled;
-			else if( _mouseDown && style.imageDown != null )
-				drawable = style.imageDown;
-			else if( isChecked && style.imageChecked != null )
-				drawable = ( style.imageCheckedOver != null && _mouseOver ) ? style.imageCheckedOver : style.imageChecked;
-			else if( _mouseOver && style.imageOver != null )
-				drawable = style.imageOver;
-			else if( style.imageUp != null ) //
-				drawable = style.imageUp;
-
-			image.setDrawable( drawable );
-		}
+        public Cell GetImageCell()
+        {
+            return GetCell(_image);
+        }
 
 
-		public override void draw( Graphics graphics, float parentAlpha )
-		{
-			updateImage();
-			base.draw( graphics, parentAlpha );
-		}
+        private void UpdateImage()
+        {
+            IDrawable drawable = null;
+            if (isDisabled && _style.ImageDisabled != null)
+                drawable = _style.ImageDisabled;
+            else if (MouseDown && _style.ImageDown != null)
+                drawable = _style.ImageDown;
+            else if (isChecked && _style.ImageChecked != null)
+                drawable = _style.ImageCheckedOver != null && MouseOver ? _style.ImageCheckedOver : _style.ImageChecked;
+            else if (MouseOver && _style.ImageOver != null)
+                drawable = _style.ImageOver;
+            else if (_style.ImageUp != null) //
+                drawable = _style.ImageUp;
 
-	}
-
-
-	public class ImageButtonStyle : ButtonStyle
-	{
-		/** Optional. */
-		public IDrawable imageUp, imageDown, imageOver, imageChecked, imageCheckedOver, imageDisabled;
-
-
-		public ImageButtonStyle()
-		{}
-
-
-		public ImageButtonStyle( IDrawable up, IDrawable down, IDrawable checkked, IDrawable imageUp, IDrawable imageDown, IDrawable imageChecked ) : base( up, down, checkked )
-		{
-			this.imageUp = imageUp;
-			this.imageDown = imageDown;
-			this.imageChecked = imageChecked;
-		}
+            _image.SetDrawable(drawable);
+        }
 
 
-		public new ImageButtonStyle clone()
-		{
-			return new ImageButtonStyle {
-				up = up,
-				down = down,
-				over = over,
-				checkked = checkked,
-				checkedOver = checkedOver,
-				disabled = disabled,
+        public override void Draw(Graphics graphics, float parentAlpha)
+        {
+            UpdateImage();
+            base.Draw(graphics, parentAlpha);
+        }
+    }
 
-				imageUp = imageUp,
-				imageDown = imageDown,
-				imageOver = imageOver,
-				imageChecked = imageChecked,
-				imageCheckedOver = imageCheckedOver,
-				imageDisabled = imageDisabled
-			};
-		}
-	}
+
+    public class ImageButtonStyle : ButtonStyle
+    {
+        /** Optional. */
+        public IDrawable ImageUp, ImageDown, ImageOver, ImageChecked, ImageCheckedOver, ImageDisabled;
+
+
+        public ImageButtonStyle()
+        {
+        }
+
+
+        public ImageButtonStyle(IDrawable up, IDrawable down, IDrawable checkked, IDrawable imageUp,
+            IDrawable imageDown, IDrawable imageChecked) : base(up, down, checkked)
+        {
+            this.ImageUp = imageUp;
+            this.ImageDown = imageDown;
+            this.ImageChecked = imageChecked;
+        }
+
+
+        public new ImageButtonStyle Clone()
+        {
+            return new ImageButtonStyle
+            {
+                Up = Up,
+                Down = Down,
+                Over = Over,
+                Checkked = Checkked,
+                CheckedOver = CheckedOver,
+                Disabled = Disabled,
+
+                ImageUp = ImageUp,
+                ImageDown = ImageDown,
+                ImageOver = ImageOver,
+                ImageChecked = ImageChecked,
+                ImageCheckedOver = ImageCheckedOver,
+                ImageDisabled = ImageDisabled
+            };
+        }
+    }
 }
-

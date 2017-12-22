@@ -67,20 +67,20 @@ namespace Nez.NormalMapGenerator
 			if( flattenImage )
 			{
 				logger.LogMessage( "flattening image" );
-				destData = TextureUtils.createFlatHeightmap( destData, opaqueColor, transparentColor );
+				destData = TextureUtils.CreateFlatHeightmap( destData, opaqueColor, transparentColor );
 			}
 
 			if( blurType != BlurType.None )
 			{
 				logger.LogMessage( "blurring image width blurDeviation: {0}", blurDeviation );
 				if( blurType == BlurType.Color )
-					destData = TextureUtils.createBlurredTexture( destData, bmp.Width, bmp.Height, (double)blurDeviation );
+					destData = TextureUtils.CreateBlurredTexture( destData, bmp.Width, bmp.Height, (double)blurDeviation );
 				else
-					destData = TextureUtils.createBlurredGrayscaleTexture( destData, bmp.Width, bmp.Height, (double)blurDeviation );
+					destData = TextureUtils.CreateBlurredGrayscaleTexture( destData, bmp.Width, bmp.Height, (double)blurDeviation );
 			}
 
 			logger.LogMessage( "generating normal map with {0}", edgeDetectionFilter );
-			destData = TextureUtils.createNormalMap( destData, edgeDetectionFilter, bmp.Width, bmp.Height, normalStrength, invertX, invertY );
+			destData = TextureUtils.CreateNormalMap( destData, edgeDetectionFilter, bmp.Width, bmp.Height, normalStrength, invertX, invertY );
 
 			bmp.setData( destData );
 

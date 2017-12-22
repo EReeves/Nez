@@ -1,49 +1,49 @@
 ﻿namespace Nez.Shadows
 {
 	/// <summary>
-	/// Represents an occluding line segment in the visibility mesh
+	///     Represents an occluding line segment in the visibility mesh
 	/// </summary>
 	internal class Segment
-	{
-		/// <summary>
-		/// First end-point of the segment
-		/// </summary>
-		internal EndPoint p1;
+    {
+	    /// <summary>
+	    ///     First end-point of the segment
+	    /// </summary>
+	    internal EndPoint P1;
 
-		/// <summary>
-		/// Second end-point of the segment
-		/// </summary>
-		internal EndPoint p2;
-
-
-		internal Segment()
-		{
-			p1 = null;
-			p2 = null;
-		}
+	    /// <summary>
+	    ///     Second end-point of the segment
+	    /// </summary>
+	    internal EndPoint P2;
 
 
-		public override bool Equals( object obj )
-		{
-			if( obj is Segment )
-			{
-				var other = obj as Segment;
-				return p1.Equals( other.p1 ) && p2.Equals( other.p2 );
-			}
-
-			return false;
-		}
+        internal Segment()
+        {
+            P1 = null;
+            P2 = null;
+        }
 
 
-		public override int GetHashCode()
-		{
-			return p1.GetHashCode() + p2.GetHashCode();
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj is Segment)
+            {
+                var other = obj as Segment;
+                return P1.Equals(other.P1) && P2.Equals(other.P2);
+            }
+
+            return false;
+        }
 
 
-		public override string ToString()
-		{
-			return "{" + p1.position.ToString() + ", " + p2.position.ToString() + "}";
-		}
-	}
+        public override int GetHashCode()
+        {
+            return P1.GetHashCode() + P2.GetHashCode();
+        }
+
+
+        public override string ToString()
+        {
+            return "{" + P1.Position + ", " + P2.Position + "}";
+        }
+    }
 }

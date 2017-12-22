@@ -1,206 +1,199 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections;
-
 
 namespace Nez.Systems
 {
 	/// <summary>
-	/// basic CoroutineManager. Coroutines can do the following:
-	/// - yield return null (tick again the next frame)
-	/// - yield return Coroutine.waitForSeconds( 3 ) (tick again after a 3 second delay)
-	/// - yield return Coroutine.waitForSeconds( 5.5f ) (tick again after a 5.5 second delay)
-	/// - yield return startCoroutine( another() ) (wait for the other coroutine before getting ticked again)
+	///     basic CoroutineManager. Coroutines can do the following:
+	///     - yield return null (tick again the next frame)
+	///     - yield return Coroutine.waitForSeconds( 3 ) (tick again after a 3 second delay)
+	///     - yield return Coroutine.waitForSeconds( 5.5f ) (tick again after a 5.5 second delay)
+	///     - yield return startCoroutine( another() ) (wait for the other coroutine before getting ticked again)
 	/// </summary>
 	public class CoroutineManager : IUpdatableManager
-	{
-		/// <summary>
-		/// internal class used by the CoroutineManager to hide the data it requires for a Coroutine
-		/// </summary>
-		class CoroutineImpl : ICoroutine, IPoolable
-		{
-			public IEnumerator enumerator;
-			/// <summary>
-			/// anytime a delay is yielded it is added to the waitTimer which tracks the delays
-			/// </summary>
-			public float waitTimer;
-			public bool isDone;
-			public CoroutineImpl waitForCoroutine;
-			public bool useUnscaledDeltaTime = false;
+    {
+	    /// <summary>
+	    ///     flag to keep track of when we are in our update loop. If a new coroutine is started during the update loop we have
+	    ///     to stick
+	    ///     it in the shouldRunNextFrame List to avoid modifying a List while we iterate.
+	    /// </summary>
+	    private bool _isInUpdate;
+
+        private readonly List<CoroutineImpl> _shouldRunNextFrame = new List<CoroutineImpl>();
+        private readonly List<CoroutineImpl> _unblockedCoroutines = new List<CoroutineImpl>();
 
 
-			public void stop()
-			{
-				isDone = true;
-			}
+        void IUpdatableManager.Update()
+        {
+            _isInUpdate = true;
+            for (var i = 0; i < _unblockedCoroutines.Count; i++)
+            {
+                var coroutine = _unblockedCoroutines[i];
+
+                // check for stopped coroutines
+                if (coroutine.IsDone)
+                {
+                    Pool<CoroutineImpl>.Free(coroutine);
+                    continue;
+                }
+
+                // are we waiting for any other coroutines to finish?
+                if (coroutine.WaitForCoroutine != null)
+                    if (coroutine.WaitForCoroutine.IsDone)
+                    {
+                        coroutine.WaitForCoroutine = null;
+                    }
+                    else
+                    {
+                        _shouldRunNextFrame.Add(coroutine);
+                        continue;
+                    }
+
+                // deal with timers if we have them
+                if (coroutine.WaitTimer > 0)
+                {
+                    // still has time left. decrement and run again next frame being sure to decrement with the appropriate deltaTime.
+                    coroutine.WaitTimer -= coroutine.UseUnscaledDeltaTime ? Time.UnscaledDeltaTime : Time.DeltaTime;
+                    _shouldRunNextFrame.Add(coroutine);
+                    continue;
+                }
+
+                if (TickCoroutine(coroutine))
+                    _shouldRunNextFrame.Add(coroutine);
+            }
+
+            _unblockedCoroutines.Clear();
+            _unblockedCoroutines.AddRange(_shouldRunNextFrame);
+            _shouldRunNextFrame.Clear();
+
+            _isInUpdate = false;
+        }
 
 
-			public ICoroutine setUseUnscaledDeltaTime( bool useUnscaledDeltaTime )
-			{
-				this.useUnscaledDeltaTime = useUnscaledDeltaTime;
-				return this;
-			}
+	    /// <summary>
+	    ///     adds the IEnumerator to the CoroutineManager. Coroutines get ticked before Update is called each frame.
+	    /// </summary>
+	    /// <returns>The coroutine.</returns>
+	    /// <param name="enumerator">Enumerator.</param>
+	    public ICoroutine StartCoroutine(IEnumerator enumerator)
+        {
+            // find or create a CoroutineImpl
+            var coroutine = Pool<CoroutineImpl>.Obtain();
+            coroutine.PrepareForReuse();
+
+            // setup the coroutine and add it
+            coroutine.Enumerator = enumerator;
+            var shouldContinueCoroutine = TickCoroutine(coroutine);
+
+            // guard against empty coroutines
+            if (!shouldContinueCoroutine)
+                return null;
+
+            if (_isInUpdate)
+                _shouldRunNextFrame.Add(coroutine);
+            else
+                _unblockedCoroutines.Add(coroutine);
+
+            return coroutine;
+        }
 
 
-			internal void prepareForReuse()
-			{
-				isDone = false;
-			}
+	    /// <summary>
+	    ///     ticks a coroutine. returns true if the coroutine should continue to run next frame. This method will put finished
+	    ///     coroutines
+	    ///     back in the Pool!
+	    /// </summary>
+	    /// <returns><c>true</c>, if coroutine was ticked, <c>false</c> otherwise.</returns>
+	    /// <param name="coroutine">Coroutine.</param>
+	    private bool TickCoroutine(CoroutineImpl coroutine)
+        {
+            // This coroutine has finished
+            if (!coroutine.Enumerator.MoveNext() || coroutine.IsDone)
+            {
+                Pool<CoroutineImpl>.Free(coroutine);
+                return false;
+            }
+
+            if (coroutine.Enumerator.Current == null)
+                return true;
+
+            if (coroutine.Enumerator.Current is WaitForSeconds)
+            {
+                coroutine.WaitTimer = (coroutine.Enumerator.Current as WaitForSeconds).WaitTime;
+                return true;
+            }
+
+#if DEBUG
+            // deprecation warning for yielding an int/float
+            if (coroutine.Enumerator.Current is int)
+            {
+                Debug.Error(
+                    "yield Coroutine.waitForSeconds instead of an int. Yielding an int will not work in a release build.");
+                coroutine.WaitTimer = (int) coroutine.Enumerator.Current;
+                return true;
+            }
+
+            if (coroutine.Enumerator.Current is float)
+            {
+                Debug.Error(
+                    "yield Coroutine.waitForSeconds instead of a float. Yielding a float will not work in a release build.");
+                coroutine.WaitTimer = (float) coroutine.Enumerator.Current;
+                return true;
+            }
+#endif
+
+            if (coroutine.Enumerator.Current is CoroutineImpl)
+            {
+                coroutine.WaitForCoroutine = coroutine.Enumerator.Current as CoroutineImpl;
+                return true;
+            }
+            // This coroutine yielded some value we don't understand. run it next frame.
+            return true;
+        }
+
+	    /// <summary>
+	    ///     internal class used by the CoroutineManager to hide the data it requires for a Coroutine
+	    /// </summary>
+	    private class CoroutineImpl : ICoroutine, IPoolable
+        {
+            public IEnumerator Enumerator;
+            public bool IsDone;
+            public bool UseUnscaledDeltaTime;
+            public CoroutineImpl WaitForCoroutine;
+
+	        /// <summary>
+	        ///     anytime a delay is yielded it is added to the waitTimer which tracks the delays
+	        /// </summary>
+	        public float WaitTimer;
 
 
-			void IPoolable.reset()
-			{
-				isDone = true;
-				waitTimer = 0;
-				waitForCoroutine = null;
-				enumerator = null;
-				useUnscaledDeltaTime = false;
-			}
-		}
+            public void Stop()
+            {
+                IsDone = true;
+            }
 
 
-		/// <summary>
-		/// flag to keep track of when we are in our update loop. If a new coroutine is started during the update loop we have to stick
-		/// it in the shouldRunNextFrame List to avoid modifying a List while we iterate.
-		/// </summary>
-		bool _isInUpdate;
-		List<CoroutineImpl> _unblockedCoroutines = new List<CoroutineImpl>();
-		List<CoroutineImpl> _shouldRunNextFrame = new List<CoroutineImpl>();
+            public ICoroutine SetUseUnscaledDeltaTime(bool useUnscaledDeltaTime)
+            {
+                this.UseUnscaledDeltaTime = useUnscaledDeltaTime;
+                return this;
+            }
 
 
-		/// <summary>
-		/// adds the IEnumerator to the CoroutineManager. Coroutines get ticked before Update is called each frame.
-		/// </summary>
-		/// <returns>The coroutine.</returns>
-		/// <param name="enumerator">Enumerator.</param>
-		public ICoroutine startCoroutine( IEnumerator enumerator )
-		{
-			// find or create a CoroutineImpl
-			var coroutine = Pool<CoroutineImpl>.obtain();
-			coroutine.prepareForReuse();
-
-			// setup the coroutine and add it
-			coroutine.enumerator = enumerator;
-			var shouldContinueCoroutine = tickCoroutine( coroutine );
-
-			// guard against empty coroutines
-			if( !shouldContinueCoroutine )
-				return null;
-
-			if( _isInUpdate )
-				_shouldRunNextFrame.Add( coroutine );
-			else
-				_unblockedCoroutines.Add( coroutine );
-
-			return coroutine;
-		}
+            void IPoolable.Reset()
+            {
+                IsDone = true;
+                WaitTimer = 0;
+                WaitForCoroutine = null;
+                Enumerator = null;
+                UseUnscaledDeltaTime = false;
+            }
 
 
-		void IUpdatableManager.update()
-		{
-			_isInUpdate = true;
-			for( var i = 0; i < _unblockedCoroutines.Count; i++ )
-			{
-				var coroutine = _unblockedCoroutines[i];
-
-				// check for stopped coroutines
-				if( coroutine.isDone )
-				{
-					Pool<CoroutineImpl>.free( coroutine );
-					continue;
-				}
-
-				// are we waiting for any other coroutines to finish?
-				if( coroutine.waitForCoroutine != null )
-				{
-					if( coroutine.waitForCoroutine.isDone )
-					{
-						coroutine.waitForCoroutine = null;
-					}
-					else
-					{
-						_shouldRunNextFrame.Add( coroutine );
-						continue;
-					}
-				}
-
-				// deal with timers if we have them
-				if( coroutine.waitTimer > 0 )
-				{
-					// still has time left. decrement and run again next frame being sure to decrement with the appropriate deltaTime.
-					coroutine.waitTimer -= coroutine.useUnscaledDeltaTime ? Time.unscaledDeltaTime : Time.deltaTime;
-					_shouldRunNextFrame.Add( coroutine );
-					continue;
-				}
-
-				if( tickCoroutine( coroutine ) )
-					_shouldRunNextFrame.Add( coroutine );
-			}
-
-			_unblockedCoroutines.Clear();
-			_unblockedCoroutines.AddRange( _shouldRunNextFrame );
-			_shouldRunNextFrame.Clear();
-
-			_isInUpdate = false;
-		}
-
-
-		/// <summary>
-		/// ticks a coroutine. returns true if the coroutine should continue to run next frame. This method will put finished coroutines
-		/// back in the Pool!
-		/// </summary>
-		/// <returns><c>true</c>, if coroutine was ticked, <c>false</c> otherwise.</returns>
-		/// <param name="coroutine">Coroutine.</param>
-		bool tickCoroutine( CoroutineImpl coroutine )
-		{
-			// This coroutine has finished
-			if( !coroutine.enumerator.MoveNext() || coroutine.isDone )
-			{
-				Pool<CoroutineImpl>.free( coroutine );
-				return false;
-			}
-
-			if( coroutine.enumerator.Current == null )
-			{
-				// yielded null. run again next frame
-				return true;
-			}
-
-			if( coroutine.enumerator.Current is WaitForSeconds )
-			{
-				coroutine.waitTimer = ( coroutine.enumerator.Current as WaitForSeconds ).waitTime;
-				return true;
-			}
-
-			#if DEBUG
-			// deprecation warning for yielding an int/float
-			if( coroutine.enumerator.Current is int )
-			{
-				Debug.error( "yield Coroutine.waitForSeconds instead of an int. Yielding an int will not work in a release build." );
-				coroutine.waitTimer = (int)coroutine.enumerator.Current;
-				return true;
-			}
-
-			if( coroutine.enumerator.Current is float )
-			{
-				Debug.error( "yield Coroutine.waitForSeconds instead of a float. Yielding a float will not work in a release build." );
-				coroutine.waitTimer = (float)coroutine.enumerator.Current;
-				return true;
-			}
-			#endif
-
-			if( coroutine.enumerator.Current is CoroutineImpl )
-			{
-				coroutine.waitForCoroutine = coroutine.enumerator.Current as CoroutineImpl;
-				return true;
-			}
-			else
-			{
-				// This coroutine yielded some value we don't understand. run it next frame.
-				return true;
-			}
-		}
-	
-	}
+            internal void PrepareForReuse()
+            {
+                IsDone = false;
+            }
+        }
+    }
 }
-

@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-
+﻿using Microsoft.Xna.Framework;
 
 namespace Nez.Overlap2D
 {
-	public class O2DScene
-	{
-		public string sceneName;
-		public Color ambientColor;
-		public O2DComposite composite;
-
-
-		public O2DScene()
-		{}
-
-	}
+    public class O2DScene
+    {
+        public Color AmbientColor;
+        public O2DComposite Composite;
+        public string SceneName;
+    }
 }
-

@@ -1,12 +1,8 @@
-﻿using System;
-
-
-namespace Nez.Particles
+﻿namespace Nez.Particles
 {
-	public enum ParticleEmitterType
-	{
-		Gravity,
-		Radial
-	}
+    public enum ParticleEmitterType
+    {
+        Gravity,
+        Radial
+    }
 }
-

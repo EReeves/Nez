@@ -1,341 +1,364 @@
 using System;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace Nez
 {
 	/// <summary>
-	/// convenience subclass with a single property that casts the Effect for cleaner configuration
+	///     convenience subclass with a single property that casts the Effect for cleaner configuration
 	/// </summary>
 	public class Material<T> : Material, IDisposable where T : Effect
-	{
-		public new T effect
-		{
-			get { return (T)base.effect; }
-			set { base.effect = value; }
-		}
+    {
+        public Material()
+        {
+        }
 
 
-		public Material()
-		{}
+        public Material(T effect) : base(effect)
+        {
+        }
+
+        public new T Effect
+        {
+            get => (T) base.Effect;
+            set => base.Effect = value;
+        }
+    }
 
 
-		public Material( T effect ) : base( effect )
-		{}
-	}
+    public class Material : IComparable<Material>, IDisposable
+    {
+	    /// <summary>
+	    ///     default Material instance
+	    /// </summary>
+	    public static Material DefaultMaterial = new Material();
+
+	    /// <summary>
+	    ///     default opaque Material used for PostProcessors
+	    /// </summary>
+	    public static Material DefaultOpaqueMaterial = new Material(BlendState.Opaque);
+
+	    /// <summary>
+	    ///     BlendState used by the Batcher for the current RenderableComponent
+	    /// </summary>
+	    public BlendState BlendState = BlendState.AlphaBlend;
+
+	    /// <summary>
+	    ///     DepthStencilState used by the Batcher for the current RenderableComponent
+	    /// </summary>
+	    public DepthStencilState DepthStencilState = DepthStencilState.None;
+
+	    /// <summary>
+	    ///     Effect used by the Batcher for the current RenderableComponent
+	    /// </summary>
+	    public Effect Effect;
+
+	    /// <summary>
+	    ///     SamplerState used by the Batcher for the current RenderableComponent
+	    /// </summary>
+	    public SamplerState SamplerState = Core.DefaultSamplerState;
 
 
-	public class Material : IComparable<Material>, IDisposable
-	{
-		/// <summary>
-		/// default Material instance
-		/// </summary>
-		public static Material defaultMaterial = new Material();
-
-		/// <summary>
-		/// default opaque Material used for PostProcessors
-		/// </summary>
-		public static Material defaultOpaqueMaterial = new Material( BlendState.Opaque );
-
-		/// <summary>
-		/// BlendState used by the Batcher for the current RenderableComponent
-		/// </summary>
-		public BlendState blendState = BlendState.AlphaBlend;
-
-		/// <summary>
-		/// DepthStencilState used by the Batcher for the current RenderableComponent
-		/// </summary>
-		public DepthStencilState depthStencilState = DepthStencilState.None;
-
-		/// <summary>
-		/// SamplerState used by the Batcher for the current RenderableComponent
-		/// </summary>
-		public SamplerState samplerState = Core.defaultSamplerState;
-
-		/// <summary>
-		/// Effect used by the Batcher for the current RenderableComponent
-		/// </summary>
-		public Effect effect;
+        public Material()
+        {
+        }
 
 
-		#region Static common states
-
-		// BlendStates can be made to work with transparency by adding the following:
-		// - AlphaSourceBlend = Blend.SourceAlpha, 
-		// - AlphaDestinationBlend = Blend.InverseSourceAlpha 
-
-		public static Material stencilWrite( int stencilRef = 1 )
-		{
-			return new Material {
-				depthStencilState = new DepthStencilState {
-					StencilEnable = true,
-					StencilFunction = CompareFunction.Always,
-					StencilPass = StencilOperation.Replace,
-					ReferenceStencil = stencilRef,
-					DepthBufferEnable = false,
-				}
-			};
-		}
+        public Material(Effect effect)
+        {
+            this.Effect = effect;
+        }
 
 
-		public static Material stencilRead( int stencilRef = 1 )
-		{
-			return new Material
-			{
-				depthStencilState = new DepthStencilState {
-					StencilEnable = true,
-					StencilFunction = CompareFunction.Equal,
-					StencilPass = StencilOperation.Keep,
-					ReferenceStencil = stencilRef,
-					DepthBufferEnable = false
-				}
-			};
-		}
+        public Material(BlendState blendState, Effect effect = null)
+        {
+            this.BlendState = blendState;
+            this.Effect = effect;
+        }
 
 
-		public static Material blendDarken()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.One,
-					ColorDestinationBlend = Blend.One,
-					ColorBlendFunction = BlendFunction.Min,
-					AlphaSourceBlend = Blend.One,
-					AlphaDestinationBlend = Blend.One,
-					AlphaBlendFunction = BlendFunction.Min
-				}
-			};
-		}
+        public Material(DepthStencilState depthStencilState, Effect effect = null)
+        {
+            this.DepthStencilState = depthStencilState;
+            this.Effect = effect;
+        }
 
 
-		public static Material blendLighten()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.One,
-					ColorDestinationBlend = Blend.One,
-					ColorBlendFunction = BlendFunction.Max,
-					AlphaSourceBlend = Blend.One,
-					AlphaDestinationBlend = Blend.One,
-					AlphaBlendFunction = BlendFunction.Max
-				}
-			};
-		}
+	    /// <Docs>To be added.</Docs>
+	    /// <para>Returns the sort order of the current instance compared to the specified object.</para>
+	    /// <summary>
+	    ///     very basic here. We only check if the pointers are the same
+	    /// </summary>
+	    /// <returns>The to.</returns>
+	    /// <param name="other">Other.</param>
+	    public int CompareTo(Material other)
+        {
+            if (ReferenceEquals(other, null))
+                return 1;
+
+            if (ReferenceEquals(this, other))
+                return 0;
+
+            return -1;
+        }
 
 
-		public static Material blendScreen()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.InverseDestinationColor,
-					ColorDestinationBlend = Blend.One,
-					ColorBlendFunction = BlendFunction.Add
-				}
-			};
-		}
+        public virtual void Dispose()
+        {
+            if (BlendState != null && BlendState != BlendState.AlphaBlend)
+            {
+                BlendState.Dispose();
+                BlendState = null;
+            }
+
+            if (DepthStencilState != null && DepthStencilState != DepthStencilState.None)
+            {
+                DepthStencilState.Dispose();
+                DepthStencilState = null;
+            }
+
+            if (SamplerState != null && SamplerState != Core.DefaultSamplerState)
+            {
+                SamplerState.Dispose();
+                SamplerState = null;
+            }
+
+            if (Effect != null)
+            {
+                Effect.Dispose();
+                Effect = null;
+            }
+        }
 
 
-		public static Material blendMultiply()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.DestinationColor,
-					ColorDestinationBlend = Blend.Zero,
-					ColorBlendFunction = BlendFunction.Add,
-					AlphaSourceBlend = Blend.DestinationAlpha,
-					AlphaDestinationBlend = Blend.Zero,
-					AlphaBlendFunction = BlendFunction.Add
-
-				}
-			};
-		}
+        ~Material()
+        {
+            Dispose();
+        }
 
 
-		/// <summary>
-		/// blend equation is sourceColor * sourceBlend + destinationColor * destinationBlend so this works out to sourceColor * destinationColor * 2
-		/// and results in colors < 0.5 darkening and colors > 0.5 lightening the base
-		/// </summary>
-		public static Material blendMultiply2x()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.DestinationColor,
-					ColorDestinationBlend = Blend.SourceColor,
-					ColorBlendFunction = BlendFunction.Add
-				}
-			};
-		}
+	    /// <summary>
+	    ///     called when the Material is initialy set right before Batcher.begin to allow any Effects that have parameters set
+	    ///     if necessary
+	    ///     based on the Camera Matrix such as to set the MatrixTransform via camera.viewProjectionMatrix mimicking what
+	    ///     Batcher does. This will
+	    ///     only be called if there is a non-null Effect.
+	    /// </summary>
+	    /// <param name="camera">Camera.</param>
+	    public virtual void OnPreRender(Camera camera)
+        {
+        }
 
 
-		public static Material blendLinearDodge()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.One,
-					ColorDestinationBlend = Blend.One,
-					ColorBlendFunction = BlendFunction.Add
-				}
-			};
-		}
+	    /// <summary>
+	    ///     clones the Material. Note that the Effect is not cloned. It is the same instance as the original Material.
+	    /// </summary>
+	    public Material Clone()
+        {
+            return new Material
+            {
+                BlendState = BlendState,
+                DepthStencilState = DepthStencilState,
+                SamplerState = SamplerState,
+                Effect = Effect
+            };
+        }
 
 
-		public static Material blendLinearBurn()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.One,
-					ColorDestinationBlend = Blend.One,
-					ColorBlendFunction = BlendFunction.ReverseSubtract
-				}
-			};
-		}
+        #region Static common states
+
+        // BlendStates can be made to work with transparency by adding the following:
+        // - AlphaSourceBlend = Blend.SourceAlpha, 
+        // - AlphaDestinationBlend = Blend.InverseSourceAlpha 
+
+        public static Material StencilWrite(int stencilRef = 1)
+        {
+            return new Material
+            {
+                DepthStencilState = new DepthStencilState
+                {
+                    StencilEnable = true,
+                    StencilFunction = CompareFunction.Always,
+                    StencilPass = StencilOperation.Replace,
+                    ReferenceStencil = stencilRef,
+                    DepthBufferEnable = false
+                }
+            };
+        }
 
 
-		public static Material blendDifference()
-		{
-			return new Material {
-				blendState = new BlendState {
-					ColorSourceBlend = Blend.InverseDestinationColor,
-					ColorDestinationBlend = Blend.InverseSourceColor,
-					ColorBlendFunction = BlendFunction.Add
-				}
-			};
-		}
+        public static Material StencilRead(int stencilRef = 1)
+        {
+            return new Material
+            {
+                DepthStencilState = new DepthStencilState
+                {
+                    StencilEnable = true,
+                    StencilFunction = CompareFunction.Equal,
+                    StencilPass = StencilOperation.Keep,
+                    ReferenceStencil = stencilRef,
+                    DepthBufferEnable = false
+                }
+            };
+        }
 
 
-		public static Material blendSubtractive()
-		{
-			return new Material
-			{
-				blendState = new BlendState
-				{
-					ColorSourceBlend = Blend.SourceAlpha,
-					ColorDestinationBlend = Blend.One,
-					ColorBlendFunction = BlendFunction.ReverseSubtract,
-					AlphaSourceBlend = Blend.SourceAlpha,
-					AlphaDestinationBlend = Blend.One,
-					AlphaBlendFunction = BlendFunction.ReverseSubtract
-				}
-			};
-		}
+        public static Material BlendDarken()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.One,
+                    ColorDestinationBlend = Blend.One,
+                    ColorBlendFunction = BlendFunction.Min,
+                    AlphaSourceBlend = Blend.One,
+                    AlphaDestinationBlend = Blend.One,
+                    AlphaBlendFunction = BlendFunction.Min
+                }
+            };
+        }
 
 
-		public static Material blendAdditive()
-		{
-			return new Material
-			{
-				blendState = new BlendState
-				{
-					ColorSourceBlend = Blend.SourceAlpha,
-					ColorDestinationBlend = Blend.One,
-					AlphaSourceBlend = Blend.SourceAlpha,
-					AlphaDestinationBlend = Blend.One
-				}
-			};
-		}
-
-		#endregion
-
-
-		public Material()
-		{}
+        public static Material BlendLighten()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.One,
+                    ColorDestinationBlend = Blend.One,
+                    ColorBlendFunction = BlendFunction.Max,
+                    AlphaSourceBlend = Blend.One,
+                    AlphaDestinationBlend = Blend.One,
+                    AlphaBlendFunction = BlendFunction.Max
+                }
+            };
+        }
 
 
-		public Material( Effect effect )
-		{
-			this.effect = effect;
-		}
+        public static Material BlendScreen()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.InverseDestinationColor,
+                    ColorDestinationBlend = Blend.One,
+                    ColorBlendFunction = BlendFunction.Add
+                }
+            };
+        }
 
 
-		public Material( BlendState blendState, Effect effect = null )
-		{
-			this.blendState = blendState;
-			this.effect = effect;
-		}
+        public static Material BlendMultiply()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.DestinationColor,
+                    ColorDestinationBlend = Blend.Zero,
+                    ColorBlendFunction = BlendFunction.Add,
+                    AlphaSourceBlend = Blend.DestinationAlpha,
+                    AlphaDestinationBlend = Blend.Zero,
+                    AlphaBlendFunction = BlendFunction.Add
+                }
+            };
+        }
 
 
-		public Material( DepthStencilState depthStencilState, Effect effect = null )
-		{
-			this.depthStencilState = depthStencilState;
-			this.effect = effect;
-		}
+	    /// <summary>
+	    ///     blend equation is sourceColor * sourceBlend + destinationColor * destinationBlend so this works out to sourceColor
+	    ///     * destinationColor * 2
+	    ///     and results in colors < 0.5 darkening and colors> 0.5 lightening the base
+	    /// </summary>
+	    public static Material BlendMultiply2X()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.DestinationColor,
+                    ColorDestinationBlend = Blend.SourceColor,
+                    ColorBlendFunction = BlendFunction.Add
+                }
+            };
+        }
 
 
-		~Material()
-		{
-			Dispose();
-		}
+        public static Material BlendLinearDodge()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.One,
+                    ColorDestinationBlend = Blend.One,
+                    ColorBlendFunction = BlendFunction.Add
+                }
+            };
+        }
 
 
-		public virtual void Dispose()
-		{
-			if( blendState != null && blendState != BlendState.AlphaBlend )
-			{
-				blendState.Dispose();
-				blendState = null;
-			}
-
-			if( depthStencilState != null && depthStencilState != DepthStencilState.None )
-			{
-				depthStencilState.Dispose();
-				depthStencilState = null;
-			}
-
-			if( samplerState != null && samplerState != Core.defaultSamplerState )
-			{
-				samplerState.Dispose();
-				samplerState = null;
-			}
-
-			if( effect != null )
-			{
-				effect.Dispose();
-				effect = null;
-			}
-		}
+        public static Material BlendLinearBurn()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.One,
+                    ColorDestinationBlend = Blend.One,
+                    ColorBlendFunction = BlendFunction.ReverseSubtract
+                }
+            };
+        }
 
 
-		/// <summary>
-		/// called when the Material is initialy set right before Batcher.begin to allow any Effects that have parameters set if necessary
-		/// based on the Camera Matrix such as to set the MatrixTransform via camera.viewProjectionMatrix mimicking what Batcher does. This will
-		/// only be called if there is a non-null Effect.
-		/// </summary>
-		/// <param name="camera">Camera.</param>
-		public virtual void onPreRender( Camera camera )
-		{}
+        public static Material BlendDifference()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.InverseDestinationColor,
+                    ColorDestinationBlend = Blend.InverseSourceColor,
+                    ColorBlendFunction = BlendFunction.Add
+                }
+            };
+        }
 
 
-		/// <Docs>To be added.</Docs>
-		/// <para>Returns the sort order of the current instance compared to the specified object.</para>
-		/// <summary>
-		/// very basic here. We only check if the pointers are the same
-		/// </summary>
-		/// <returns>The to.</returns>
-		/// <param name="other">Other.</param>
-		public int CompareTo( Material other )
-		{
-			if( object.ReferenceEquals( other, null ) )
-				return 1;
-
-			if( object.ReferenceEquals( this, other ) )
-				return 0;
-
-			return -1;
-		}
+        public static Material BlendSubtractive()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.SourceAlpha,
+                    ColorDestinationBlend = Blend.One,
+                    ColorBlendFunction = BlendFunction.ReverseSubtract,
+                    AlphaSourceBlend = Blend.SourceAlpha,
+                    AlphaDestinationBlend = Blend.One,
+                    AlphaBlendFunction = BlendFunction.ReverseSubtract
+                }
+            };
+        }
 
 
-		/// <summary>
-		/// clones the Material. Note that the Effect is not cloned. It is the same instance as the original Material.
-		/// </summary>
-		public Material clone()
-		{
-			return new Material {
-				blendState = blendState,
-				depthStencilState = depthStencilState,
-				samplerState = samplerState,
-				effect = effect
-			};
-		}
-	}
+        public static Material BlendAdditive()
+        {
+            return new Material
+            {
+                BlendState = new BlendState
+                {
+                    ColorSourceBlend = Blend.SourceAlpha,
+                    ColorDestinationBlend = Blend.One,
+                    AlphaSourceBlend = Blend.SourceAlpha,
+                    AlphaDestinationBlend = Blend.One
+                }
+            };
+        }
+
+        #endregion
+    }
 }
-

@@ -1,24 +1,18 @@
-﻿using System;
-
-
-namespace Nez.AI.UtilityAI
+﻿namespace Nez.AI.UtilityAI
 {
 	/// <summary>
-	/// The first Consideration to score above the score of the Default Consideration is selected
+	///     The first Consideration to score above the score of the Default Consideration is selected
 	/// </summary>
 	public class FirstScoreReasoner<T> : Reasoner<T>
-	{
-		protected override IConsideration<T> selectBestConsideration( T context )
-		{
-			var defaultScore = defaultConsideration.getScore( context );
-			for( var i = 0; i < _considerations.Count; i++ )
-			{
-				if( _considerations[i].getScore( context ) >= defaultScore )
-					return _considerations[i];
-			}
+    {
+        protected override IConsideration<T> SelectBestConsideration(T context)
+        {
+            var defaultScore = DefaultConsideration.GetScore(context);
+            for (var i = 0; i < Considerations.Count; i++)
+                if (Considerations[i].GetScore(context) >= defaultScore)
+                    return Considerations[i];
 
-			return defaultConsideration;
-		}
-	}
+            return DefaultConsideration;
+        }
+    }
 }
-

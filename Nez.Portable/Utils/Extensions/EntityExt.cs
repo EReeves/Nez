@@ -1,113 +1,111 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 
-
 namespace Nez
 {
-	public static class EntityExt
-	{
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setParent( this Entity self, Transform parent )
-		{
-			self.transform.setParent( parent );
-			return self;
-		}
+    public static class EntityExt
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetParent(this Entity self, Transform parent)
+        {
+            self.Transform.SetParent(parent);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setParent( this Entity self, Entity entity )
-		{
-			self.transform.setParent( entity.transform );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetParent(this Entity self, Entity entity)
+        {
+            self.Transform.SetParent(entity.Transform);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setPosition( this Entity self, Vector2 position )
-		{
-			self.transform.setPosition( position );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetPosition(this Entity self, Vector2 position)
+        {
+            self.Transform.SetPosition(position);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setPosition( this Entity self, float x, float y )
-		{
-			self.transform.setPosition( x, y );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetPosition(this Entity self, float x, float y)
+        {
+            self.Transform.SetPosition(x, y);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setLocalPosition( this Entity self, Vector2 localPosition )
-		{
-			self.transform.setLocalPosition( localPosition );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetLocalPosition(this Entity self, Vector2 localPosition)
+        {
+            self.Transform.SetLocalPosition(localPosition);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setRotation( this Entity self, float radians )
-		{
-			self.transform.setRotation( radians );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetRotation(this Entity self, float radians)
+        {
+            self.Transform.SetRotation(radians);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setRotationDegrees( this Entity self, float degrees )
-		{
-			self.transform.setRotationDegrees( degrees );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetRotationDegrees(this Entity self, float degrees)
+        {
+            self.Transform.SetRotationDegrees(degrees);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setLocalRotation( this Entity self, float radians )
-		{
-			self.transform.setLocalRotation( radians );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetLocalRotation(this Entity self, float radians)
+        {
+            self.Transform.SetLocalRotation(radians);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setLocalRotationDegrees( this Entity self, float degrees )
-		{
-			self.transform.setLocalRotationDegrees( degrees );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetLocalRotationDegrees(this Entity self, float degrees)
+        {
+            self.Transform.SetLocalRotationDegrees(degrees);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setScale( this Entity self, Vector2 scale )
-		{
-			self.transform.setScale( scale );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetScale(this Entity self, Vector2 scale)
+        {
+            self.Transform.SetScale(scale);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setScale( this Entity self, float scale )
-		{
-			self.transform.setScale( scale );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetScale(this Entity self, float scale)
+        {
+            self.Transform.SetScale(scale);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setLocalScale( this Entity self, Vector2 scale )
-		{
-			self.transform.setLocalScale( scale );
-			return self;
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetLocalScale(this Entity self, Vector2 scale)
+        {
+            self.Transform.SetLocalScale(scale);
+            return self;
+        }
 
 
-		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static Entity setLocalScale( this Entity self, float scale )
-		{
-			self.transform.setLocalScale( scale );
-			return self;
-		}
-
-	}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Entity SetLocalScale(this Entity self, float scale)
+        {
+            self.Transform.SetLocalScale(scale);
+            return self;
+        }
+    }
 }

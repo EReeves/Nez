@@ -1,34 +1,34 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace Nez.Tiled
 {
-	public class TiledImageLayer : TiledLayer
-	{
-		public readonly Texture2D texture;
+    public class TiledImageLayer : TiledLayer
+    {
+        public readonly Texture2D Texture;
 
-		RectangleF _bounds;
-
-
-		public TiledImageLayer( string name, Texture2D texture ) : base( name )
-		{
-			this.texture = texture;
-			_bounds.width = texture.Width;
-			_bounds.height = texture.Height;
-		}
+        private RectangleF _bounds;
 
 
-		public void draw( Batcher batcher )
-		{
-			batcher.draw( texture, offset, Color.White );
-		}
+        public TiledImageLayer(string name, Texture2D texture) : base(name)
+        {
+            this.Texture = texture;
+            _bounds.Width = texture.Width;
+            _bounds.Height = texture.Height;
+        }
 
 
-		public override void draw( Batcher batcher, Vector2 parentPosition, float layerDepth, RectangleF cameraClipBounds )
-		{
-			batcher.draw( texture, parentPosition + offset, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, layerDepth );
-		}
+        public void Draw(Batcher batcher)
+        {
+            batcher.Draw(Texture, Offset, Color.White);
+        }
 
-	}
+
+        public override void Draw(Batcher batcher, Vector2 parentPosition, float layerDepth,
+            RectangleF cameraClipBounds)
+        {
+            batcher.Draw(Texture, parentPosition + Offset, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None,
+                layerDepth);
+        }
+    }
 }

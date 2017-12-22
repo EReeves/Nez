@@ -1,98 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 
 namespace Nez
 {
-	public class EntityProcessorList
-	{
-		protected List<EntitySystem> _processors = new List<EntitySystem>();
+    public class EntityProcessorList
+    {
+        protected List<EntitySystem> Processors = new List<EntitySystem>();
 
 
-		public void add( EntitySystem processor )
-		{
-			_processors.Add( processor );
-		}
-
-
-		public void remove( EntitySystem processor )
-		{
-			_processors.Remove( processor );
-		}
-
-
-		public virtual void onComponentAdded( Entity entity )
-		{
-			notifyEntityChanged( entity );
-		}
-
-
-		public virtual void onComponentRemoved( Entity entity )
-		{
-			notifyEntityChanged( entity );
-		}
-
-
-		public virtual void onEntityAdded( Entity entity )
-		{
-			notifyEntityChanged( entity );
-		}
-
-
-		public virtual void onEntityRemoved( Entity entity )
-		{
-			removeFromProcessors( entity );
-		}
-
-
-		protected virtual void notifyEntityChanged( Entity entity )
-		{
-			for( var i = 0; i < _processors.Count; i++ )
-				_processors[i].onChange( entity );
-		}
-
-
-		protected virtual void removeFromProcessors( Entity entity )
-		{
-			for( var i = 0; i < _processors.Count; i++ )
-				_processors[i].remove( entity );
-		}
-
-
-		public void begin()
-		{}
-
-
-		public void update()
-		{
-			for( var i = 0; i < _processors.Count; i++ )
-				_processors[i].update();
-		}
-
-
-        public void lateUpdate()
+        public void Add(EntitySystem processor)
         {
-            for( var i = 0; i < _processors.Count; i++ )
-                _processors[ i ].lateUpdate();
+            Processors.Add(processor);
         }
 
 
-        public void end()
-		{}
+        public void Remove(EntitySystem processor)
+        {
+            Processors.Remove(processor);
+        }
 
 
-		public T getProcessor<T>() where T : EntitySystem
-		{
-			for( var i = 0; i < _processors.Count; i++ )
-			{
-				var processor = _processors[i];
-				if( processor is T )
-					return processor as T;
-			}
+        public virtual void OnComponentAdded(Entity entity)
+        {
+            NotifyEntityChanged(entity);
+        }
 
-			return null;
-		}
 
-	}
+        public virtual void OnComponentRemoved(Entity entity)
+        {
+            NotifyEntityChanged(entity);
+        }
+
+
+        public virtual void OnEntityAdded(Entity entity)
+        {
+            NotifyEntityChanged(entity);
+        }
+
+
+        public virtual void OnEntityRemoved(Entity entity)
+        {
+            RemoveFromProcessors(entity);
+        }
+
+
+        protected virtual void NotifyEntityChanged(Entity entity)
+        {
+            for (var i = 0; i < Processors.Count; i++)
+                Processors[i].OnChange(entity);
+        }
+
+
+        protected virtual void RemoveFromProcessors(Entity entity)
+        {
+            for (var i = 0; i < Processors.Count; i++)
+                Processors[i].Remove(entity);
+        }
+
+
+        public void Begin()
+        {
+        }
+
+
+        public void Update()
+        {
+            for (var i = 0; i < Processors.Count; i++)
+                Processors[i].Update();
+        }
+
+
+        public void LateUpdate()
+        {
+            for (var i = 0; i < Processors.Count; i++)
+                Processors[i].LateUpdate();
+        }
+
+
+        public void End()
+        {
+        }
+
+
+        public T GetProcessor<T>() where T : EntitySystem
+        {
+            for (var i = 0; i < Processors.Count; i++)
+            {
+                var processor = Processors[i];
+                if (processor is T)
+                    return processor as T;
+            }
+
+            return null;
+        }
+    }
 }
-

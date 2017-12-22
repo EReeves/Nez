@@ -1,17 +1,13 @@
 ﻿using System.Xml.Serialization;
 
-
 namespace Nez.Svg
 {
-	public class SvgCircle : SvgElement
-	{
-		[XmlAttribute( "r" )]
-		public float radius;
+    public class SvgCircle : SvgElement
+    {
+        [XmlAttribute("cx")] public float CenterX;
 
-		[XmlAttribute( "cy" )]
-		public float centerY;
+        [XmlAttribute("cy")] public float CenterY;
 
-		[XmlAttribute( "cx" )]
-		public float centerX;
-	}
+        [XmlAttribute("r")] public float Radius;
+    }
 }

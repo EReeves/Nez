@@ -1,612 +1,516 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
-
 namespace Nez
 {
 	/// <summary>
-	/// A virtual input that is represented as a boolean. As well as simply checking the current button state, you can ask whether
-	/// it was just pressed or released this frame. You can also keep the button press stored in a buffer for a limited time, or
-	/// until it is consumed by calling consumeBuffer()
+	///     A virtual input that is represented as a boolean. As well as simply checking the current button state, you can ask
+	///     whether
+	///     it was just pressed or released this frame. You can also keep the button press stored in a buffer for a limited
+	///     time, or
+	///     until it is consumed by calling consumeBuffer()
 	/// </summary>
 	public class VirtualButton : VirtualInput
-	{
-		public List<Node> nodes;
-		public float bufferTime;
-		public float firstRepeatTime;
-		public float multiRepeatTime;
-		public bool isRepeating { get; private set; }
-
-		float _bufferCounter;
-		float _repeatCounter;
-		bool _willRepeat;
-
-
-		public VirtualButton( float bufferTime )
-		{
-			nodes = new List<Node>();
-			this.bufferTime = bufferTime;
-		}
-
-
-		public VirtualButton() : this( 0 )
-		{ }
-
-
-		public VirtualButton( float bufferTime, params Node[] nodes )
-		{
-			this.nodes = new List<Node>( nodes );
-			this.bufferTime = bufferTime;
-		}
-
-
-		public VirtualButton( params Node[] nodes ) : this( 0, nodes )
-		{ }
-
-
-		public void setRepeat( float repeatTime )
-		{
-			setRepeat( repeatTime, repeatTime );
-		}
-
-
-		public void setRepeat( float firstRepeatTime, float multiRepeatTime )
-		{
-			this.firstRepeatTime = firstRepeatTime;
-			this.multiRepeatTime = multiRepeatTime;
-			_willRepeat = firstRepeatTime > 0;
-			if( !_willRepeat )
-				isRepeating = false;
-		}
-
-
-		public override void update()
-		{
-			_bufferCounter -= Time.unscaledDeltaTime;
-
-			var check = false;
-			for( var i = 0; i < nodes.Count; i++ )
-			{
-				nodes[i].update();
-				if( nodes[i].isPressed )
-				{
-					_bufferCounter = bufferTime;
-					check = true;
-				}
-				else if( nodes[i].isDown )
-				{
-					check = true;
-				}
-			}
-
-			if( !check )
-			{
-				_repeatCounter = 0;
-				_bufferCounter = 0;
-			}
-			else if( _willRepeat )
-			{
-				isRepeating = false;
-				if( _repeatCounter == 0 )
-				{
-					_repeatCounter = firstRepeatTime;
-				}
-				else
-				{
-					_repeatCounter -= Time.unscaledDeltaTime;
-					if( _repeatCounter <= 0 )
-					{
-						isRepeating = true;
-						_repeatCounter = multiRepeatTime;
-					}
-				}
-			}
-		}
-
-
-		public bool isDown
-		{
-			get
-			{
-				foreach( var node in nodes )
-					if( node.isDown )
-						return true;
-				return false;
-			}
-		}
-
-
-		public bool isPressed
-		{
-			get
-			{
-				if( _bufferCounter > 0 || isRepeating )
-					return true;
-
-				foreach( var node in nodes )
-					if( node.isPressed )
-						return true;
-				return false;
-			}
-		}
-
-
-		public bool isReleased
-		{
-			get
-			{
-				foreach( var node in nodes )
-					if( node.isReleased )
-						return true;
-				return false;
-			}
-		}
-
-
-		public void consumeBuffer()
-		{
-			_bufferCounter = 0;
-		}
-
-
-		#region Node management
-
-		/// <summary>
-		/// adds a keyboard key to this VirtualButton
-		/// </summary>
-		/// <returns>The keyboard key.</returns>
-		/// <param name="key">Key.</param>
-		public VirtualButton addKeyboardKey( Keys key )
-		{
-			nodes.Add( new KeyboardKey( key ) );
-			return this;
-		}
-
-
-		/// <summary>
-		/// adds a keyboard key with modifier to this VirtualButton. modifier must be in the down state for isPressed/isDown to be true.
-		/// </summary>
-		/// <returns>The keyboard key.</returns>
-		/// <param name="key">Key.</param>
-		/// <param name="modifier">Modifier.</param>
-		public VirtualButton addKeyboardKey( Keys key, Keys modifier )
-		{
-			nodes.Add( new KeyboardModifiedKey( key, modifier ) );
-			return this;
-		}
-
-
-		/// <summary>
-		/// adds a GamePad buttons press to this VirtualButton
-		/// </summary>
-		/// <returns>The game pad button.</returns>
-		/// <param name="gamepadIndex">Gamepad index.</param>
-		/// <param name="button">Button.</param>
-		public VirtualButton addGamePadButton( int gamepadIndex, Buttons button )
-		{
-			nodes.Add( new GamePadButton( gamepadIndex, button ) );
-			return this;
-		}
-
-
-		/// <summary>
-		/// adds a GamePad left trigger press to this VirtualButton
-		/// </summary>
-		/// <returns>The game pad left trigger.</returns>
-		/// <param name="gamepadIndex">Gamepad index.</param>
-		/// <param name="threshold">Threshold.</param>
-		public VirtualButton addGamePadLeftTrigger( int gamepadIndex, float threshold )
-		{
-			nodes.Add( new GamePadLeftTrigger( gamepadIndex, threshold ) );
-			return this;
-		}
-
-
-		/// <summary>
-		/// adds a GamePad right trigger press to this VirtualButton
-		/// </summary>
-		/// <returns>The game pad right trigger.</returns>
-		/// <param name="gamepadIndex">Gamepad index.</param>
-		/// <param name="threshold">Threshold.</param>
-		public VirtualButton addGamePadRightTrigger( int gamepadIndex, float threshold )
-		{
-			nodes.Add( new GamePadRightTrigger( gamepadIndex, threshold ) );
-			return this;
-		}
-
-
-		/// <summary>
-		/// adds a GamePad DPad press to this VirtualButton
-		/// </summary>
-		/// <returns>The game pad DP ad.</returns>
-		/// <param name="gamepadIndex">Gamepad index.</param>
-		/// <param name="direction">Direction.</param>
-		public VirtualButton addGamePadDPad( int gamepadIndex, Direction direction )
-		{
-			switch( direction )
-			{
-				case Direction.Up:
-					nodes.Add( new GamePadDPadUp( gamepadIndex ) );
-					break;
-				case Direction.Down:
-					nodes.Add( new GamePadDPadDown( gamepadIndex ) );
-					break;
-				case Direction.Left:
-					nodes.Add( new GamePadDPadLeft( gamepadIndex ) );
-					break;
-				case Direction.Right:
-					nodes.Add( new GamePadDPadRight( gamepadIndex ) );
-					break;
-			}
-
-			return this;
-		}
-
-
-		/// <summary>
-		/// adds a left mouse click to this VirtualButton
-		/// </summary>
-		/// <returns>The mouse left button.</returns>
-		public VirtualButton addMouseLeftButton()
-		{
-			nodes.Add( new MouseLeftButton() );
-			return this;
-		}
-
-
-		/// <summary>
-		/// adds a right mouse click to this VirtualButton
-		/// </summary>
-		/// <returns>The mouse right button.</returns>
-		public VirtualButton addMouseRightButton()
-		{
-			nodes.Add( new MouseRightButton() );
-			return this;
-		}
-
-		#endregion
-
-
-		static public implicit operator bool( VirtualButton button )
-		{
-			return button.isDown;
-		}
-
-
-		#region Node types
-
-		public abstract class Node : VirtualInputNode
-		{
-			public abstract bool isDown { get; }
-			public abstract bool isPressed { get; }
-			public abstract bool isReleased { get; }
-		}
-
-
-		#region Keyboard
-
-		public class KeyboardKey : Node
-		{
-			public Keys key;
-
-
-			public KeyboardKey( Keys key )
-			{
-				this.key = key;
-			}
-
-
-			public override bool isDown
-			{
-				get { return Input.isKeyDown( key ); }
-			}
-
-
-			public override bool isPressed
-			{
-				get { return Input.isKeyPressed( key ); }
-			}
-
-
-			public override bool isReleased
-			{
-				get { return Input.isKeyReleased( key ); }
-			}
-		}
-
-
-		/// <summary>
-		/// works like KeyboardKey except the modifier key must also be down for isDown/isPressed to be true. isReleased checks only key.
-		/// </summary>
-		public class KeyboardModifiedKey : Node
-		{
-			public Keys key;
-			public Keys modifier;
-
-
-			public KeyboardModifiedKey( Keys key, Keys modifier )
-			{
-				this.key = key;
-				this.modifier = modifier;
-			}
-
-
-			public override bool isDown
-			{
-				get { return Input.isKeyDown( modifier ) && Input.isKeyDown( key ); }
-			}
-
-
-			public override bool isPressed
-			{
-				get { return Input.isKeyDown( modifier ) && Input.isKeyPressed( key ); }
-			}
-
-
-			public override bool isReleased
-			{
-				get { return Input.isKeyReleased( key ); }
-			}
-		}
-
-		#endregion
-
-
-		#region GamePad Buttons and Triggers
-
-		public class GamePadButton : Node
-		{
-			public int gamepadIndex;
-			public Buttons button;
-
-
-			public GamePadButton( int gamepadIndex, Buttons button )
-			{
-				this.gamepadIndex = gamepadIndex;
-				this.button = button;
-			}
-
+    {
+        private float _bufferCounter;
+        private float _repeatCounter;
+        private bool _willRepeat;
+        public float BufferTime;
+        public float FirstRepeatTime;
+        public float MultiRepeatTime;
+        public List<Node> Nodes;
+
+
+        public VirtualButton(float bufferTime)
+        {
+            Nodes = new List<Node>();
+            this.BufferTime = bufferTime;
+        }
+
+
+        public VirtualButton() : this(0)
+        {
+        }
+
+
+        public VirtualButton(float bufferTime, params Node[] nodes)
+        {
+            this.Nodes = new List<Node>(nodes);
+            this.BufferTime = bufferTime;
+        }
+
+
+        public VirtualButton(params Node[] nodes) : this(0, nodes)
+        {
+        }
+
+        public bool IsRepeating { get; private set; }
+
+
+        public bool IsDown
+        {
+            get
+            {
+                foreach (var node in Nodes)
+                    if (node.IsDown)
+                        return true;
+                return false;
+            }
+        }
+
+
+        public bool IsPressed
+        {
+            get
+            {
+                if (_bufferCounter > 0 || IsRepeating)
+                    return true;
+
+                foreach (var node in Nodes)
+                    if (node.IsPressed)
+                        return true;
+                return false;
+            }
+        }
+
+
+        public bool IsReleased
+        {
+            get
+            {
+                foreach (var node in Nodes)
+                    if (node.IsReleased)
+                        return true;
+                return false;
+            }
+        }
+
+
+        public void SetRepeat(float repeatTime)
+        {
+            SetRepeat(repeatTime, repeatTime);
+        }
+
+
+        public void SetRepeat(float firstRepeatTime, float multiRepeatTime)
+        {
+            this.FirstRepeatTime = firstRepeatTime;
+            this.MultiRepeatTime = multiRepeatTime;
+            _willRepeat = firstRepeatTime > 0;
+            if (!_willRepeat)
+                IsRepeating = false;
+        }
+
+
+        public override void Update()
+        {
+            _bufferCounter -= Time.UnscaledDeltaTime;
+
+            var check = false;
+            for (var i = 0; i < Nodes.Count; i++)
+            {
+                Nodes[i].Update();
+                if (Nodes[i].IsPressed)
+                {
+                    _bufferCounter = BufferTime;
+                    check = true;
+                }
+                else if (Nodes[i].IsDown)
+                {
+                    check = true;
+                }
+            }
+
+            if (!check)
+            {
+                _repeatCounter = 0;
+                _bufferCounter = 0;
+            }
+            else if (_willRepeat)
+            {
+                IsRepeating = false;
+                if (_repeatCounter == 0)
+                {
+                    _repeatCounter = FirstRepeatTime;
+                }
+                else
+                {
+                    _repeatCounter -= Time.UnscaledDeltaTime;
+                    if (_repeatCounter <= 0)
+                    {
+                        IsRepeating = true;
+                        _repeatCounter = MultiRepeatTime;
+                    }
+                }
+            }
+        }
+
+
+        public void ConsumeBuffer()
+        {
+            _bufferCounter = 0;
+        }
+
+
+        public static implicit operator bool(VirtualButton button)
+        {
+            return button.IsDown;
+        }
+
+
+        #region Node management
+
+	    /// <summary>
+	    ///     adds a keyboard key to this VirtualButton
+	    /// </summary>
+	    /// <returns>The keyboard key.</returns>
+	    /// <param name="key">Key.</param>
+	    public VirtualButton AddKeyboardKey(Keys key)
+        {
+            Nodes.Add(new KeyboardKey(key));
+            return this;
+        }
+
+
+	    /// <summary>
+	    ///     adds a keyboard key with modifier to this VirtualButton. modifier must be in the down state for isPressed/isDown to
+	    ///     be true.
+	    /// </summary>
+	    /// <returns>The keyboard key.</returns>
+	    /// <param name="key">Key.</param>
+	    /// <param name="modifier">Modifier.</param>
+	    public VirtualButton AddKeyboardKey(Keys key, Keys modifier)
+        {
+            Nodes.Add(new KeyboardModifiedKey(key, modifier));
+            return this;
+        }
+
+
+	    /// <summary>
+	    ///     adds a GamePad buttons press to this VirtualButton
+	    /// </summary>
+	    /// <returns>The game pad button.</returns>
+	    /// <param name="gamepadIndex">Gamepad index.</param>
+	    /// <param name="button">Button.</param>
+	    public VirtualButton AddGamePadButton(int gamepadIndex, Buttons button)
+        {
+            Nodes.Add(new GamePadButton(gamepadIndex, button));
+            return this;
+        }
+
+
+	    /// <summary>
+	    ///     adds a GamePad left trigger press to this VirtualButton
+	    /// </summary>
+	    /// <returns>The game pad left trigger.</returns>
+	    /// <param name="gamepadIndex">Gamepad index.</param>
+	    /// <param name="threshold">Threshold.</param>
+	    public VirtualButton AddGamePadLeftTrigger(int gamepadIndex, float threshold)
+        {
+            Nodes.Add(new GamePadLeftTrigger(gamepadIndex, threshold));
+            return this;
+        }
+
+
+	    /// <summary>
+	    ///     adds a GamePad right trigger press to this VirtualButton
+	    /// </summary>
+	    /// <returns>The game pad right trigger.</returns>
+	    /// <param name="gamepadIndex">Gamepad index.</param>
+	    /// <param name="threshold">Threshold.</param>
+	    public VirtualButton AddGamePadRightTrigger(int gamepadIndex, float threshold)
+        {
+            Nodes.Add(new GamePadRightTrigger(gamepadIndex, threshold));
+            return this;
+        }
+
+
+	    /// <summary>
+	    ///     adds a GamePad DPad press to this VirtualButton
+	    /// </summary>
+	    /// <returns>The game pad DP ad.</returns>
+	    /// <param name="gamepadIndex">Gamepad index.</param>
+	    /// <param name="direction">Direction.</param>
+	    public VirtualButton AddGamePadDPad(int gamepadIndex, Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    Nodes.Add(new GamePadDPadUp(gamepadIndex));
+                    break;
+                case Direction.Down:
+                    Nodes.Add(new GamePadDPadDown(gamepadIndex));
+                    break;
+                case Direction.Left:
+                    Nodes.Add(new GamePadDPadLeft(gamepadIndex));
+                    break;
+                case Direction.Right:
+                    Nodes.Add(new GamePadDPadRight(gamepadIndex));
+                    break;
+            }
+
+            return this;
+        }
+
+
+	    /// <summary>
+	    ///     adds a left mouse click to this VirtualButton
+	    /// </summary>
+	    /// <returns>The mouse left button.</returns>
+	    public VirtualButton AddMouseLeftButton()
+        {
+            Nodes.Add(new MouseLeftButton());
+            return this;
+        }
+
+
+	    /// <summary>
+	    ///     adds a right mouse click to this VirtualButton
+	    /// </summary>
+	    /// <returns>The mouse right button.</returns>
+	    public VirtualButton AddMouseRightButton()
+        {
+            Nodes.Add(new MouseRightButton());
+            return this;
+        }
+
+        #endregion
+
+
+        #region Node types
+
+        public abstract class Node : VirtualInputNode
+        {
+            public abstract bool IsDown { get; }
+            public abstract bool IsPressed { get; }
+            public abstract bool IsReleased { get; }
+        }
 
-			public override bool isDown
-			{
-				get { return Input.gamePads[gamepadIndex].isButtonDown( button ); }
-			}
-
-
-			public override bool isPressed
-			{
-				get { return Input.gamePads[gamepadIndex].isButtonPressed( button ); }
-			}
-
 
-			public override bool isReleased
-			{
-				get { return Input.gamePads[gamepadIndex].isButtonReleased( button ); }
-			}
-		}
+        #region Keyboard
 
+        public class KeyboardKey : Node
+        {
+            public Keys Key;
 
-		public class GamePadLeftTrigger : Node
-		{
-			public int gamepadIndex;
-			public float threshold;
 
+            public KeyboardKey(Keys key)
+            {
+                this.Key = key;
+            }
 
-			public GamePadLeftTrigger( int gamepadIndex, float threshold )
-			{
-				this.gamepadIndex = gamepadIndex;
-				this.threshold = threshold;
-			}
 
+            public override bool IsDown => Input.IsKeyDown(Key);
 
-			public override bool isDown
-			{
-				get { return Input.gamePads[gamepadIndex].isLeftTriggerDown( threshold ); }
-			}
-
-			public override bool isPressed
-			{
-				get { return Input.gamePads[gamepadIndex].isLeftTriggerPressed( threshold ); }
-			}
 
-			public override bool isReleased
-			{
-				get { return Input.gamePads[gamepadIndex].isLeftTriggerReleased( threshold ); }
-			}
-		}
+            public override bool IsPressed => Input.IsKeyPressed(Key);
 
 
-		public class GamePadRightTrigger : Node
-		{
-			public int gamepadIndex;
-			public float threshold;
+            public override bool IsReleased => Input.IsKeyReleased(Key);
+        }
 
 
-			public GamePadRightTrigger( int gamepadIndex, float threshold )
-			{
-				this.gamepadIndex = gamepadIndex;
-				this.threshold = threshold;
-			}
+	    /// <summary>
+	    ///     works like KeyboardKey except the modifier key must also be down for isDown/isPressed to be true. isReleased checks
+	    ///     only key.
+	    /// </summary>
+	    public class KeyboardModifiedKey : Node
+        {
+            public Keys Key;
+            public Keys Modifier;
 
 
-			public override bool isDown
-			{
-				get { return Input.gamePads[gamepadIndex].isRightTriggerDown( threshold ); }
-			}
+            public KeyboardModifiedKey(Keys key, Keys modifier)
+            {
+                this.Key = key;
+                this.Modifier = modifier;
+            }
 
-			public override bool isPressed
-			{
-				get { return Input.gamePads[gamepadIndex].isRightTriggerPressed( threshold ); }
-			}
 
-			public override bool isReleased
-			{
-				get { return Input.gamePads[gamepadIndex].isRightTriggerReleased( threshold ); }
-			}
-		}
+            public override bool IsDown => Input.IsKeyDown(Modifier) && Input.IsKeyDown(Key);
 
-		#endregion
 
+            public override bool IsPressed => Input.IsKeyDown(Modifier) && Input.IsKeyPressed(Key);
 
-		#region GamePad DPad
 
-		public class GamePadDPadRight : Node
-		{
-			public int gamepadIndex;
+            public override bool IsReleased => Input.IsKeyReleased(Key);
+        }
 
+        #endregion
 
-			public GamePadDPadRight( int gamepadIndex )
-			{
-				this.gamepadIndex = gamepadIndex;
-			}
 
+        #region GamePad Buttons and Triggers
 
-			public override bool isDown
-			{
-				get { return Input.gamePads[gamepadIndex].DpadRightDown; }
-			}
+        public class GamePadButton : Node
+        {
+            public Buttons Button;
+            public int GamepadIndex;
 
-			public override bool isPressed
-			{
-				get { return Input.gamePads[gamepadIndex].DpadRightPressed; }
-			}
 
-			public override bool isReleased
-			{
-				get { return Input.gamePads[gamepadIndex].DpadRightReleased; }
-			}
-		}
+            public GamePadButton(int gamepadIndex, Buttons button)
+            {
+                this.GamepadIndex = gamepadIndex;
+                this.Button = button;
+            }
 
 
-		public class GamePadDPadLeft : Node
-		{
-			public int gamepadIndex;
+            public override bool IsDown => Input.GamePads[GamepadIndex].IsButtonDown(Button);
 
 
-			public GamePadDPadLeft( int gamepadIndex )
-			{
-				this.gamepadIndex = gamepadIndex;
-			}
+            public override bool IsPressed => Input.GamePads[GamepadIndex].IsButtonPressed(Button);
 
 
-			public override bool isDown
-			{
-				get { return Input.gamePads[gamepadIndex].DpadLeftDown; }
-			}
+            public override bool IsReleased => Input.GamePads[GamepadIndex].IsButtonReleased(Button);
+        }
 
-			public override bool isPressed
-			{
-				get { return Input.gamePads[gamepadIndex].DpadLeftPressed; }
-			}
 
-			public override bool isReleased
-			{
-				get { return Input.gamePads[gamepadIndex].DpadLeftReleased; }
-			}
-		}
+        public class GamePadLeftTrigger : Node
+        {
+            public int GamepadIndex;
+            public float Threshold;
 
 
-		public class GamePadDPadUp : Node
-		{
-			public int gamepadIndex;
+            public GamePadLeftTrigger(int gamepadIndex, float threshold)
+            {
+                this.GamepadIndex = gamepadIndex;
+                this.Threshold = threshold;
+            }
 
 
-			public GamePadDPadUp( int gamepadIndex )
-			{
-				this.gamepadIndex = gamepadIndex;
-			}
+            public override bool IsDown => Input.GamePads[GamepadIndex].IsLeftTriggerDown(Threshold);
 
+            public override bool IsPressed => Input.GamePads[GamepadIndex].IsLeftTriggerPressed(Threshold);
 
-			public override bool isDown
-			{
-				get { return Input.gamePads[gamepadIndex].DpadUpDown; }
-			}
+            public override bool IsReleased => Input.GamePads[GamepadIndex].IsLeftTriggerReleased(Threshold);
+        }
 
-			public override bool isPressed
-			{
-				get { return Input.gamePads[gamepadIndex].DpadUpPressed; }
-			}
 
-			public override bool isReleased
-			{
-				get { return Input.gamePads[gamepadIndex].DpadUpReleased; }
-			}
-		}
+        public class GamePadRightTrigger : Node
+        {
+            public int GamepadIndex;
+            public float Threshold;
 
 
-		public class GamePadDPadDown : Node
-		{
-			public int gamepadIndex;
+            public GamePadRightTrigger(int gamepadIndex, float threshold)
+            {
+                this.GamepadIndex = gamepadIndex;
+                this.Threshold = threshold;
+            }
 
 
-			public GamePadDPadDown( int gamepadIndex )
-			{
-				this.gamepadIndex = gamepadIndex;
-			}
+            public override bool IsDown => Input.GamePads[GamepadIndex].IsRightTriggerDown(Threshold);
 
+            public override bool IsPressed => Input.GamePads[GamepadIndex].IsRightTriggerPressed(Threshold);
 
-			public override bool isDown
-			{
-				get { return Input.gamePads[gamepadIndex].DpadDownDown; }
-			}
+            public override bool IsReleased => Input.GamePads[GamepadIndex].IsRightTriggerReleased(Threshold);
+        }
 
-			public override bool isPressed
-			{
-				get { return Input.gamePads[gamepadIndex].DpadDownPressed; }
-			}
+        #endregion
 
-			public override bool isReleased
-			{
-				get { return Input.gamePads[gamepadIndex].DpadDownReleased; }
-			}
-		}
 
-		#endregion
+        #region GamePad DPad
 
+        public class GamePadDPadRight : Node
+        {
+            public int GamepadIndex;
 
-		#region Mouse
 
-		public class MouseLeftButton : Node
-		{
-			public override bool isDown
-			{
-				get { return Input.leftMouseButtonDown; }
-			}
+            public GamePadDPadRight(int gamepadIndex)
+            {
+                this.GamepadIndex = gamepadIndex;
+            }
 
-			public override bool isPressed
-			{
-				get { return Input.leftMouseButtonPressed; }
-			}
 
-			public override bool isReleased
-			{
-				get { return Input.leftMouseButtonReleased; }
-			}
-		}
+            public override bool IsDown => Input.GamePads[GamepadIndex].DpadRightDown;
 
+            public override bool IsPressed => Input.GamePads[GamepadIndex].DpadRightPressed;
 
-		public class MouseRightButton : Node
-		{
-			public override bool isDown
-			{
-				get { return Input.rightMouseButtonDown; }
-			}
+            public override bool IsReleased => Input.GamePads[GamepadIndex].DpadRightReleased;
+        }
 
-			public override bool isPressed
-			{
-				get { return Input.rightMouseButtonPressed; }
-			}
 
-			public override bool isReleased
-			{
-				get { return Input.rightMouseButtonReleased; }
-			}
-		}
+        public class GamePadDPadLeft : Node
+        {
+            public int GamepadIndex;
 
-		#endregion
 
-		#endregion
+            public GamePadDPadLeft(int gamepadIndex)
+            {
+                this.GamepadIndex = gamepadIndex;
+            }
 
-	}
+
+            public override bool IsDown => Input.GamePads[GamepadIndex].DpadLeftDown;
+
+            public override bool IsPressed => Input.GamePads[GamepadIndex].DpadLeftPressed;
+
+            public override bool IsReleased => Input.GamePads[GamepadIndex].DpadLeftReleased;
+        }
+
+
+        public class GamePadDPadUp : Node
+        {
+            public int GamepadIndex;
+
+
+            public GamePadDPadUp(int gamepadIndex)
+            {
+                this.GamepadIndex = gamepadIndex;
+            }
+
+
+            public override bool IsDown => Input.GamePads[GamepadIndex].DpadUpDown;
+
+            public override bool IsPressed => Input.GamePads[GamepadIndex].DpadUpPressed;
+
+            public override bool IsReleased => Input.GamePads[GamepadIndex].DpadUpReleased;
+        }
+
+
+        public class GamePadDPadDown : Node
+        {
+            public int GamepadIndex;
+
+
+            public GamePadDPadDown(int gamepadIndex)
+            {
+                this.GamepadIndex = gamepadIndex;
+            }
+
+
+            public override bool IsDown => Input.GamePads[GamepadIndex].DpadDownDown;
+
+            public override bool IsPressed => Input.GamePads[GamepadIndex].DpadDownPressed;
+
+            public override bool IsReleased => Input.GamePads[GamepadIndex].DpadDownReleased;
+        }
+
+        #endregion
+
+
+        #region Mouse
+
+        public class MouseLeftButton : Node
+        {
+            public override bool IsDown => Input.LeftMouseButtonDown;
+
+            public override bool IsPressed => Input.LeftMouseButtonPressed;
+
+            public override bool IsReleased => Input.LeftMouseButtonReleased;
+        }
+
+
+        public class MouseRightButton : Node
+        {
+            public override bool IsDown => Input.RightMouseButtonDown;
+
+            public override bool IsPressed => Input.RightMouseButtonPressed;
+
+            public override bool IsReleased => Input.RightMouseButtonReleased;
+        }
+
+        #endregion
+
+        #endregion
+    }
 }
-

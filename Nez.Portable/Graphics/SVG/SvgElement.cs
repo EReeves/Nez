@@ -2,94 +2,88 @@
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 
-
 namespace Nez.Svg
 {
 	/// <summary>
-	/// base class for all SVG elements. Has some helpers for parsing colors and dealing with transforms.
+	///     base class for all SVG elements. Has some helpers for parsing colors and dealing with transforms.
 	/// </summary>
 	public abstract class SvgElement
-	{
-		[XmlAttribute( "id" )]
-		public string id;
+    {
+        protected List<SvgTransform> Transforms;
 
-		[XmlAttribute( "stroke" )]
-		public string strokeAttribute
-		{
-			get { return null; }
-			set
-			{
-				if( value.StartsWith( "#" ) )
-					strokeColor = ColorExt.hexToColor( value.Substring( 1 ) );
-			}
-		}
+        public Color FillColor;
 
-		public Color strokeColor = Color.Red;
+        [XmlAttribute("id")] public string Id;
 
-		[XmlAttribute( "fill" )]
-		public string fillAttribute
-		{
-			get { return null; }
-			set
-			{
-				if( value.StartsWith( "#" ) )
-					fillColor = ColorExt.hexToColor( value.Substring( 1 ) );
-			}
-		}
+        public Color StrokeColor = Color.Red;
 
-		public Color fillColor;
+        public float StrokeWidth = 1;
 
-		[XmlAttribute( "stroke-width" )]
-		public string strokeWidthAttribute
-		{
-			get { return null; }
-			set { float.TryParse( value, out strokeWidth ); }
-		}
+        [XmlAttribute("stroke")]
+        public string StrokeAttribute
+        {
+            get => null;
+            set
+            {
+                if (value.StartsWith("#"))
+                    StrokeColor = ColorExt.HexToColor(value.Substring(1));
+            }
+        }
 
-		public float strokeWidth = 1;
+        [XmlAttribute("fill")]
+        public string FillAttribute
+        {
+            get => null;
+            set
+            {
+                if (value.StartsWith("#"))
+                    FillColor = ColorExt.HexToColor(value.Substring(1));
+            }
+        }
 
-		[XmlAttribute( "transform" )]
-		public string transformAttribute
-		{
-			get { return null; }
-			set { _transforms = SvgTransformConverter.parseTransforms( value ); }
-		}
+        [XmlAttribute("stroke-width")]
+        public string StrokeWidthAttribute
+        {
+            get => null;
+            set => float.TryParse(value, out StrokeWidth);
+        }
 
-		protected List<SvgTransform> _transforms;
+        [XmlAttribute("transform")]
+        public string TransformAttribute
+        {
+            get => null;
+            set => Transforms = SvgTransformConverter.ParseTransforms(value);
+        }
+
+	    /// <summary>
+	    ///     helper property that just loops through all the transforms and if there is an SvgRotate transform it will return
+	    ///     that angle
+	    /// </summary>
+	    /// <value>The rotation degrees.</value>
+	    public float RotationDegrees
+        {
+            get
+            {
+                if (Transforms == null)
+                    return 0;
+
+                for (var i = 0; i < Transforms.Count; i++)
+                    if (Transforms[i] is SvgRotate)
+                        return (Transforms[i] as SvgRotate).Angle;
+
+                return 0;
+            }
+        }
 
 
-		public Matrix2D getCombinedMatrix()
-		{
-			var m = Matrix2D.identity;
-			if( _transforms != null && _transforms.Count > 0 )
-			{
-				foreach( var trans in _transforms )
-					m = Matrix2D.multiply( m, trans.matrix );
-			}
+        public Matrix2D GetCombinedMatrix()
+        {
+            var m = Matrix2D.Identity;
+            if (Transforms != null && Transforms.Count > 0)
+                foreach (var trans in Transforms)
+                    m = Matrix2D.Multiply(m, trans.Matrix);
 
-			return m;
-		}
-
-		/// <summary>
-		/// helper property that just loops through all the transforms and if there is an SvgRotate transform it will return that angle
-		/// </summary>
-		/// <value>The rotation degrees.</value>
-		public float rotationDegrees
-		{
-			get
-			{
-				if( _transforms == null )
-					return 0;
-
-				for( var i = 0; i < _transforms.Count; i++ )
-				{
-					if( _transforms[i] is SvgRotate )
-						return ( _transforms[i] as SvgRotate ).angle;
-				}
-
-				return 0;
-			}
-		}
-
-	}
+            return m;
+        }
+    }
 }

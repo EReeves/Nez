@@ -101,7 +101,7 @@ namespace Nez.TextureAtlasGenerator
 					return getFileNameWithoutExtension( filepath );
 
 				// if this was a directly specified image path in the XML return it directly
-				if( input.contains( filepath ) )
+				if( input.Contains( filepath ) )
 					return Path.GetFileNameWithoutExtension( filepath );
 				
 				// return the folder-filename as our first option
