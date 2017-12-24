@@ -106,6 +106,7 @@ namespace Nez
             {
                 inspector = new InspectorList(comp);
                 inspector.Initialize(_table, _skin);
+                inspector.Target = comp;
                 _inspectors.Add(inspector);
             }
 

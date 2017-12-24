@@ -25,7 +25,7 @@ namespace Nez.UI
 	/// </summary>
 	public class TextField : Element, IInputListener, IKeyboardListener
     {
-        protected bool IsOver, IsPressed, IsFocused;
+        public bool IsOver, IsPressed, IsFocused;
         private readonly float _keyRepeatTime = 0.2f;
         private ITimer _keyRepeatTimer;
 

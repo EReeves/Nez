@@ -257,8 +257,8 @@ namespace Nez
 	    /// <param name="layerDepth">Value.</param>
 	    public RenderableComponent SetLayerDepth(float layerDepth)
         {
-            layerDepth = Mathf.Clamp01(layerDepth);
-
+	        this.layerDepth = Mathf.Clamp01(layerDepth);
+	    	
             if (Entity != null && Entity.Scene != null)
                 Entity.Scene.RenderableComponents.SetRenderLayerNeedsComponentSort(renderLayer);
             return this;

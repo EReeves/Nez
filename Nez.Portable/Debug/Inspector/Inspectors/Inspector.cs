@@ -171,7 +171,7 @@ namespace Nez
         {
             var materialProp = ReflectionUtils.GetPropertyInfo(target, "material");
             var materialMethod = ReflectionUtils.GetPropertyGetter(materialProp);
-            var material = materialMethod.Invoke(target, new object[] { }) as Material;
+            var material = materialMethod?.Invoke(target, new object[] { }) as Material;
             if (material == null || material.Effect == null)
                 return null;
 

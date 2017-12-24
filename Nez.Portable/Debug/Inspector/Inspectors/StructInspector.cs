@@ -27,7 +27,7 @@ namespace Nez
                     continue;
 
                 var inspector = GetInspectorForType(field.FieldType, Target, field);
-                if (inspector != null)
+                if (inspector == null)
                 {
                     inspector.SetStructTarget(Target, this, field);
                     inspector.Initialize(table, skin);

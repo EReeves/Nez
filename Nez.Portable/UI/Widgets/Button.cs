@@ -262,7 +262,7 @@ namespace Nez.UI
 
         void IInputListener.OnMouseUp(Vector2 mousePos)
         {
-            if (MouseDown == false) return;
+           // if (MouseDown == false) return;
             MouseDown = false;
 
             SetChecked(!isChecked, true);

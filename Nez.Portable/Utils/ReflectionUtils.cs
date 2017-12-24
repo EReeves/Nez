@@ -84,7 +84,7 @@ namespace Nez
         public static MethodInfo GetPropertyGetter(PropertyInfo prop)
         {
 #if NETFX_CORE
-            return prop.GetMethod;
+            return prop?.GetMethod;
 #else
 			return prop.GetGetMethod( true );
 			#endif
