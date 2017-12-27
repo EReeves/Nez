@@ -23,10 +23,10 @@ namespace Nez.Overlap2D.Runtime
 		public float layerDepth;
 		public string layerName
 		{
-			get { return _layerName; }
+			get => _layerName;
 			set
 			{
-				if( value != null && value != string.Empty )
+				if( !string.IsNullOrEmpty(value) )
 				{
 					var regex = new Regex( @"\d+" );
 					var match = regex.Match( value );
@@ -56,10 +56,7 @@ namespace Nez.Overlap2D.Runtime
 		/// <param name="zIndexMax">Z index max.</param>
 		public float calculateLayerDepth( float zIndexMin, float zIndexMax, CompositeItemVO compositeItem )
 		{
-			if( compositeItem != null )
-				return compositeItem.calculateLayerDepthForChild( zIndexMin, zIndexMax, this );
-
-			return Mathf.Map01( (float)zIndex, zIndexMin, zIndexMax );
+			return compositeItem?.calculateLayerDepthForChild( zIndexMin, zIndexMax, this ) ?? Mathf.Map01( (float)zIndex, zIndexMin, zIndexMax );
 		}
 
 

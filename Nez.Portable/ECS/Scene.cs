@@ -82,7 +82,7 @@ namespace Nez
 	        BestFit
         }
 
-        private readonly FastList<Renderer> _afterPostProcessorRenderers = new FastList<Renderer>();
+        private readonly FastList<Renderer> afterPostProcessorRenderers = new FastList<Renderer>();
         internal readonly FastList<PostProcessor> PostProcessors = new FastList<PostProcessor>();
 
         internal readonly FastList<SceneComponent> SceneComponents = new FastList<SceneComponent>();
@@ -109,13 +109,13 @@ namespace Nez
 	    /// </summary>
 	    public readonly RenderableComponentList RenderableComponents;
 
-        private RenderTarget2D _destinationRenderTarget;
-        private bool _didSceneBegin;
-        private IFinalRenderDelegate _finalRenderDelegate;
-        private readonly FastList<Renderer> _renderers = new FastList<Renderer>();
+        private RenderTarget2D destinationRenderTarget;
+        private bool didSceneBegin;
+        private IFinalRenderDelegate finalRenderDelegate;
+        private readonly FastList<Renderer> renderers = new FastList<Renderer>();
 
 
-        private Action<Texture2D> _screenshotRequestCallback;
+        private Action<Texture2D> screenshotRequestCallback;
 
 
 	    /// <summary>
@@ -162,9 +162,9 @@ namespace Nez
                 EntityProcessors = new EntityProcessorList();
 
             // setup our resolution policy. we'll commit it in begin
-            _resolutionPolicy = _defaultSceneResolutionPolicy;
-            _designResolutionSize = _defaultDesignResolutionSize;
-            _designBleedSize = _defaultDesignBleedSize;
+            resolutionPolicy = defaultSceneResolutionPolicy;
+            designResolutionSize = defaultDesignResolutionSize;
+            designBleedSize = defaultDesignBleedSize;
 
             Initialize();
         }
@@ -194,14 +194,13 @@ namespace Nez
         {
             set
             {
-                if (_finalRenderDelegate != null)
-                    _finalRenderDelegate.Unload();
+	            finalRenderDelegate?.Unload();
 
-                _finalRenderDelegate = value;
-                _finalRenderDelegate.Scene = this;
-                _finalRenderDelegate.OnAddedToScene();
+	            finalRenderDelegate = value;
+                finalRenderDelegate.Scene = this;
+                finalRenderDelegate.OnAddedToScene();
             }
-            get => _finalRenderDelegate;
+            get => finalRenderDelegate;
         }
 
 
@@ -223,10 +222,10 @@ namespace Nez
 	    public static void SetDefaultDesignResolution(int width, int height,
             SceneResolutionPolicy sceneResolutionPolicy, int horizontalBleed = 0, int verticalBleed = 0)
         {
-            _defaultDesignResolutionSize = new Point(width, height);
-            _defaultSceneResolutionPolicy = sceneResolutionPolicy;
-            if (_defaultSceneResolutionPolicy == SceneResolutionPolicy.BestFit)
-                _defaultDesignBleedSize = new Point(horizontalBleed, verticalBleed);
+            defaultDesignResolutionSize = new Point(width, height);
+            defaultSceneResolutionPolicy = sceneResolutionPolicy;
+            if (defaultSceneResolutionPolicy == SceneResolutionPolicy.BestFit)
+                defaultDesignBleedSize = new Point(horizontalBleed, verticalBleed);
         }
 
 
@@ -240,7 +239,7 @@ namespace Nez
 	    /// <param name="callback">Callback.</param>
 	    public void RequestScreenshot(Action<Texture2D> callback)
         {
-            _screenshotRequestCallback = callback;
+            screenshotRequestCallback = callback;
         }
 
         #endregion
@@ -251,37 +250,37 @@ namespace Nez
 	    /// <summary>
 	    ///     default resolution size used for all scenes
 	    /// </summary>
-	    private static Point _defaultDesignResolutionSize;
+	    private static Point defaultDesignResolutionSize;
 
 	    /// <summary>
 	    ///     default bleed size for <see cref="SceneResolutionPolicy.BestFit" /> resolution policy
 	    /// </summary>
-	    private static Point _defaultDesignBleedSize;
+	    private static Point defaultDesignBleedSize;
 
 	    /// <summary>
 	    ///     default resolution policy used for all scenes
 	    /// </summary>
-	    private static SceneResolutionPolicy _defaultSceneResolutionPolicy = SceneResolutionPolicy.None;
+	    private static SceneResolutionPolicy defaultSceneResolutionPolicy = SceneResolutionPolicy.None;
 
 	    /// <summary>
 	    ///     resolution policy used by the scene
 	    /// </summary>
-	    private SceneResolutionPolicy _resolutionPolicy;
+	    private SceneResolutionPolicy resolutionPolicy;
 
 	    /// <summary>
 	    ///     design resolution size used by the scene
 	    /// </summary>
-	    private Point _designResolutionSize;
+	    private Point designResolutionSize;
 
 	    /// <summary>
 	    ///     bleed size for <see cref="SceneResolutionPolicy.BestFit" /> resolution policy
 	    /// </summary>
-	    private Point _designBleedSize;
+	    private Point designBleedSize;
 
 	    /// <summary>
 	    ///     this gets setup based on the resolution policy and is used for the final blit of the RenderTarget
 	    /// </summary>
-	    private Rectangle _finalRenderDestinationRect;
+	    private Rectangle finalRenderDestinationRect;
 
         #endregion
 
@@ -384,7 +383,7 @@ namespace Nez
 
         internal void Begin()
         {
-            Assert.IsFalse(_renderers.Length == 0,
+            Assert.IsFalse(renderers.Length == 0,
                 "Scene has begun with no renderer. At least one renderer must be present before beginning a scene.");
             Physics.Reset();
 
@@ -392,22 +391,21 @@ namespace Nez
             UpdateResolutionScaler();
             GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, SceneRenderTarget);
 
-            if (EntityProcessors != null)
-                EntityProcessors.Begin();
-            Core.Emitter.AddObserver(CoreEvents.GraphicsDeviceReset, OnGraphicsDeviceReset);
+	        EntityProcessors?.Begin();
+	        Core.Emitter.AddObserver(CoreEvents.GraphicsDeviceReset, OnGraphicsDeviceReset);
 
-            _didSceneBegin = true;
+            didSceneBegin = true;
             OnStart();
         }
 
 
         internal void End()
         {
-            _didSceneBegin = false;
+            didSceneBegin = false;
 
             // we kill Renderers and PostProcessors first since they rely on Entities
-            for (var i = 0; i < _renderers.Length; i++)
-                _renderers.Buffer[i].Unload();
+            for (var i = 0; i < renderers.Length; i++)
+                renderers.Buffer[i].Unload();
 
             for (var i = 0; i < PostProcessors.Length; i++)
                 PostProcessors.Buffer[i].Unload();
@@ -425,13 +423,11 @@ namespace Nez
             SceneRenderTarget.Dispose();
             Physics.Clear();
 
-            if (_destinationRenderTarget != null)
-                _destinationRenderTarget.Dispose();
+	        destinationRenderTarget?.Dispose();
 
-            if (EntityProcessors != null)
-                EntityProcessors.End();
+	        EntityProcessors?.End();
 
-            Unload();
+	        Unload();
         }
 
 
@@ -449,16 +445,14 @@ namespace Nez
                     SceneComponents.Buffer[i].Update();
 
             // update our EntityProcessors
-            if (EntityProcessors != null)
-                EntityProcessors.Update();
+	        EntityProcessors?.Update();
 
-            // update our Entities
+	        // update our Entities
             Entities.Update();
 
-            if (EntityProcessors != null)
-                EntityProcessors.LateUpdate();
+	        EntityProcessors?.LateUpdate();
 
-            // we update our renderables after entity.update in case any new Renderables were added
+	        // we update our renderables after entity.update in case any new Renderables were added
             RenderableComponents.UpdateLists();
         }
 
@@ -467,7 +461,7 @@ namespace Nez
         {
             // Renderers should always have those that require a RenderTarget first. They clear themselves and set themselves as
             // the current RenderTarget when they render. If the first Renderer wants the sceneRenderTarget we set and clear it now.
-            if (_renderers[0].WantsToRenderToSceneRenderTarget)
+            if (renderers[0].WantsToRenderToSceneRenderTarget)
             {
                 GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, SceneRenderTarget);
                 Core.GraphicsDevice.Clear(ClearColor);
@@ -475,23 +469,23 @@ namespace Nez
 
 
             var lastRendererHadRenderTarget = false;
-            for (var i = 0; i < _renderers.Length; i++)
+            for (var i = 0; i < renderers.Length; i++)
             {
                 // MonoGame follows the XNA bullshit implementation so it will clear the entire buffer if we change the render target even if null.
                 // Because of that, we track when we are done with our RenderTargets and clear the scene at that time.
-                if (lastRendererHadRenderTarget && _renderers.Buffer[i].WantsToRenderToSceneRenderTarget)
+                if (lastRendererHadRenderTarget && renderers.Buffer[i].WantsToRenderToSceneRenderTarget)
                 {
                     GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, SceneRenderTarget);
                     Core.GraphicsDevice.Clear(ClearColor);
 
                     // force a Camera matrix update to account for the new Viewport size
-                    if (_renderers.Buffer[i].Camera != null)
-                        _renderers.Buffer[i].Camera.ForceMatrixUpdate();
+                    if (renderers.Buffer[i].Camera != null)
+                        renderers.Buffer[i].Camera.ForceMatrixUpdate();
                     Camera.ForceMatrixUpdate();
                 }
 
-                _renderers.Buffer[i].Render(this);
-                lastRendererHadRenderTarget = _renderers.Buffer[i].RenderTexture != null;
+                renderers.Buffer[i].Render(this);
+                lastRendererHadRenderTarget = renderers.Buffer[i].RenderTexture != null;
             }
         }
 
@@ -509,42 +503,42 @@ namespace Nez
                     {
                         var isEven = Mathf.IsEven(enabledCounter);
                         enabledCounter++;
-                        PostProcessors.Buffer[i].Process(isEven ? SceneRenderTarget : _destinationRenderTarget,
-                            isEven ? _destinationRenderTarget : SceneRenderTarget);
+                        PostProcessors.Buffer[i].Process(isEven ? SceneRenderTarget : destinationRenderTarget,
+                            isEven ? destinationRenderTarget : SceneRenderTarget);
                     }
 
             // deal with our Renderers that want to render after PostProcessors if we have any
-            for (var i = 0; i < _afterPostProcessorRenderers.Length; i++)
+            for (var i = 0; i < afterPostProcessorRenderers.Length; i++)
             {
                 if (i == 0)
                     GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, Mathf.IsEven(enabledCounter)
                         ? SceneRenderTarget
-                        : _destinationRenderTarget);
+                        : destinationRenderTarget);
 
                 // force a Camera matrix update to account for the new Viewport size
-                if (_afterPostProcessorRenderers.Buffer[i].Camera != null)
-                    _afterPostProcessorRenderers.Buffer[i].Camera.ForceMatrixUpdate();
-                _afterPostProcessorRenderers.Buffer[i].Render(this);
+                if (afterPostProcessorRenderers.Buffer[i].Camera != null)
+                    afterPostProcessorRenderers.Buffer[i].Camera.ForceMatrixUpdate();
+                afterPostProcessorRenderers.Buffer[i].Render(this);
             }
 
             // if we have a screenshot request deal with it before the final render to the backbuffer
-            if (_screenshotRequestCallback != null)
+            if (screenshotRequestCallback != null)
             {
                 var tex = new Texture2D(Core.GraphicsDevice, SceneRenderTarget.Width, SceneRenderTarget.Height);
                 var data = new int[tex.Bounds.Width * tex.Bounds.Height];
-                (Mathf.IsEven(enabledCounter) ? SceneRenderTarget : _destinationRenderTarget).GetData(data);
+                (Mathf.IsEven(enabledCounter) ? SceneRenderTarget : destinationRenderTarget).GetData(data);
                 tex.SetData(data);
-                _screenshotRequestCallback(tex);
+                screenshotRequestCallback(tex);
 
-                _screenshotRequestCallback = null;
+                screenshotRequestCallback = null;
             }
 
             // render our final result to the backbuffer or let our delegate do so
-            if (_finalRenderDelegate != null)
+            if (finalRenderDelegate != null)
             {
-                _finalRenderDelegate.HandleFinalRender(LetterboxColor,
-                    Mathf.IsEven(enabledCounter) ? SceneRenderTarget : _destinationRenderTarget,
-                    _finalRenderDestinationRect, SamplerState);
+                finalRenderDelegate.HandleFinalRender(LetterboxColor,
+                    Mathf.IsEven(enabledCounter) ? SceneRenderTarget : destinationRenderTarget,
+                    finalRenderDestinationRect, SamplerState);
             }
             else
             {
@@ -552,8 +546,8 @@ namespace Nez
                 Core.GraphicsDevice.Clear(LetterboxColor);
                 Graphics.Instance.Batcher.Begin(BlendState.Opaque, SamplerState, null, null);
                 Graphics.Instance.Batcher.Draw(
-                    Mathf.IsEven(enabledCounter) ? SceneRenderTarget : _destinationRenderTarget,
-                    _finalRenderDestinationRect, Color.White);
+                    Mathf.IsEven(enabledCounter) ? SceneRenderTarget : destinationRenderTarget,
+                    finalRenderDestinationRect, Color.White);
                 Graphics.Instance.Batcher.End();
             }
         }
@@ -586,17 +580,17 @@ namespace Nez
 	    public void SetDesignResolution(int width, int height, SceneResolutionPolicy sceneResolutionPolicy,
             int horizontalBleed = 0, int verticalBleed = 0)
         {
-            _designResolutionSize = new Point(width, height);
-            _resolutionPolicy = sceneResolutionPolicy;
-            if (_resolutionPolicy == SceneResolutionPolicy.BestFit)
-                _designBleedSize = new Point(horizontalBleed, verticalBleed);
+            designResolutionSize = new Point(width, height);
+            resolutionPolicy = sceneResolutionPolicy;
+            if (resolutionPolicy == SceneResolutionPolicy.BestFit)
+                designBleedSize = new Point(horizontalBleed, verticalBleed);
             UpdateResolutionScaler();
         }
 
 
         private void UpdateResolutionScaler()
         {
-            var designSize = _designResolutionSize;
+            var designSize = designResolutionSize;
             var screenSize = new Point(Screen.Width, Screen.Height);
             var screenAspectRatio = screenSize.X / (float) screenSize.Y;
 
@@ -610,7 +604,7 @@ namespace Nez
 
             // calculate the scale used by the PixelPerfect variants
             PixelPerfectScale = 1;
-            if (_resolutionPolicy != SceneResolutionPolicy.None)
+            if (resolutionPolicy != SceneResolutionPolicy.None)
             {
                 if (designSize.X / (float) designSize.Y > screenAspectRatio)
                     PixelPerfectScale = screenSize.X / designSize.X;
@@ -621,12 +615,12 @@ namespace Nez
                     PixelPerfectScale = 1;
             }
 
-            switch (_resolutionPolicy)
+            switch (resolutionPolicy)
             {
                 case SceneResolutionPolicy.None:
-                    _finalRenderDestinationRect.X = _finalRenderDestinationRect.Y = 0;
-                    _finalRenderDestinationRect.Width = screenSize.X;
-                    _finalRenderDestinationRect.Height = screenSize.Y;
+                    finalRenderDestinationRect.X = finalRenderDestinationRect.Y = 0;
+                    finalRenderDestinationRect.Width = screenSize.X;
+                    finalRenderDestinationRect.Height = screenSize.Y;
                     rectCalculated = true;
                     break;
                 case SceneResolutionPolicy.ExactFit:
@@ -662,10 +656,10 @@ namespace Nez
                     if (PixelPerfectScale == 0)
                         PixelPerfectScale = 1;
 
-                    _finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * PixelPerfectScale);
-                    _finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * PixelPerfectScale);
-                    _finalRenderDestinationRect.X = (screenSize.X - _finalRenderDestinationRect.Width) / 2;
-                    _finalRenderDestinationRect.Y = (screenSize.Y - _finalRenderDestinationRect.Height) / 2;
+                    finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * PixelPerfectScale);
+                    finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * PixelPerfectScale);
+                    finalRenderDestinationRect.X = (screenSize.X - finalRenderDestinationRect.Width) / 2;
+                    finalRenderDestinationRect.Y = (screenSize.Y - finalRenderDestinationRect.Height) / 2;
                     rectCalculated = true;
 
                     break;
@@ -680,10 +674,10 @@ namespace Nez
                     renderTargetWidth = designSize.X;
                     renderTargetHeight = designSize.Y;
 
-                    _finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * PixelPerfectScale);
-                    _finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * PixelPerfectScale);
-                    _finalRenderDestinationRect.X = (screenSize.X - _finalRenderDestinationRect.Width) / 2;
-                    _finalRenderDestinationRect.Y = (screenSize.Y - _finalRenderDestinationRect.Height) / 2;
+                    finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * PixelPerfectScale);
+                    finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * PixelPerfectScale);
+                    finalRenderDestinationRect.X = (screenSize.X - finalRenderDestinationRect.Width) / 2;
+                    finalRenderDestinationRect.Y = (screenSize.Y - finalRenderDestinationRect.Height) / 2;
                     rectCalculated = true;
 
                     break;
@@ -699,10 +693,10 @@ namespace Nez
                     // start with exact design size render texture height. the width may change
                     renderTargetHeight = designSize.Y;
 
-                    _finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * resolutionScaleX);
-                    _finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * PixelPerfectScale);
-                    _finalRenderDestinationRect.X = (screenSize.X - _finalRenderDestinationRect.Width) / 2;
-                    _finalRenderDestinationRect.Y = (screenSize.Y - _finalRenderDestinationRect.Height) / 2;
+                    finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * resolutionScaleX);
+                    finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * PixelPerfectScale);
+                    finalRenderDestinationRect.X = (screenSize.X - finalRenderDestinationRect.Width) / 2;
+                    finalRenderDestinationRect.Y = (screenSize.Y - finalRenderDestinationRect.Height) / 2;
                     rectCalculated = true;
 
                     renderTargetWidth = (int) (designSize.X * resolutionScaleX / PixelPerfectScale);
@@ -719,18 +713,18 @@ namespace Nez
                     // start with exact design size render texture width. the height may change
                     renderTargetWidth = designSize.X;
 
-                    _finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * PixelPerfectScale);
-                    _finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * resolutionScaleY);
-                    _finalRenderDestinationRect.X = (screenSize.X - _finalRenderDestinationRect.Width) / 2;
-                    _finalRenderDestinationRect.Y = (screenSize.Y - _finalRenderDestinationRect.Height) / 2;
+                    finalRenderDestinationRect.Width = Mathf.CeilToInt(designSize.X * PixelPerfectScale);
+                    finalRenderDestinationRect.Height = Mathf.CeilToInt(designSize.Y * resolutionScaleY);
+                    finalRenderDestinationRect.X = (screenSize.X - finalRenderDestinationRect.Width) / 2;
+                    finalRenderDestinationRect.Y = (screenSize.Y - finalRenderDestinationRect.Height) / 2;
                     rectCalculated = true;
 
                     renderTargetHeight = (int) (designSize.Y * resolutionScaleY / PixelPerfectScale);
 
                     break;
                 case SceneResolutionPolicy.BestFit:
-                    var safeScaleX = (float) screenSize.X / (designSize.X - _designBleedSize.X);
-                    var safeScaleY = (float) screenSize.Y / (designSize.Y - _designBleedSize.Y);
+                    var safeScaleX = (float) screenSize.X / (designSize.X - designBleedSize.X);
+                    var safeScaleY = (float) screenSize.Y / (designSize.Y - designBleedSize.Y);
 
                     var resolutionScale = MathHelper.Max(resolutionScaleX, resolutionScaleY);
                     var safeScale = MathHelper.Min(safeScaleX, safeScaleY);
@@ -750,45 +744,43 @@ namespace Nez
                 var renderWidth = designSize.X * resolutionScaleX;
                 var renderHeight = designSize.Y * resolutionScaleY;
 
-                _finalRenderDestinationRect = RectangleExt.FromFloats((screenSize.X - renderWidth) / 2,
+                finalRenderDestinationRect = RectangleExt.FromFloats((screenSize.X - renderWidth) / 2,
                     (screenSize.Y - renderHeight) / 2, renderWidth, renderHeight);
             }
 
 
             // set some values in the Input class to translate mouse position to our scaled resolution
-            var scaleX = renderTargetWidth / (float) _finalRenderDestinationRect.Width;
-            var scaleY = renderTargetHeight / (float) _finalRenderDestinationRect.Height;
+            var scaleX = renderTargetWidth / (float) finalRenderDestinationRect.Width;
+            var scaleY = renderTargetHeight / (float) finalRenderDestinationRect.Height;
 
             Input.ResolutionScale = new Vector2(scaleX, scaleY);
-            Input.ResolutionOffset = _finalRenderDestinationRect.Location;
+            Input.ResolutionOffset = finalRenderDestinationRect.Location;
 
             // resize our RenderTargets
-            if (SceneRenderTarget != null)
-                SceneRenderTarget.Dispose();
-            SceneRenderTarget = RenderTarget.Create(renderTargetWidth, renderTargetHeight);
+	        SceneRenderTarget?.Dispose();
+	        SceneRenderTarget = RenderTarget.Create(renderTargetWidth, renderTargetHeight);
 
             // only create the destinationRenderTarget if it already exists, which would indicate we have PostProcessors
-            if (_destinationRenderTarget != null)
+            if (destinationRenderTarget != null)
             {
-                _destinationRenderTarget.Dispose();
-                _destinationRenderTarget = RenderTarget.Create(renderTargetWidth, renderTargetHeight);
+                destinationRenderTarget.Dispose();
+                destinationRenderTarget = RenderTarget.Create(renderTargetWidth, renderTargetHeight);
             }
 
             // notify the Renderers, PostProcessors and FinalRenderDelegate of the change in render texture size
-            for (var i = 0; i < _renderers.Length; i++)
-                _renderers.Buffer[i].OnSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
+            for (var i = 0; i < renderers.Length; i++)
+                renderers.Buffer[i].OnSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
 
-            for (var i = 0; i < _afterPostProcessorRenderers.Length; i++)
-                _afterPostProcessorRenderers.Buffer[i]
+            for (var i = 0; i < afterPostProcessorRenderers.Length; i++)
+                afterPostProcessorRenderers.Buffer[i]
                     .OnSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
 
             for (var i = 0; i < PostProcessors.Length; i++)
                 PostProcessors.Buffer[i].OnSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
 
-            if (_finalRenderDelegate != null)
-                _finalRenderDelegate.OnSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
+	        finalRenderDelegate?.OnSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
 
-            Camera.OnSceneRenderTargetSizeChanged(renderTargetWidth, renderTargetHeight);
+	        Camera.OnSceneRenderTargetSizeChanged(renderTargetWidth, renderTargetHeight);
         }
 
         #endregion
@@ -888,17 +880,17 @@ namespace Nez
         {
             if (renderer.WantsToRenderAfterPostProcessors)
             {
-                _afterPostProcessorRenderers.Add(renderer);
-                _afterPostProcessorRenderers.Sort();
+                afterPostProcessorRenderers.Add(renderer);
+                afterPostProcessorRenderers.Sort();
             }
             else
             {
-                _renderers.Add(renderer);
-                _renderers.Sort();
+                renderers.Add(renderer);
+                renderers.Sort();
             }
 
             // if we already began let the PostProcessor know what size our RenderTarget is
-            if (_didSceneBegin)
+            if (didSceneBegin)
                 renderer.OnSceneBackBufferSizeChanged(SceneRenderTarget.Width, SceneRenderTarget.Height);
 
             return renderer;
@@ -913,13 +905,13 @@ namespace Nez
 	    /// <typeparam name="T">The 1st type parameter.</typeparam>
 	    public T GetRenderer<T>() where T : Renderer
         {
-            for (var i = 0; i < _renderers.Length; i++)
-                if (_renderers.Buffer[i] is T)
-                    return _renderers[i] as T;
+            for (var i = 0; i < renderers.Length; i++)
+                if (renderers.Buffer[i] is T)
+                    return renderers[i] as T;
 
-            for (var i = 0; i < _afterPostProcessorRenderers.Length; i++)
-                if (_afterPostProcessorRenderers.Buffer[i] is T)
-                    return _afterPostProcessorRenderers.Buffer[i] as T;
+            for (var i = 0; i < afterPostProcessorRenderers.Length; i++)
+                if (afterPostProcessorRenderers.Buffer[i] is T)
+                    return afterPostProcessorRenderers.Buffer[i] as T;
             return null;
         }
 
@@ -931,9 +923,9 @@ namespace Nez
 	    public void RemoveRenderer(Renderer renderer)
         {
             if (renderer.WantsToRenderAfterPostProcessors)
-                _afterPostProcessorRenderers.Remove(renderer);
+                afterPostProcessorRenderers.Remove(renderer);
             else
-                _renderers.Remove(renderer);
+                renderers.Remove(renderer);
         }
 
 
@@ -951,15 +943,15 @@ namespace Nez
             postProcessor.OnAddedToScene();
 
             // if we already began let the PostProcessor know what size our RenderTarget is
-            if (_didSceneBegin)
+            if (didSceneBegin)
                 postProcessor.OnSceneBackBufferSizeChanged(SceneRenderTarget.Width, SceneRenderTarget.Height);
 
             // lazily create the 2nd RenderTarget for post processing only when a PostProcessor is added
-            if (_destinationRenderTarget == null)
+            if (destinationRenderTarget == null)
                 if (SceneRenderTarget != null)
-                    _destinationRenderTarget = RenderTarget.Create(SceneRenderTarget.Width, SceneRenderTarget.Height);
+                    destinationRenderTarget = RenderTarget.Create(SceneRenderTarget.Width, SceneRenderTarget.Height);
                 else
-                    _destinationRenderTarget = RenderTarget.Create();
+                    destinationRenderTarget = RenderTarget.Create();
 
             return postProcessor;
         }

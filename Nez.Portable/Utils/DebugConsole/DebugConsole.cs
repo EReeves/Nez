@@ -66,7 +66,7 @@ namespace Nez.Console
         private float _underscoreCounter;
 
         private readonly bool _enabled = true;
-        internal bool IsOpen;
+        public bool IsOpen;
 
 
         static DebugConsole()
