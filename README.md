@@ -7,7 +7,7 @@ This fork is used by me personally, I update it to work with the latest Monogame
 - Support for Monogame 3.7.x
 - Updated naming conventions to fit Microsoft standards.
 - There may be removal of components I dislike, unless someone wants it.
-- Several properties on components have been made public for ease of use. e.g. DebugConsole.IsVisible
+- Several properties on components have been made public for ease of use. e.g. DebugConsole.IsOpen
 
 
 
