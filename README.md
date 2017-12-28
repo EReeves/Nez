@@ -2,7 +2,7 @@
 ##  Fork Notes
 This fork is used by me personally, I update it to work with the latest Monogame dev nugget package every now and then. Nez currently only supports Monogame 3.5.
 
-###  Inconclusive summary of changes
+### Inconclusive summary of changes
 
 - Support for Monogame 3.7.x
 - Updated naming conventions to fit Microsoft standards.
@@ -10,9 +10,6 @@ This fork is used by me personally, I update it to work with the latest Monogame
 - Several properties on components have been made public for ease of use. e.g. DebugConsole.IsOpen
 
 -------
-
-
-
 
 
 
