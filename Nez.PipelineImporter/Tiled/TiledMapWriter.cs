@@ -4,10 +4,9 @@ using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using Nez.Tiled;
+using Nez.PipelineRuntime.Tiled;
 
-
-namespace Nez.TiledMaps
+namespace Nez.PipelineImporter.Tiled
 {
 	[ContentTypeWriter]
 	public class TiledMapWriter : ContentTypeWriter<TmxMap>
@@ -22,8 +21,8 @@ namespace Nez.TiledMaps
 			int largestTileWidth = 0, largestTileHeight = 0;
 			foreach( var tileset in map.tilesets )
 			{
-				largestTileWidth = Math.Max( largestTileWidth, tileset.tileWidth );
-				largestTileHeight = Math.Max( largestTileHeight, tileset.tileHeight );
+				largestTileWidth = System.Math.Max( largestTileWidth, tileset.tileWidth );
+				largestTileHeight = System.Math.Max( largestTileHeight, tileset.tileHeight );
 			}
 
 			writer.Write( hexToColor( map.backgroundColor ) );
@@ -247,13 +246,13 @@ namespace Nez.TiledMaps
 
 		public override string GetRuntimeType( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.Tiled.TiledMap ).AssemblyQualifiedName;
+			return typeof( TiledMap ).AssemblyQualifiedName;
 		}
 
 
 		public override string GetRuntimeReader( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.Tiled.TiledMapReader ).AssemblyQualifiedName;
+			return typeof( TiledMapReader ).AssemblyQualifiedName;
 		}
 
 	}

@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿using Nez.Debug;
+
+namespace Nez.AI.BehaviorTree.Decorators
 {
 	/// <summary>
 	///     will keep executing its child task until the child task returns failure

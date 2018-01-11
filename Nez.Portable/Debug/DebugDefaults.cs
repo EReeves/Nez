@@ -1,7 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Debug
 {
     public static partial class Debug
     {
@@ -30,7 +31,7 @@ namespace Nez
         public static class Size
         {
             public static int LineSizeMultiplier =>
-                Math.Max(Mathf.CeilToInt((float) Core.Scene.SceneRenderTargetSize.X / Screen.Width), 1);
+                System.Math.Max(Mathf.CeilToInt((float) Core.Scene.SceneRenderTargetSize.X / Screen.Width), 1);
         }
     }
 }

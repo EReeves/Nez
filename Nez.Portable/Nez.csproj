@@ -35,7 +35,7 @@
     <Folder Include="ECS\" />
     <Folder Include="Graphics\" />
     <Folder Include="Input\" />
-    <Folder Include="Math\" />
+    <Folder Include="Maths\" />
     <Folder Include="Physics\" />
     <Folder Include="Utils\" />
     <Folder Include="PipelineRuntime\" />
@@ -118,7 +118,7 @@
     <Compile Include="Graphics\Renderers\Renderer.cs" />
     <Compile Include="Input\GamePadData.cs" />
     <Compile Include="Input\Input.cs" />
-    <Compile Include="Math\Mathf.cs" />
+    <Compile Include="Maths\Mathf.cs" />
     <Compile Include="Physics\Collisions.cs" />
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Ray2D.cs" />
@@ -167,9 +167,9 @@
     <Compile Include="Utils\Timers\Timer.cs" />
     <Compile Include="ECS\Components\Renderables\Sprites\SpriteAnimation.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
-    <Compile Include="Math\Flags.cs" />
+    <Compile Include="Maths\Flags.cs" />
     <Compile Include="Debug\DebugDrawItem.cs" />
-    <Compile Include="Math\Random.cs" />
+    <Compile Include="Maths\Random.cs" />
     <Compile Include="ECS\Components\FollowCamera.cs" />
     <Compile Include="Graphics\Textures\Subtexture.cs" />
     <Compile Include="PipelineRuntime\TexturePacker\TexturePackerAtlas.cs" />
@@ -243,7 +243,7 @@
     <Compile Include="ECS\Components\Physics\Mover.cs" />
     <Compile Include="ECS\Components\IUpdatable.cs" />
     <Compile Include="Utils\Pair.cs" />
-    <Compile Include="Math\RectangleF.cs" />
+    <Compile Include="Maths\RectangleF.cs" />
     <Compile Include="ECS\Components\Renderables\Sprites\NineSliceSprite.cs" />
     <Compile Include="Graphics\Transitions\FadeTransition.cs" />
     <Compile Include="Graphics\Transitions\TransformTransition.cs" />
@@ -432,7 +432,7 @@
     <Compile Include="AI\Pathfinding\AStar\AStarPathfinder.cs" />
     <Compile Include="AI\Pathfinding\BreadthFirst\UnweightedGraph.cs" />
     <Compile Include="AI\Pathfinding\BreadthFirst\UnweightedGridGraph.cs" />
-    <Compile Include="Math\Axis.cs" />
+    <Compile Include="Maths\Axis.cs" />
     <Compile Include="PipelineRuntime\Tiled\TiledTileExt.cs" />
     <Compile Include="ECS\Components\Physics\TiledMapMover.cs" />
     <Compile Include="ECS\Systems\EntitySystem.cs" />
@@ -488,7 +488,7 @@
     <Compile Include="Utils\Extensions\EdgeExt.cs" />
     <Compile Include="ECS\Components\Text\TextRunComponent.cs" />
     <Compile Include="ECS\Components\Text\TextRun.cs" />
-    <Compile Include="Math\Matrix2D.cs" />
+    <Compile Include="Maths\Matrix2D.cs" />
     <Compile Include="Utils\Extensions\SoundEffectInstanceExt.cs" />
     <Compile Include="Physics\ColliderTriggerHelper.cs" />
     <Compile Include="ECS\Components\ColorCycler.cs" />
@@ -528,8 +528,8 @@
     <Compile Include="Physics\Verlet\Composites\Box.cs" />
     <Compile Include="Physics\Verlet\Composites\Ragdoll.cs" />
     <Compile Include="Utils\Tweens\RenderableColorTween.cs" />
-    <Compile Include="Math\Bezier.cs" />
-    <Compile Include="Math\BezierSpline.cs" />
+    <Compile Include="Maths\Bezier.cs" />
+    <Compile Include="Maths\BezierSpline.cs" />
     <Compile Include="Graphics\SVG\Shapes\Paths\FauxGraphicsPath.cs" />
     <Compile Include="Graphics\SVG\Shapes\Paths\ISvgPathBuilder.cs" />
     <Compile Include="Graphics\SVG\Shapes\Paths\SvgPath.cs" />
@@ -560,7 +560,7 @@
     <Compile Include="ECS\Components\Renderables\IRenderable.cs" />
     <Compile Include="ECS\SceneComponent.cs" />
     <Compile Include="Utils\Extensions\EntityExt.cs" />
-    <Compile Include="Math\SubpixelFloat.cs" />
+    <Compile Include="Maths\SubpixelFloat.cs" />
     <Compile Include="ECS\Components\Physics\Colliders\BoxCollider.cs" />
     <Compile Include="ECS\Components\Physics\Colliders\CircleCollider.cs" />
     <Compile Include="ECS\Components\Physics\Colliders\Collider.cs" />
@@ -575,14 +575,15 @@
     <Compile Include="Utils\Extensions\GestureSampleExt.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.7.0.1156, Culture=neutral, PublicKeyToken=null">
-      <HintPath>../../packages/MonoGame.Framework.Portable.3.7.0.1156-develop/lib/portable-net45+win8+wpa81/MonoGame.Framework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Content\NezDefaultBMFont.xnb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\SVG\Shapes\Paths\SvgPathBuilder.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.7.0.1206, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\MonoGame.Framework.Portable.3.7.0.1206-develop\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

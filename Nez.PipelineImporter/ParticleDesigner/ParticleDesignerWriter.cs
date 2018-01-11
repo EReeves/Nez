@@ -1,13 +1,11 @@
-﻿using System;
-using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Nez.Particles;
-using Nez.ParticleDesigner;
+using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Renderables.Particles;
+using Nez.PipelineRuntime.ParticleDesigner;
 
-
-namespace Nez.ParticleDesignerImporter
+namespace Nez.PipelineImporter.ParticleDesigner
 {
 	[ContentTypeWriter]
 	public class ParticleDesignerWriter : ContentTypeWriter<ParticleDesignerProcessorResult>

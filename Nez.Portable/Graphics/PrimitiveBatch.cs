@@ -1,8 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.Graphics
 {
 	/// <summary>
 	///     batcher that draws vertex colored triangles
@@ -241,14 +244,14 @@ namespace Nez
             var increment = MathHelper.Pi * 2.0f / circleSegments;
             var theta = 0.0f;
 
-            var v0 = center + radius * new Vector2((float) Math.Cos(theta), (float) Math.Sin(theta));
+            var v0 = center + radius * new Vector2((float) System.Math.Cos(theta), (float) System.Math.Sin(theta));
             theta += increment;
 
             for (var i = 1; i < circleSegments - 1; i++)
             {
-                var v1 = center + radius * new Vector2((float) Math.Cos(theta), (float) Math.Sin(theta));
-                var v2 = center + radius * new Vector2((float) Math.Cos(theta + increment),
-                             (float) Math.Sin(theta + increment));
+                var v1 = center + radius * new Vector2((float) System.Math.Cos(theta), (float) System.Math.Sin(theta));
+                var v2 = center + radius * new Vector2((float) System.Math.Cos(theta + increment),
+                             (float) System.Math.Sin(theta + increment));
 
                 AddVertex(v0, color, PrimitiveType.TriangleList);
                 AddVertex(v1, color, PrimitiveType.TriangleList);
@@ -273,7 +276,7 @@ namespace Nez
             rotation.Normalize();
 
             // Calculate angle of directional vector
-            var angle = (float) Math.Atan2(rotation.X, -rotation.Y);
+            var angle = (float) System.Math.Atan2(rotation.X, -rotation.Y);
             // Create matrix for rotation
             var rotMatrix = Matrix2D.CreateRotation(angle);
             // Create translation matrix for end-point

@@ -1,4 +1,7 @@
-﻿namespace Nez.DeferredLighting
+﻿using Nez.ECS;
+using Nez.ECS.Components.Renderables;
+
+namespace Nez.Graphics.DeferredLighting.Lights
 {
     public abstract class DeferredLight : RenderableComponent
     {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
+using Nez.Utils;
 
-namespace Nez.Sprites
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     Scrolling sprite. Note that ScrollingSprite overrides the Material so that it can wrap the UVs. This class requires

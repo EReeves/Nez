@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using Nez.Debug;
+using Nez.ECS.Components.Renderables;
+using Nez.Utils.Collections;
 
-namespace Nez
+namespace Nez.ECS.InternalUtils
 {
     public class RenderableComponentList
     {

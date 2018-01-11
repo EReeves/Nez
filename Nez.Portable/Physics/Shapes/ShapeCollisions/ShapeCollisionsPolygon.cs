@@ -1,8 +1,7 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 
-namespace Nez.PhysicsShapes
+namespace Nez.Physics.Shapes.ShapeCollisions
 {
     public static partial class ShapeCollisions
     {
@@ -81,7 +80,7 @@ namespace Nez.PhysicsShapes
 
                 // Check if the current interval distance is the minimum one. If so store the interval distance and the current distance.
                 // This will be used to calculate the minimum translation vector
-                intervalDist = Math.Abs(intervalDist);
+                intervalDist = System.Math.Abs(intervalDist);
                 if (intervalDist < minIntervalDistance)
                 {
                     minIntervalDistance = intervalDist;

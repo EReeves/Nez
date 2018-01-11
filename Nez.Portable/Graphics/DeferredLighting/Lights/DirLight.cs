@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Lights
 {
 	/// <summary>
 	///     directional light with a shortended name to avoid clashes with the XNA DirectionalLight. This light type has only a

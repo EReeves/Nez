@@ -1,4 +1,4 @@
-﻿namespace Nez.UI
+﻿namespace Nez.UI.Base
 {
 	/// <summary>
 	///     Value placeholder, allowing the value to be computed on request. Values are provided an element for context which

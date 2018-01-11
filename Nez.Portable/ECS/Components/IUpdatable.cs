@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez
+namespace Nez.ECS.Components
 {
 	/// <summary>
 	///     interface that when added to a Component lets Nez know that it wants the update method called each frame as long as

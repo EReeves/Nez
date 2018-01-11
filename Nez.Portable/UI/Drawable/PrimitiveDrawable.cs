@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Graphics.Batcher;
 
-namespace Nez.UI
+namespace Nez.UI.Drawable
 {
     public class PrimitiveDrawable : IDrawable
     {
@@ -44,7 +45,7 @@ namespace Nez.UI
         }
 
 
-        public virtual void Draw(Graphics graphics, float x, float y, float width, float height, Color color)
+        public virtual void Draw(Graphics.Graphics graphics, float x, float y, float width, float height, Color color)
         {
             var col = this.Color.HasValue ? this.Color.Value : color;
             if (color.A != 255)

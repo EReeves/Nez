@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Nez.Textures;
+using Nez.Debug;
+using Nez.Graphics.Textures;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez.Sprites
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     Sprite class handles the display and animation of a sprite. It uses a suggested Enum as a key (you can use an int
@@ -33,7 +36,7 @@ namespace Nez.Sprites
 	    ///     when the Scene is running.
 	    /// </summary>
 	    /// <param name="customComparer">Custom comparer.</param>
-	    public Sprite(IEqualityComparer<TEnum> customComparer = null) : base(Graphics.Instance.PixelTexture)
+	    public Sprite(IEqualityComparer<TEnum> customComparer = null) : base(Graphics.Graphics.Instance.PixelTexture)
         {
             _animations = new Dictionary<TEnum, SpriteAnimation>(customComparer);
         }

@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Input
 {
 	/// <summary>
 	///     prep for a proper multi-platform clipboard system. For now it just mocks the clipboard and will only work in-app

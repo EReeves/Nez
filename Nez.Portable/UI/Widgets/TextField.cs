@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Nez.BitmapFonts;
+using Nez.Debug;
+using Nez.Input;
+using Nez.Maths;
+using Nez;
+using Nez.UI.Base;
+using Nez.UI.Drawable;
+using Nez.Utils;
+using Nez.Utils.Fonts;
+using Nez.Utils.Timers;
+using BitmapFont = Nez.BitmapFont;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
 	/// <summary>
 	///     A single-line text input field.
@@ -94,7 +104,7 @@ namespace Nez.UI
             {
                 var prefHeight = TextHeight;
                 if (_style.Background != null)
-                    prefHeight = Math.Max(prefHeight + _style.Background.BottomHeight + _style.Background.TopHeight,
+                    prefHeight = System.Math.Max(prefHeight + _style.Background.BottomHeight + _style.Background.TopHeight,
                         _style.Background.MinHeight);
 
                 return prefHeight;
@@ -215,14 +225,14 @@ namespace Nez.UI
             var glyphCount = _glyphPositions.Count;
 
             // Check if the cursor has gone out the left or right side of the visible area and adjust renderoffset.
-            var distance = _glyphPositions[Math.Max(0, Cursor - 1)] + _renderOffset;
+            var distance = _glyphPositions[System.Math.Max(0, Cursor - 1)] + _renderOffset;
             if (distance <= 0)
             {
                 _renderOffset -= distance;
             }
             else
             {
-                var index = Math.Min(glyphCount - 1, Cursor + 1);
+                var index = System.Math.Min(glyphCount - 1, Cursor + 1);
                 var minX = _glyphPositions[index] - visibleWidth;
                 if (-_renderOffset < minX)
                     _renderOffset = -minX;
@@ -234,18 +244,18 @@ namespace Nez.UI
             for (var i = 0; i < glyphCount; i++)
                 if (_glyphPositions[i] >= -_renderOffset)
                 {
-                    _visibleTextStart = Math.Max(0, i);
+                    _visibleTextStart = System.Math.Max(0, i);
                     startX = _glyphPositions[i];
                     break;
                 }
 
             // calculate last visible char based on visible width and render offset
             var length = DisplayText.Length;
-            _visibleTextEnd = Math.Min(length, Cursor + 1);
+            _visibleTextEnd = System.Math.Min(length, Cursor + 1);
             for (; _visibleTextEnd <= length; _visibleTextEnd++)
                 if (_glyphPositions[_visibleTextEnd] > startX + visibleWidth)
                     break;
-            _visibleTextEnd = Math.Max(0, _visibleTextEnd - 1);
+            _visibleTextEnd = System.Math.Max(0, _visibleTextEnd - 1);
 
             if ((_textHAlign & AlignInternal.Left) == 0)
             {
@@ -261,10 +271,10 @@ namespace Nez.UI
             // calculate selection x position and width
             if (HasSelection)
             {
-                var minIndex = Math.Min(Cursor, SelectionStart);
-                var maxIndex = Math.Max(Cursor, SelectionStart);
-                var minX = Math.Max(_glyphPositions[minIndex], -_renderOffset);
-                var maxX = Math.Min(_glyphPositions[maxIndex], visibleWidth - _renderOffset);
+                var minIndex = System.Math.Min(Cursor, SelectionStart);
+                var maxIndex = System.Math.Max(Cursor, SelectionStart);
+                var minX = System.Math.Max(_glyphPositions[minIndex], -_renderOffset);
+                var maxX = System.Math.Min(_glyphPositions[maxIndex], visibleWidth - _renderOffset);
                 _selectionX = minX;
 
                 if (_renderOffset == 0)
@@ -442,7 +452,7 @@ namespace Nez.UI
         public string GetSelection()
         {
             return HasSelection
-                ? Text.Substring(Math.Min(SelectionStart, Cursor), Math.Max(SelectionStart, Cursor))
+                ? Text.Substring(System.Math.Min(SelectionStart, Cursor), System.Math.Max(SelectionStart, Cursor))
                 : "";
         }
 
@@ -457,8 +467,8 @@ namespace Nez.UI
             Assert.IsFalse(selectionStart < 0, "selectionStart must be >= 0");
             Assert.IsFalse(selectionEnd < 0, "selectionEnd must be >= 0");
 
-            selectionStart = Math.Min(Text.Length, selectionStart);
-            selectionEnd = Math.Min(Text.Length, selectionEnd);
+            selectionStart = System.Math.Min(Text.Length, selectionStart);
+            selectionEnd = System.Math.Min(Text.Length, selectionEnd);
             if (selectionEnd == selectionStart)
             {
                 ClearSelection();
@@ -508,7 +518,7 @@ namespace Nez.UI
         {
             Assert.IsFalse(cursorPosition < 0, "cursorPosition must be >= 0");
             ClearSelection();
-            Cursor = Math.Min(cursorPosition, Text.Length);
+            Cursor = System.Math.Min(cursorPosition, Text.Length);
             return this;
         }
 
@@ -846,7 +856,7 @@ namespace Nez.UI
 
         #region Drawing
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             var font = _style.Font;
             var fontColor = _disabled && _style.DisabledFontColor.HasValue
@@ -935,14 +945,14 @@ namespace Nez.UI
 	    /// <param name="font">Font.</param>
 	    /// <param name="x">The x coordinate.</param>
 	    /// <param name="y">The y coordinate.</param>
-	    protected void DrawSelection(IDrawable selection, Graphics graphics, BitmapFont font, float x, float y)
+	    protected void DrawSelection(IDrawable selection, Graphics.Graphics graphics, BitmapFont font, float x, float y)
         {
             selection.Draw(graphics, x + _selectionX + _renderOffset + FontOffset, y - font.Descent / 2, _selectionWidth,
                 TextHeight, Color.White);
         }
 
 
-        protected void DrawCursor(IDrawable cursorPatch, Graphics graphics, BitmapFont font, float x, float y)
+        protected void DrawCursor(IDrawable cursorPatch, Graphics.Graphics graphics, BitmapFont font, float x, float y)
         {
             cursorPatch.Draw(graphics,
                 x + TextOffset + _glyphPositions[Cursor] - _glyphPositions[_visibleTextStart] + FontOffset -
@@ -962,8 +972,8 @@ namespace Nez.UI
         {
             if (HasSelection && !_passwordMode)
             {
-                var start = Math.Min(Cursor, SelectionStart);
-                var length = Math.Max(Cursor, SelectionStart) - start;
+                var start = System.Math.Min(Cursor, SelectionStart);
+                var length = System.Math.Max(Cursor, SelectionStart) - start;
                 Clipboard.SetContents(Text.Substring(start, length));
             }
         }
@@ -998,7 +1008,7 @@ namespace Nez.UI
             _textBuffer.Clear();
             var textLength = Text.Length;
             if (HasSelection)
-                textLength -= Math.Abs(Cursor - SelectionStart);
+                textLength -= System.Math.Abs(Cursor - SelectionStart);
 
             //var data = style.font.getData();
             for (int i = 0, n = content.Length; i < n; i++)
@@ -1043,8 +1053,8 @@ namespace Nez.UI
         {
             var from = SelectionStart;
             var to = Cursor;
-            var minIndex = Math.Min(from, to);
-            var maxIndex = Math.Max(from, to);
+            var minIndex = System.Math.Min(from, to);
+            var maxIndex = System.Math.Max(from, to);
             var newText = (minIndex > 0 ? Text.Substring(0, minIndex) : "")
                           + (maxIndex < Text.Length ? Text.Substring(maxIndex, Text.Length - maxIndex) : "");
 
@@ -1273,7 +1283,7 @@ namespace Nez.UI
 
         public TextFieldStyle()
         {
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
         }
 
 
@@ -1282,7 +1292,7 @@ namespace Nez.UI
         {
             this.Background = background;
             this.Cursor = cursor;
-            this.Font = font ?? Graphics.Instance.BitmapFont;
+            this.Font = font ?? Graphics.Graphics.Instance.BitmapFont;
             this.FontColor = fontColor;
             this.Selection = selection;
         }

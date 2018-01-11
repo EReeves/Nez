@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables._3D
 {
     public abstract class GeometricPrimitive3D : Renderable3D, IDisposable
     {
@@ -15,7 +15,7 @@ namespace Nez
         protected List<VertexPositionColorNormal> Vertices = new List<VertexPositionColorNormal>();
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             // flush the 2D batch so we render appropriately depth-wise
             graphics.Batcher.FlushBatch();

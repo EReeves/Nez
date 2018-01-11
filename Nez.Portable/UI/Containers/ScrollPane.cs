@@ -1,7 +1,13 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.Graphics;
+using Nez.Maths;
+using Nez.UI.Base;
+using Nez.Utils;
+using Nez.Utils.Extensions;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Containers
 {
 	/// <summary>
 	///     A group that scrolls a child widget using scrollbars and/or mouse or touch dragging.
@@ -185,7 +191,7 @@ namespace Nez.UI
             {
                 _fadeDelay -= Time.UnscaledDeltaTime;
                 if (_fadeDelay <= 0)
-                    _fadeAlpha = Math.Max(0, _fadeAlpha - Time.UnscaledDeltaTime);
+                    _fadeAlpha = System.Math.Max(0, _fadeAlpha - Time.UnscaledDeltaTime);
             }
 
             if (_flingTimer > 0)
@@ -222,24 +228,24 @@ namespace Nez.UI
                 {
                     ResetFade();
                     if (_visualAmountX < _amountX)
-                        SetVisualScrollX(Math.Min(_amountX,
-                            _visualAmountX + Math.Max(2000 * Time.UnscaledDeltaTime,
+                        SetVisualScrollX(System.Math.Min(_amountX,
+                            _visualAmountX + System.Math.Max(2000 * Time.UnscaledDeltaTime,
                                 (_amountX - _visualAmountX) * 7 * Time.UnscaledDeltaTime)));
                     else
-                        SetVisualScrollX(Math.Max(_amountX,
-                            _visualAmountX - Math.Max(2000 * Time.UnscaledDeltaTime,
+                        SetVisualScrollX(System.Math.Max(_amountX,
+                            _visualAmountX - System.Math.Max(2000 * Time.UnscaledDeltaTime,
                                 (_visualAmountX - _amountX) * 7 * Time.UnscaledDeltaTime)));
                 }
                 if (_visualAmountY != _amountY)
                 {
                     ResetFade();
                     if (_visualAmountY < _amountY)
-                        SetVisualScrollY(Math.Min(_amountY,
-                            _visualAmountY + Math.Max(2000 * Time.UnscaledDeltaTime,
+                        SetVisualScrollY(System.Math.Min(_amountY,
+                            _visualAmountY + System.Math.Max(2000 * Time.UnscaledDeltaTime,
                                 (_amountY - _visualAmountY) * 7 * Time.UnscaledDeltaTime)));
                     else
-                        SetVisualScrollY(Math.Max(_amountY,
-                            _visualAmountY - Math.Max(2000 * Time.UnscaledDeltaTime,
+                        SetVisualScrollY(System.Math.Max(_amountY,
+                            _visualAmountY - System.Math.Max(2000 * Time.UnscaledDeltaTime,
                                 (_visualAmountY - _amountY) * 7 * Time.UnscaledDeltaTime)));
                 }
             }
@@ -289,7 +295,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             if (_widget == null)
                 return;
@@ -325,14 +331,14 @@ namespace Nez.UI
                 {
                     var scrollbarHeight = 0f;
                     if (_style.HScrollKnob != null) scrollbarHeight = _style.HScrollKnob.MinHeight;
-                    if (_style.HScroll != null) scrollbarHeight = Math.Max(scrollbarHeight, _style.HScroll.MinHeight);
+                    if (_style.HScroll != null) scrollbarHeight = System.Math.Max(scrollbarHeight, _style.HScroll.MinHeight);
                     eleY += scrollbarHeight;
                 }
                 if (_scrollY && !_vScrollOnRight)
                 {
                     var scrollbarWidth = 0f;
                     if (_style.HScrollKnob != null) scrollbarWidth = _style.HScrollKnob.MinWidth;
-                    if (_style.HScroll != null) scrollbarWidth = Math.Max(scrollbarWidth, _style.HScroll.MinWidth);
+                    if (_style.HScroll != null) scrollbarWidth = System.Math.Max(scrollbarWidth, _style.HScroll.MinWidth);
                     eleX += scrollbarWidth;
                 }
             }
@@ -398,7 +404,7 @@ namespace Nez.UI
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             if (Transform)
                 ApplyTransform(graphics, ComputeTransform());
@@ -450,7 +456,7 @@ namespace Nez.UI
                     {
                         var scrollbarWidth = 0f;
                         if (_style.VScrollKnob != null) scrollbarWidth = _style.VScrollKnob.MinWidth;
-                        if (_style.VScroll != null) scrollbarWidth = Math.Max(scrollbarWidth, _style.VScroll.MinWidth);
+                        if (_style.VScroll != null) scrollbarWidth = System.Math.Max(scrollbarWidth, _style.VScroll.MinWidth);
                         width += scrollbarWidth;
                     }
                     return width;
@@ -473,7 +479,7 @@ namespace Nez.UI
                         var scrollbarHeight = 0f;
                         if (_style.HScrollKnob != null) scrollbarHeight = _style.HScrollKnob.MinHeight;
                         if (_style.HScroll != null)
-                            scrollbarHeight = Math.Max(scrollbarHeight, _style.HScroll.MinHeight);
+                            scrollbarHeight = System.Math.Max(scrollbarHeight, _style.HScroll.MinHeight);
                         height += scrollbarHeight;
                     }
                     return height;
@@ -502,10 +508,10 @@ namespace Nez.UI
 
             var scrollbarHeight = 0f;
             if (hScrollKnob != null) scrollbarHeight = hScrollKnob.MinHeight;
-            if (_style.HScroll != null) scrollbarHeight = Math.Max(scrollbarHeight, _style.HScroll.MinHeight);
+            if (_style.HScroll != null) scrollbarHeight = System.Math.Max(scrollbarHeight, _style.HScroll.MinHeight);
             var scrollbarWidth = 0f;
             if (vScrollKnob != null) scrollbarWidth = vScrollKnob.MinWidth;
-            if (_style.VScroll != null) scrollbarWidth = Math.Max(scrollbarWidth, _style.VScroll.MinWidth);
+            if (_style.VScroll != null) scrollbarWidth = System.Math.Max(scrollbarWidth, _style.VScroll.MinWidth);
 
             // Get available space size by subtracting background's padded area.
             _areaWidth = width - bgLeftWidth - bgRightWidth;
@@ -582,8 +588,8 @@ namespace Nez.UI
             }
 
             // If the widget is smaller than the available space, make it take up the available space.
-            widgetWidth = DisableX ? _areaWidth : Math.Max(_areaWidth, widgetWidth);
-            widgetHeight = DisableY ? _areaHeight : Math.Max(_areaHeight, widgetHeight);
+            widgetWidth = DisableX ? _areaWidth : System.Math.Max(_areaWidth, widgetWidth);
+            widgetHeight = DisableY ? _areaHeight : System.Math.Max(_areaHeight, widgetHeight);
 
             _maxX = widgetWidth - _areaWidth;
             _maxY = widgetHeight - _areaHeight;
@@ -607,7 +613,7 @@ namespace Nez.UI
                     var boundsY = _hScrollOnBottom ? bgBottomHeight : height - bgTopHeight - hScrollHeight;
                     _hScrollBounds = RectangleExt.FromFloats(boundsX, boundsY, _areaWidth, hScrollHeight);
                     if (_variableSizeKnobs)
-                        _hKnobBounds.Width = (int) Math.Max(hScrollKnob.MinWidth,
+                        _hKnobBounds.Width = (int) System.Math.Max(hScrollKnob.MinWidth,
                             (int) (_hScrollBounds.Width * _areaWidth / widgetWidth));
                     else
                         _hKnobBounds.Width = (int) hScrollKnob.MinWidth;
@@ -644,7 +650,7 @@ namespace Nez.UI
                     _vScrollBounds = RectangleExt.FromFloats(boundsX, boundsY, vScrollWidth, _areaHeight);
                     _vKnobBounds.Width = (int) vScrollKnob.MinWidth;
                     if (_variableSizeKnobs)
-                        _vKnobBounds.Height = (int) Math.Max(vScrollKnob.MinHeight,
+                        _vKnobBounds.Height = (int) System.Math.Max(vScrollKnob.MinHeight,
                             (int) (_vScrollBounds.Height * _areaHeight / widgetHeight));
                     else
                         _vKnobBounds.Height = (int) vScrollKnob.MinHeight;
@@ -726,8 +732,8 @@ namespace Nez.UI
                 var delta = mousePos.X - _lastMousePos.X;
                 var scrollH = _lastHandlePosition + delta;
                 _lastHandlePosition = scrollH;
-                scrollH = Math.Max(_hScrollBounds.X, scrollH);
-                scrollH = Math.Min(_hScrollBounds.X + _hScrollBounds.Width - _hKnobBounds.Width, scrollH);
+                scrollH = System.Math.Max(_hScrollBounds.X, scrollH);
+                scrollH = System.Math.Min(_hScrollBounds.X + _hScrollBounds.Width - _hKnobBounds.Width, scrollH);
                 var total = _hScrollBounds.Width - _hKnobBounds.Width;
                 if (total != 0)
                     SetScrollPercentX((scrollH - _hScrollBounds.X) / total);
@@ -738,8 +744,8 @@ namespace Nez.UI
                 var delta = mousePos.Y - _lastMousePos.Y;
                 var scrollV = _lastHandlePosition + delta;
                 _lastHandlePosition = scrollV;
-                scrollV = Math.Max(_vScrollBounds.Y, scrollV);
-                scrollV = Math.Min(_vScrollBounds.Y + _vScrollBounds.Height - _vKnobBounds.Height, scrollV);
+                scrollV = System.Math.Max(_vScrollBounds.Y, scrollV);
+                scrollV = System.Math.Min(_vScrollBounds.Y + _vScrollBounds.Height - _vKnobBounds.Height, scrollV);
                 float total = _vScrollBounds.Height - _vKnobBounds.Height;
                 if (total != 0)
                 {
@@ -990,7 +996,7 @@ namespace Nez.UI
                 return 0;
             var barheight = 0f;
             if (_style.HScrollKnob != null) barheight = _style.HScrollKnob.MinHeight;
-            if (_style.HScroll != null) barheight = Math.Max(barheight, _style.HScroll.MinHeight);
+            if (_style.HScroll != null) barheight = System.Math.Max(barheight, _style.HScroll.MinHeight);
             return barheight;
         }
 
@@ -1001,7 +1007,7 @@ namespace Nez.UI
                 return 0;
             var barWidth = 0f;
             if (_style.VScrollKnob != null) barWidth = _style.VScrollKnob.MinWidth;
-            if (_style.VScroll != null) barWidth = Math.Max(barWidth, _style.VScroll.MinWidth);
+            if (_style.VScroll != null) barWidth = System.Math.Max(barWidth, _style.VScroll.MinWidth);
             return barWidth;
         }
 

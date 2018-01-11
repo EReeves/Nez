@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez.AI.UtilityAI
+namespace Nez.AI.UtilityAI.Considerations.Appraisals
 {
 	/// <summary>
 	///     wraps a Func for use as an Appraisal without having to create a subclass

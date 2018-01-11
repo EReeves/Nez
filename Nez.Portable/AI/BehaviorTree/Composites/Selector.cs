@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿namespace Nez.AI.BehaviorTree.Composites
 {
 	/// <summary>
 	///     The selector task is similar to an "or" operation. It will return success as soon as one of its child tasks return

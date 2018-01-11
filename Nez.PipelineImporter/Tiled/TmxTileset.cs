@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.IO;
-using System;
-using Nez.PipelineImporter;
+using System.Xml.Serialization;
+using Nez.PipelineImporter.Common;
 
-
-namespace Nez.TiledMaps
+namespace Nez.PipelineImporter.Tiled
 {
 	[XmlRoot( ElementName = "tileset" )]
 	public class TmxTileset

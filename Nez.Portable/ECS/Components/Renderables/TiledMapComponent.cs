@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.Tiled;
+using Nez.Debug;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Graphics.Batcher;
+using Nez.PipelineRuntime.Tiled;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
     public class TiledMapComponent : RenderableComponent, IUpdatable
     {
@@ -62,7 +66,7 @@ namespace Nez
 
         #region Rendering helpers
 
-        private void RenderObjectGroup(TiledObjectGroup group, Graphics graphics)
+        private void RenderObjectGroup(TiledObjectGroup group, Graphics.Graphics graphics)
         {
             var renderPosition = Entity.Transform.Position + localOffset;
 
@@ -180,7 +184,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             if (LayerIndicesToRender == null)
                 TiledMap.Draw(graphics.Batcher, Entity.Transform.Position + localOffset, layerDepth, camera.Bounds);
@@ -192,7 +196,7 @@ namespace Nez
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             foreach (var group in TiledMap.ObjectGroups)
                 RenderObjectGroup(group, graphics);
@@ -225,7 +229,7 @@ namespace Nez
                 collider.Entity = Entity;
                 _colliders[i] = collider;
 
-                Physics.AddCollider(collider);
+                Nez.Physics.Physics.AddCollider(collider);
             }
         }
 
@@ -236,7 +240,7 @@ namespace Nez
                 return;
 
             foreach (var collider in _colliders)
-                Physics.RemoveCollider(collider);
+                Nez.Physics.Physics.RemoveCollider(collider);
             _colliders = null;
         }
 

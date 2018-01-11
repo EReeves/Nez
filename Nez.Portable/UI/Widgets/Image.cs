@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
+using Nez.UI.Base;
+using Nez.UI.Drawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class Image : Element
     {
@@ -39,7 +41,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
 

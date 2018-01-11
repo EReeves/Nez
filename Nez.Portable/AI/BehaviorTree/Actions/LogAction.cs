@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿namespace Nez.AI.BehaviorTree.Actions
 {
 	/// <summary>
 	///     simple task which will output the specified text and return success. It can be used for debugging.
@@ -25,9 +25,9 @@
         public override TaskStatus Update(T context)
         {
             if (IsError)
-                Debug.Error(Text);
+                Debug.Debug.Error(Text);
             else
-                Debug.Log(Text);
+                Debug.Debug.Log(Text);
 
             return TaskStatus.Success;
         }

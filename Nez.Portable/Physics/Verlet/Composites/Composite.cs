@@ -1,7 +1,10 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using Nez.Graphics.Batcher;
+using Nez.Physics.Verlet.Constraints;
+using Nez.Utils.Collections;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet.Composites
 {
 	/// <summary>
 	///     represents an object in the Verlet world. Consists of Particles and Constraints and handles updating them
@@ -109,10 +112,10 @@ namespace Nez.Verlet
             if (DrawParticles)
                 for (var i = 0; i < Particles.Length; i++)
                     if (Particles.Buffer[i].Radius == 0)
-                        batcher.DrawPixel(Particles.Buffer[i].Position, Debug.Colors.VerletParticle, 4);
+                        batcher.DrawPixel(Particles.Buffer[i].Position, Debug.Debug.Colors.VerletParticle, 4);
                     else
                         batcher.DrawCircle(Particles.Buffer[i].Position, (int) Particles.Buffer[i].Radius,
-                            Debug.Colors.VerletParticle, 1, 4);
+                            Debug.Debug.Colors.VerletParticle, 1, 4);
         }
 
 

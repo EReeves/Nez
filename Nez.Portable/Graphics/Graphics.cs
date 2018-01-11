@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.BitmapFonts;
-using Nez.Textures;
+using Nez;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics
 {
 	/// <summary>
 	///     wrapper class that holds in instance of a Batcher and helpers so that it can be passed around and draw anything.
@@ -15,7 +15,7 @@ namespace Nez
 	    /// <summary>
 	    ///     All 2D rendering is done through this Batcher instance
 	    /// </summary>
-	    public Batcher Batcher;
+	    public Batcher.Batcher Batcher;
 
 	    /// <summary>
 	    ///     default font is loaded up and stored here for easy access. Nez uses it for the DebugConsole
@@ -37,7 +37,7 @@ namespace Nez
 
         public Graphics(BitmapFont font)
         {
-            Batcher = new Batcher(Core.GraphicsDevice);
+            Batcher = new Batcher.Batcher(Core.GraphicsDevice);
             BitmapFont = font;
 
             // the bottom/right pixel is white on the default font so we'll use that for the pixelTexture

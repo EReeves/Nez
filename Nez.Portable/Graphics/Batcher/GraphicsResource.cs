@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Graphics.Batcher
 {
 	/// <summary>
 	///     this class exists only so that we can sneak the Batcher through and have it work just like SpriteBatch with regard

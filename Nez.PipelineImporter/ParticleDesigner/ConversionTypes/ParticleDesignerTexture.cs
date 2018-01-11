@@ -1,8 +1,6 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
-
-namespace Nez.ParticleDesignerImporter
+namespace Nez.PipelineImporter.ParticleDesigner.ConversionTypes
 {
 	public class ParticleDesignerTexture
 	{

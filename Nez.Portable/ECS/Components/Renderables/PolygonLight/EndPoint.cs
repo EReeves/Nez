@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Nez.Shadows
+namespace Nez.ECS.Components.Renderables.PolygonLight
 {
 	/// <summary>
 	///     The end-point of a segment

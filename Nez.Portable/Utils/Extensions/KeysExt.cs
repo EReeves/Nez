@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Nez.Input;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class KeysExt
     {

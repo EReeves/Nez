@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
     public class TiledTile
     {

@@ -1,9 +1,14 @@
-using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Physics.Shapes;
+using Nez.Physics.Verlet.Composites;
+using Nez.Utils;
+using Nez.Utils.Collections;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet
 {
 	/// <summary>
 	///     the root of the Verlet simulation. Create a World and call its update method each frame.
@@ -66,19 +71,19 @@ namespace Nez.Verlet
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void HandleDragging()
         {
-            if (Input.LeftMouseButtonPressed)
+            if (Input.Input.LeftMouseButtonPressed)
             {
-                _draggedParticle = GetNearestParticle(Input.MousePosition);
+                _draggedParticle = GetNearestParticle(Input.Input.MousePosition);
             }
-            else if (Input.LeftMouseButtonDown)
+            else if (Input.Input.LeftMouseButtonDown)
             {
                 if (_draggedParticle != null)
-                    _draggedParticle.Position = Input.MousePosition;
+                    _draggedParticle.Position = Input.Input.MousePosition;
             }
-            else if (Input.LeftMouseButtonReleased)
+            else if (Input.Input.LeftMouseButtonReleased)
             {
                 if (_draggedParticle != null)
-                    _draggedParticle.Position = Input.MousePosition;
+                    _draggedParticle.Position = Input.Input.MousePosition;
                 _draggedParticle = null;
             }
         }
@@ -131,7 +136,7 @@ namespace Nez.Verlet
                 else
                 {
                     // Highlight the nearest particle within the selection radius
-                    var particle = GetNearestParticle(Input.MousePosition);
+                    var particle = GetNearestParticle(Input.Input.MousePosition);
                     if (particle != null)
                         batcher.DrawCircle(particle.Position, 8, Color.White * 0.4f);
                 }
@@ -250,7 +255,7 @@ namespace Nez.Verlet
             _iterationSteps = Mathf.TruncateToInt(_leftOverTime / _fixedDeltaTime);
             _leftOverTime -= _iterationSteps * _fixedDeltaTime;
 
-            _iterationSteps = Math.Min(_iterationSteps, MaximumStepIterations);
+            _iterationSteps = System.Math.Min(_iterationSteps, MaximumStepIterations);
         }
 
         #endregion

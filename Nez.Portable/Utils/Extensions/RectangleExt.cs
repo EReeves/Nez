@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.Physics;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class RectangleExt
     {
@@ -75,7 +77,7 @@ namespace Nez
         public static void ExpandSide(ref Rectangle rect, Edge edge, int amount)
         {
             // ensure we have a positive value
-            amount = Math.Abs(amount);
+            amount = System.Math.Abs(amount);
 
             switch (edge)
             {
@@ -142,10 +144,10 @@ namespace Nez
 	    /// <param name="result">Result.</param>
 	    public static void Union(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
         {
-            result.X = Math.Min(value1.X, value2.X);
-            result.Y = Math.Min(value1.Y, value2.Y);
-            result.Width = Math.Max(value1.Right, value2.Right) - result.X;
-            result.Height = Math.Max(value1.Bottom, value2.Bottom) - result.Y;
+            result.X = System.Math.Min(value1.X, value2.X);
+            result.Y = System.Math.Min(value1.Y, value2.Y);
+            result.Width = System.Math.Max(value1.Right, value2.Right) - result.X;
+            result.Height = System.Math.Max(value1.Bottom, value2.Bottom) - result.Y;
         }
 
 
@@ -281,7 +283,7 @@ namespace Nez
             distance = 0f;
             var maxValue = float.MaxValue;
 
-            if (Math.Abs(ray.Direction.X) < 1E-06f)
+            if (System.Math.Abs(ray.Direction.X) < 1E-06f)
             {
                 if (ray.Start.X < rect.X || ray.Start.X > rect.X + rect.Width)
                     return false;
@@ -304,7 +306,7 @@ namespace Nez
                     return false;
             }
 
-            if (Math.Abs(ray.Direction.Y) < 1E-06f)
+            if (System.Math.Abs(ray.Direction.Y) < 1E-06f)
             {
                 if (ray.Start.Y < rect.Y || ray.Start.Y > rect.Y + rect.Height)
                     return false;
@@ -336,7 +338,7 @@ namespace Nez
             var num = 0f;
             var maxValue = float.MaxValue;
 
-            if (Math.Abs(ray.Direction.X) < 1E-06f)
+            if (System.Math.Abs(ray.Direction.X) < 1E-06f)
             {
                 if (ray.Position.X < rectangle.Left || ray.Position.X > rectangle.Right)
                     return null;
@@ -359,7 +361,7 @@ namespace Nez
                     return null;
             }
 
-            if (Math.Abs(ray.Direction.Y) < 1E-06f)
+            if (System.Math.Abs(ray.Direction.Y) < 1E-06f)
             {
                 if (ray.Position.Y < rectangle.Top || ray.Position.Y > rectangle.Bottom)
                     return null;
@@ -451,11 +453,11 @@ namespace Nez
                 return false;
 
             // find the offset of both sides
-            moveX = Math.Abs(l) < r ? l : r;
-            moveY = Math.Abs(t) < b ? t : b;
+            moveX = System.Math.Abs(l) < r ? l : r;
+            moveY = System.Math.Abs(t) < b ? t : b;
 
             // only use whichever offset is the smallest
-            if (Math.Abs(moveX) < Math.Abs(moveY))
+            if (System.Math.Abs(moveX) < System.Math.Abs(moveY))
                 moveY = 0.0f;
             else
                 moveX = 0.0f;
@@ -492,7 +494,7 @@ namespace Nez
             var minDistanceY = halfHeightA + halfHeightB;
 
             // if we are not intersecting at all, return (0, 0)
-            if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
+            if (System.Math.Abs(distanceX) >= minDistanceX || System.Math.Abs(distanceY) >= minDistanceY)
                 return Vector2.Zero;
 
             // calculate and return intersection depths
@@ -506,26 +508,26 @@ namespace Nez
         public static Vector2 GetClosestPointOnBoundsToOrigin(ref Rectangle rect)
         {
             var max = GetMax(ref rect);
-            var minDist = Math.Abs(rect.Location.X);
+            var minDist = System.Math.Abs(rect.Location.X);
             var boundsPoint = new Vector2(rect.Location.X, 0);
 
-            if (Math.Abs(max.X) < minDist)
+            if (System.Math.Abs(max.X) < minDist)
             {
-                minDist = Math.Abs(max.X);
+                minDist = System.Math.Abs(max.X);
                 boundsPoint.X = max.X;
                 boundsPoint.Y = 0f;
             }
 
-            if (Math.Abs(max.Y) < minDist)
+            if (System.Math.Abs(max.Y) < minDist)
             {
-                minDist = Math.Abs(max.Y);
+                minDist = System.Math.Abs(max.Y);
                 boundsPoint.X = 0f;
                 boundsPoint.Y = max.Y;
             }
 
-            if (Math.Abs(rect.Location.Y) < minDist)
+            if (System.Math.Abs(rect.Location.Y) < minDist)
             {
-                minDist = Math.Abs(rect.Location.Y);
+                minDist = System.Math.Abs(rect.Location.Y);
                 boundsPoint.X = 0;
                 boundsPoint.Y = rect.Location.Y;
             }

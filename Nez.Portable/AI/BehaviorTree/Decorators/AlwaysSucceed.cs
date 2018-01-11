@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿using Nez.Debug;
+
+namespace Nez.AI.BehaviorTree.Decorators
 {
 	/// <summary>
 	///     will always return success except when the child task is running

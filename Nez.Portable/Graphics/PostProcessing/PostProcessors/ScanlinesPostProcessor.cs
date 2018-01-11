@@ -1,4 +1,6 @@
-﻿namespace Nez
+﻿using Nez.Graphics.Effects;
+
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
     public class ScanlinesPostProcessor : PostProcessor<ScanlinesEffect>
     {

@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
+using Nez.Utils;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
     public static class TiledTileExt
     {

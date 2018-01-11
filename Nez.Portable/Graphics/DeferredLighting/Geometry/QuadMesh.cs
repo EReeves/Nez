@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Geometry
 {
     public class QuadMesh : IDisposable
     {

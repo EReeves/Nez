@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿namespace Nez.AI.BehaviorTree.Decorators
 {
     public abstract class Decorator<T> : Behavior<T>
     {

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
     public abstract class TiledLayer
     {

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace Nez.Overlap2D
+namespace Nez.PipelineRuntime.Overlap2D
 {
     public class O2DSceneReader : ContentTypeReader<O2DScene>
     {

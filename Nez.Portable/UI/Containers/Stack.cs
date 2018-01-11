@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Nez.UI.Base;
 
-namespace Nez.UI
+namespace Nez.UI.Containers
 {
 	/// <summary>
 	///     A stack is a container that sizes its children to its size and positions them at 0,0 on top of each other.
@@ -45,27 +45,27 @@ namespace Nez.UI
                 if (child is ILayout)
                 {
                     var layout = (ILayout) child;
-                    _prefWidth = Math.Max(_prefWidth, layout.PreferredWidth);
-                    _prefHeight = Math.Max(_prefHeight, layout.PreferredHeight);
-                    _minWidth = Math.Max(_minWidth, layout.MinWidth);
-                    _minHeight = Math.Max(_minHeight, layout.MinHeight);
+                    _prefWidth = System.Math.Max(_prefWidth, layout.PreferredWidth);
+                    _prefHeight = System.Math.Max(_prefHeight, layout.PreferredHeight);
+                    _minWidth = System.Math.Max(_minWidth, layout.MinWidth);
+                    _minHeight = System.Math.Max(_minHeight, layout.MinHeight);
                     childMaxWidth = layout.MaxWidth;
                     childMaxHeight = layout.MaxHeight;
                 }
                 else
                 {
-                    _prefWidth = Math.Max(_prefWidth, child.Width);
-                    _prefHeight = Math.Max(_prefHeight, child.Height);
-                    _minWidth = Math.Max(_minWidth, child.Width);
-                    _minHeight = Math.Max(_minHeight, child.Height);
+                    _prefWidth = System.Math.Max(_prefWidth, child.Width);
+                    _prefHeight = System.Math.Max(_prefHeight, child.Height);
+                    _minWidth = System.Math.Max(_minWidth, child.Width);
+                    _minHeight = System.Math.Max(_minHeight, child.Height);
                     childMaxWidth = 0;
                     childMaxHeight = 0;
                 }
 
                 if (childMaxWidth > 0)
-                    _maxWidth = _maxWidth == 0 ? childMaxWidth : Math.Min(_maxWidth, childMaxWidth);
+                    _maxWidth = _maxWidth == 0 ? childMaxWidth : System.Math.Min(_maxWidth, childMaxWidth);
                 if (childMaxHeight > 0)
-                    _maxHeight = _maxHeight == 0 ? childMaxHeight : Math.Min(_maxHeight, childMaxHeight);
+                    _maxHeight = _maxHeight == 0 ? childMaxHeight : System.Math.Min(_maxHeight, childMaxHeight);
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class Vector3Ext
     {

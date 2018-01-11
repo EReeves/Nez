@@ -1,7 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Debug;
+using Nez.UI.Base;
+using Nez.UI.Drawable;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class TextButton : Button
     {
@@ -13,7 +17,7 @@ namespace Nez.UI
         {
             SetStyle(style);
             _label = new Label(text, style.Font, style.FontColor);
-            _label.SetAlignment(UI.Align.Center);
+            _label.SetAlignment(Base.Align.Center);
 
             Add(_label).Expand().Fill();
             SetSize(PreferredWidth, PreferredHeight);
@@ -50,7 +54,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Color? fontColor = null;
             if (isDisabled && _style.DisabledFontColor.HasValue)
@@ -121,18 +125,18 @@ namespace Nez.UI
 
         public TextButtonStyle()
         {
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
         }
 
 
         public TextButtonStyle(IDrawable up, IDrawable down, IDrawable over, BitmapFont font) : base(up, down, over)
         {
-            this.Font = font ?? Graphics.Instance.BitmapFont;
+            this.Font = font ?? Graphics.Graphics.Instance.BitmapFont;
         }
 
 
         public TextButtonStyle(IDrawable up, IDrawable down, IDrawable over) : this(up, down, over,
-            Graphics.Instance.BitmapFont)
+            Graphics.Graphics.Instance.BitmapFont)
         {
         }
 

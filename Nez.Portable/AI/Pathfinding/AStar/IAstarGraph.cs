@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.AStar
 {
 	/// <summary>
 	///     interface for a graph that can be fed to the AstarPathfinder.search method

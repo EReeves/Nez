@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Nez.AI.Pathfinding.AStar;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.BreadthFirst
 {
 	/// <summary>
 	///     calculates paths given an IUnweightedGraph and start/goal positions

@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Effects;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
 	/// <summary>
 	///     post processor to assist with making blended sprite lights. Usage is as follows:

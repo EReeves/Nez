@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Xna.Framework;
-using Nez.IEnumerableExtensions;
+using Nez.Debug.Inspector.Attributes;
 using Nez.UI;
+using Nez.UI.Containers;
+using Nez.UI.Widgets;
+using Nez.Utils;
+using Nez.Utils.Extensions;
 
 #if DEBUG
-namespace Nez
+namespace Nez.Debug.Inspector.Inspectors
 {
     public class StructInspector : Inspector
     {

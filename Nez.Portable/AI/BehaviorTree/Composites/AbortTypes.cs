@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez.AI.BehaviorTrees
+namespace Nez.AI.BehaviorTree.Composites
 {
     [Flags]
     public enum AbortTypes

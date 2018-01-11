@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez.UI
+namespace Nez.UI.Drawable
 {
 	/// <summary>
 	///     A drawable knows how to draw itself at a given rectangular size. It provides border sizes and a minimum size so
@@ -19,6 +19,6 @@ namespace Nez.UI
 
         void SetPadding(float top, float bottom, float left, float right);
 
-        void Draw(Graphics graphics, float x, float y, float width, float height, Color color);
+        void Draw(Graphics.Graphics graphics, float x, float y, float width, float height, Color color);
     }
 }

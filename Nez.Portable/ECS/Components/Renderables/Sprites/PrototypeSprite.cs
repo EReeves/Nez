@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Sprites;
+using Nez.Debug.Inspector.Attributes;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     skewable rectangle sprite for prototyping
@@ -14,7 +15,7 @@ namespace Nez
         private float _width, _height;
 
 
-        public PrototypeSprite(float width, float height) : base(Graphics.Instance.PixelTexture)
+        public PrototypeSprite(float width, float height) : base(Graphics.Graphics.Instance.PixelTexture)
         {
             _width = width;
             _height = height;
@@ -87,7 +88,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             var pos = Entity.Transform.Position - Origin * Entity.Transform.LocalScale + ((RenderableComponent) this).LocalOffset;
             var size = new Point((int) (_width * Entity.Transform.LocalScale.X),

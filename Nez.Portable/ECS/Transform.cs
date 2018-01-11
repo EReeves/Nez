@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS
 {
     public class Transform
     {

@@ -1,4 +1,7 @@
-﻿namespace Nez
+﻿using Nez.ECS;
+using Nez.Utils.Extensions;
+
+namespace Nez.Graphics.Renderers
 {
 	/// <summary>
 	///     Renderer that only renders all but one renderLayer. Useful to keep UI rendering separate from the rest of the game

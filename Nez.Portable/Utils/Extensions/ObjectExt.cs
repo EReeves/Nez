@@ -1,8 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Nez.Tweens;
+using Nez.Utils.Tweens;
+using Nez.Utils.Tweens.Interfaces;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class ObjectExt
     {

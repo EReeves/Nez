@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nez.ECS;
+using Nez.ECS.Components;
+using Nez.Utils;
 
 namespace Nez.AI.FSM
 {

@@ -1,4 +1,7 @@
-﻿namespace Nez.Verlet
+﻿using Nez.Maths;
+using Nez.Physics.Verlet.Constraints;
+
+namespace Nez.Physics.Verlet.Composites
 {
     public class Ragdoll : Composite
     {

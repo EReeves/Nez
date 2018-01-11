@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez.Sprites
+namespace Nez.ECS.Components.Renderables.Sprites
 {
     public enum AnimationCompletionBehavior
     {

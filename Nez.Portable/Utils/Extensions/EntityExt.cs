@@ -1,7 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using Nez.ECS;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class EntityExt
     {

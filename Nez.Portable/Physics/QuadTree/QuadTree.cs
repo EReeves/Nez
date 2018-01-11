@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Graphics.Batcher;
 
-namespace Nez.Spatial
+namespace Nez.Physics.QuadTree
 {
 	/// <summary>
 	///     A QuadTree Object that provides fast and efficient storage of objects in a world space.
@@ -96,19 +97,19 @@ namespace Nez.Spatial
         }
 
 
-        public void DebugRender(Graphics graphics)
+        public void DebugRender(Graphics.Graphics graphics)
         {
             DebugRenderNode(graphics, RootQuad);
 
             foreach (var ele in this)
-                graphics.Batcher.DrawHollowRect(ele.Bounds, Debug.Colors.ColliderBounds, Debug.Size.LineSizeMultiplier);
+                graphics.Batcher.DrawHollowRect(ele.Bounds, Debug.Debug.Colors.ColliderBounds, Debug.Debug.Size.LineSizeMultiplier);
         }
 
 
-        public void DebugRenderNode(Graphics graphics, QuadTreeNode<T> node)
+        public void DebugRenderNode(Graphics.Graphics graphics, QuadTreeNode<T> node)
         {
             if (node.IsEmptyLeaf)
-                graphics.Batcher.DrawHollowRect(node.QuadRect, Color.Red * 0.5f, Debug.Size.LineSizeMultiplier);
+                graphics.Batcher.DrawHollowRect(node.QuadRect, Color.Red * 0.5f, Debug.Debug.Size.LineSizeMultiplier);
 
             if (node.TopLeftChild != null)
                 DebugRenderNode(graphics, node.TopLeftChild);

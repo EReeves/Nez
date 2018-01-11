@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Nez.AI.BehaviorTree.Conditionals;
+using Nez.AI.BehaviorTree.Decorators;
 
-namespace Nez.AI.BehaviorTrees
+namespace Nez.AI.BehaviorTree.Composites
 {
 	/// <summary>
 	///     any Composite nodes must subclass this. Provides storage for children and helpers to deal with AbortTypes

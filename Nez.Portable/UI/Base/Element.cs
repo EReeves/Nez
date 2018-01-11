@@ -1,7 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Nez.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez.UI
+namespace Nez.UI.Base
 {
     public class Element : ILayout
     {
@@ -35,7 +38,7 @@ namespace Nez.UI
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
 	    /// <param name="parentAlpha">Parent alpha.</param>
-	    public virtual void Draw(Graphics graphics, float parentAlpha)
+	    public virtual void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
         }
@@ -66,10 +69,10 @@ namespace Nez.UI
 	    /// <param name="Point">Point.</param>
 	    protected float DistanceOutsideBoundsToPoint(Vector2 point)
         {
-            var offsetX = Math.Max(-point.X, point.X - Width);
-            var offsetY = Math.Max(-point.Y, point.Y - Height);
+            var offsetX = System.Math.Max(-point.X, point.X - Width);
+            var offsetY = System.Math.Max(-point.Y, point.Y - Height);
 
-            return Math.Max(offsetX, offsetY);
+            return System.Math.Max(offsetX, offsetY);
         }
 
 
@@ -77,7 +80,7 @@ namespace Nez.UI
 	    ///     Draws this element's debug lines
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
-	    public virtual void DebugRender(Graphics graphics)
+	    public virtual void DebugRender(Graphics.Graphics graphics)
         {
             if (Debug)
                 graphics.Batcher.DrawHollowRect(X, Y, Width, Height, Color.Red);
@@ -657,7 +660,7 @@ namespace Nez.UI
             if (children.Count == 1)
                 return;
 
-            index = Math.Min(index, children.Count - 1);
+            index = System.Math.Min(index, children.Count - 1);
             if (index == children.IndexOf(this))
                 return;
 

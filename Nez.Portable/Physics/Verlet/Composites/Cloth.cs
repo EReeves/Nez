@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
+using Nez.Physics.Verlet.Constraints;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet.Composites
 {
     public class Cloth : Composite
     {

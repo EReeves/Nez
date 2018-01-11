@@ -1,15 +1,9 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using System.ComponentModel;
-using System;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using Nez.TextureAtlases;
-using Microsoft.Xna.Framework;
+using Nez.PipelineRuntime.TextureAtlas;
 
-
-namespace Nez.TextureAtlasGenerator
+namespace Nez.PipelineImporter.TextureAtlasGenerator
 {
 	[ContentTypeWriter]
 	public class TextureAtlasWriter : ContentTypeWriter<TextureAtlasContent>

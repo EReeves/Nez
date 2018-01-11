@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
-using Nez.Tweens;
+using Nez.UI.Widgets;
+using Nez.Utils.Timers;
+using Nez.Utils.Tweens;
+using Nez.Utils.Tweens.Easing;
 
-namespace Nez.UI
+namespace Nez.UI.Utils
 {
     public class TooltipManager
     {

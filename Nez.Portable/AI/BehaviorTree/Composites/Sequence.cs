@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿namespace Nez.AI.BehaviorTree.Composites
 {
 	/// <summary>
 	///     The sequence task is similar to an "and" operation. It will return failure as soon as one of its child tasks return

@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.UtilityAI
+﻿namespace Nez.AI.UtilityAI.Considerations.Appraisals
 {
 	/// <summary>
 	///     scorer for use with a Consideration

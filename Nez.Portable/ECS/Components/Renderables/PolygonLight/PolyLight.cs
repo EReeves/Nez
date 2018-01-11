@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Graphics.Batcher;
+using Nez.Graphics.Effects;
+using Nez.Maths;
+using Nez.Utils;
+using Nez.Utils.Collections;
+using Nez.Utils.Extensions;
 
-namespace Nez.Shadows
+namespace Nez.ECS.Components.Renderables.PolygonLight
 {
 	/// <summary>
 	///     Point light that also casts shadows
@@ -25,7 +32,7 @@ namespace Nez.Shadows
 	    /// <summary>
 	    ///     layer mask of all the layers this light should interact with. defaults to all layers.
 	    /// </summary>
-	    public int CollidesWithLayers = Physics.AllLayers;
+	    public int CollidesWithLayers = Nez.Physics.Physics.AllLayers;
 
 	    /// <summary>
 	    ///     Power of the light, from 0 (turned off) to 1 for maximum brightness
@@ -83,7 +90,7 @@ namespace Nez.Shadows
 	    /// <returns>The overlapped components.</returns>
 	    protected virtual int GetOverlappedColliders()
         {
-            return Physics.OverlapCircleAll(Entity.Position + localOffset, Radius, ColliderCache,
+            return Nez.Physics.Physics.OverlapCircleAll(Entity.Position + localOffset, Radius, ColliderCache,
                 CollidesWithLayers);
         }
 
@@ -183,7 +190,7 @@ namespace Nez.Shadows
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             if (Power > 0 && IsVisibleFromCamera(camera))
             {
@@ -227,11 +234,11 @@ namespace Nez.Shadows
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             // draw a square for our pivot/origin and draw our bounds
-            graphics.Batcher.DrawPixel(Entity.Transform.Position + localOffset, Debug.Colors.RenderableCenter, 4);
-            graphics.Batcher.DrawHollowRect(Bounds, Debug.Colors.RenderableBounds);
+            graphics.Batcher.DrawPixel(Entity.Transform.Position + localOffset, Debug.Debug.Colors.RenderableCenter, 4);
+            graphics.Batcher.DrawHollowRect(Bounds, Debug.Debug.Colors.RenderableBounds);
         }
 
         #endregion

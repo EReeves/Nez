@@ -2,13 +2,17 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Nez.Systems;
+using Nez.Input.Virtual;
+using Nez.Maths;
+using Nez.Utils;
+using Nez.Utils.Collections;
+
 #if !FNA
 
 #endif
 
 
-namespace Nez
+namespace Nez.Input
 {
     public static class Input
     {

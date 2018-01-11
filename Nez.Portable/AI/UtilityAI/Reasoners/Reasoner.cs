@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Nez.AI.UtilityAI.Actions;
+using Nez.AI.UtilityAI.Considerations;
 
-namespace Nez.AI.UtilityAI
+namespace Nez.AI.UtilityAI.Reasoners
 {
 	/// <summary>
 	///     the root of UtilityAI.

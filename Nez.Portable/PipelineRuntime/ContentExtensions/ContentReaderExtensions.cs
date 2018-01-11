@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace Nez.Pipeline.Content
+namespace Nez.PipelineRuntime.ContentExtensions
 {
     internal static class ContentReaderExtensions
     {

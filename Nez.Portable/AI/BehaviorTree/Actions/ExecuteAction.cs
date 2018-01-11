@@ -1,6 +1,7 @@
 ﻿using System;
+using Nez.Debug;
 
-namespace Nez.AI.BehaviorTrees
+namespace Nez.AI.BehaviorTree.Actions
 {
 	/// <summary>
 	///     wraps a Func so that you can avoid having to subclass to create new actions

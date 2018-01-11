@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     basic class that can be used to create simple meshes. For more advanced usage subclass and override what is needed.
@@ -241,7 +244,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             _basicEffect.Projection = camera.ProjectionMatrix;
             _basicEffect.View = camera.TransformMatrix;

@@ -1,7 +1,6 @@
 ﻿using System;
 
-
-namespace Nez.Overlap2D.Runtime
+namespace Nez.PipelineImporter.Overlap2D.VOs.NotImplemented
 {
 	public class ParticleEffectVO : MainItemVO
 	{

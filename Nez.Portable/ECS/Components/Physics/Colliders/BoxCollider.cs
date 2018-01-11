@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+using Nez.Graphics.Batcher;
+using Nez.Physics.Shapes;
 
-namespace Nez
+namespace Nez.ECS.Components.Physics.Colliders
 {
     public class BoxCollider : Collider
     {
@@ -59,16 +60,16 @@ namespace Nez
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             var poly = Shape as Polygon;
-            graphics.Batcher.DrawHollowRect(Bounds, Debug.Colors.ColliderBounds, Debug.Size.LineSizeMultiplier);
-            graphics.Batcher.DrawPolygon(Shape.Position, poly.Points, Debug.Colors.ColliderEdge, true,
-                Debug.Size.LineSizeMultiplier);
-            graphics.Batcher.DrawPixel(Entity.Transform.Position, Debug.Colors.ColliderPosition,
-                4 * Debug.Size.LineSizeMultiplier);
-            graphics.Batcher.DrawPixel(Entity.Transform.Position + Shape.Center, Debug.Colors.ColliderCenter,
-                2 * Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawHollowRect(Bounds, Debug.Debug.Colors.ColliderBounds, Debug.Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawPolygon(Shape.Position, poly.Points, Debug.Debug.Colors.ColliderEdge, true,
+                Debug.Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawPixel(Entity.Transform.Position, Debug.Debug.Colors.ColliderPosition,
+                4 * Debug.Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawPixel(Entity.Transform.Position + Shape.Center, Debug.Debug.Colors.ColliderCenter,
+                2 * Debug.Debug.Size.LineSizeMultiplier);
         }
 
 
@@ -96,7 +97,7 @@ namespace Nez
                 box.UpdateBox(width, height);
                 IsPositionDirty = true;
                 if (Entity != null && IsParentEntityAddedToScene)
-                    Physics.UpdateCollider(this);
+                    Nez.Physics.Physics.UpdateCollider(this);
             }
 
             return this;
@@ -118,7 +119,7 @@ namespace Nez
                 box.UpdateBox(width, box.Height);
                 IsPositionDirty = true;
                 if (Entity != null && IsParentEntityAddedToScene)
-                    Physics.UpdateCollider(this);
+                    Nez.Physics.Physics.UpdateCollider(this);
             }
 
             return this;
@@ -140,7 +141,7 @@ namespace Nez
                 box.UpdateBox(box.Width, height);
                 IsPositionDirty = true;
                 if (Entity != null && IsParentEntityAddedToScene)
-                    Physics.UpdateCollider(this);
+                    Nez.Physics.Physics.UpdateCollider(this);
             }
 
             return this;

@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
 
-namespace Nez.PhysicsShapes
+namespace Nez.Physics.Shapes
 {
     public class Circle : Shape
     {
@@ -51,7 +53,7 @@ namespace Nez.PhysicsShapes
 
         public override bool PointCollidesWithShape(Vector2 point, out CollisionResult result)
         {
-            return ShapeCollisions.PointToCircle(point, this, out result);
+            return ShapeCollisions.ShapeCollisions.PointToCircle(point, this, out result);
         }
 
 
@@ -81,7 +83,7 @@ namespace Nez.PhysicsShapes
                 // we only scale lineraly being a circle so we'll use the max value
                 var scale = collider.Entity.Transform.Scale;
                 var hasUnitScale = scale.X == 1 && scale.Y == 1;
-                var maxScale = Math.Max(scale.X, scale.Y);
+                var maxScale = System.Math.Max(scale.X, scale.Y);
                 Radius = OriginalRadius * maxScale;
 
                 if (collider.Entity.Transform.Rotation != 0)
@@ -113,7 +115,7 @@ namespace Nez.PhysicsShapes
                 return Collisions.CircleToCircle(Position, Radius, other.Position, (other as Circle).Radius);
 
             if (other is Polygon)
-                return ShapeCollisions.CircleToPolygon(this, other as Polygon, out result);
+                return ShapeCollisions.ShapeCollisions.CircleToPolygon(this, other as Polygon, out result);
 
             throw new NotImplementedException(string.Format("overlaps of Circle to {0} are not supported", other));
         }
@@ -122,13 +124,13 @@ namespace Nez.PhysicsShapes
         public override bool CollidesWithShape(Shape other, out CollisionResult result)
         {
             if (other is Box && (other as Box).IsUnrotated)
-                return ShapeCollisions.CircleToBox(this, other as Box, out result);
+                return ShapeCollisions.ShapeCollisions.CircleToBox(this, other as Box, out result);
 
             if (other is Circle)
-                return ShapeCollisions.CircleToCircle(this, other as Circle, out result);
+                return ShapeCollisions.ShapeCollisions.CircleToCircle(this, other as Circle, out result);
 
             if (other is Polygon)
-                return ShapeCollisions.CircleToPolygon(this, other as Polygon, out result);
+                return ShapeCollisions.ShapeCollisions.CircleToPolygon(this, other as Polygon, out result);
 
             throw new NotImplementedException(string.Format("Collisions of Circle to {0} are not supported", other));
         }
@@ -137,7 +139,7 @@ namespace Nez.PhysicsShapes
         public override bool CollidesWithLine(Vector2 start, Vector2 end, out RaycastHit hit)
         {
             hit = new RaycastHit();
-            return ShapeCollisions.LineToCircle(start, end, this, out hit);
+            return ShapeCollisions.ShapeCollisions.LineToCircle(start, end, this, out hit);
         }
 
 

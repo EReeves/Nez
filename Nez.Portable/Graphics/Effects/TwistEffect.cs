@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public class TwistEffect : Effect
     {

@@ -2,10 +2,19 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Systems;
-using Nez.Textures;
+using Nez.Debug;
+using Nez.ECS.InternalUtils;
+using Nez.ECS.Systems;
+using Nez.Graphics;
+using Nez.Graphics.PostProcessing;
+using Nez.Graphics.Renderers;
+using Nez.Graphics.Textures;
+using Nez.Maths;
+using Nez.Utils;
+using Nez.Utils.Collections;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS
 {
     public class Scene
     {
@@ -385,7 +394,7 @@ namespace Nez
         {
             Assert.IsFalse(renderers.Length == 0,
                 "Scene has begun with no renderer. At least one renderer must be present before beginning a scene.");
-            Physics.Reset();
+            Physics.Physics.Reset();
 
             // prep our render textures
             UpdateResolutionScaler();
@@ -421,7 +430,7 @@ namespace Nez
             Camera = null;
             Content.Dispose();
             SceneRenderTarget.Dispose();
-            Physics.Clear();
+            Physics.Physics.Clear();
 
 	        destinationRenderTarget?.Dispose();
 
@@ -544,11 +553,11 @@ namespace Nez
             {
                 GraphicsDeviceExt.SetRenderTarget(Core.GraphicsDevice, finalRenderTarget);
                 Core.GraphicsDevice.Clear(LetterboxColor);
-                Graphics.Instance.Batcher.Begin(BlendState.Opaque, SamplerState, null, null);
-                Graphics.Instance.Batcher.Draw(
+                Graphics.Graphics.Instance.Batcher.Begin(BlendState.Opaque, SamplerState, null, null);
+                Graphics.Graphics.Instance.Batcher.Draw(
                     Mathf.IsEven(enabledCounter) ? SceneRenderTarget : destinationRenderTarget,
                     finalRenderDestinationRect, Color.White);
-                Graphics.Instance.Batcher.End();
+                Graphics.Graphics.Instance.Batcher.End();
             }
         }
 
@@ -633,7 +642,7 @@ namespace Nez
                     renderTargetWidth = designSize.X;
                     renderTargetHeight = designSize.Y;
 
-                    resolutionScaleX = resolutionScaleY = Math.Max(resolutionScaleX, resolutionScaleY);
+                    resolutionScaleX = resolutionScaleY = System.Math.Max(resolutionScaleX, resolutionScaleY);
                     break;
                 case SceneResolutionPolicy.NoBorderPixelPerfect:
                     // exact design size render texture
@@ -664,7 +673,7 @@ namespace Nez
 
                     break;
                 case SceneResolutionPolicy.ShowAll:
-                    resolutionScaleX = resolutionScaleY = Math.Min(resolutionScaleX, resolutionScaleY);
+                    resolutionScaleX = resolutionScaleY = System.Math.Min(resolutionScaleX, resolutionScaleY);
 
                     renderTargetWidth = designSize.X;
                     renderTargetHeight = designSize.Y;
@@ -753,8 +762,8 @@ namespace Nez
             var scaleX = renderTargetWidth / (float) finalRenderDestinationRect.Width;
             var scaleY = renderTargetHeight / (float) finalRenderDestinationRect.Height;
 
-            Input.ResolutionScale = new Vector2(scaleX, scaleY);
-            Input.ResolutionOffset = finalRenderDestinationRect.Location;
+            Input.Input.ResolutionScale = new Vector2(scaleX, scaleY);
+            Input.Input.ResolutionOffset = finalRenderDestinationRect.Location;
 
             // resize our RenderTargets
 	        SceneRenderTarget?.Dispose();

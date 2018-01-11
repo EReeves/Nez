@@ -1,4 +1,7 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿using Nez.AI.BehaviorTree.Conditionals;
+using Nez.Debug;
+
+namespace Nez.AI.BehaviorTree.Decorators
 {
 	/// <summary>
 	///     decorator that will only run its child if a condition is met. By default, the condition will be reevaluated every

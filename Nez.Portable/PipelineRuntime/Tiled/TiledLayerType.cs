@@ -1,4 +1,4 @@
-﻿namespace Nez.Tiled
+﻿namespace Nez.PipelineRuntime.Tiled
 {
     public enum TiledLayerType
     {

@@ -2,9 +2,12 @@
 using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Tweens;
+using Nez.ECS;
+using Nez.Utils;
+using Nez.Utils.Coroutines;
+using Nez.Utils.Tweens.Easing;
 
-namespace Nez
+namespace Nez.Graphics.Transitions
 {
 	/// <summary>
 	///     builds up a cover of squares then removes them

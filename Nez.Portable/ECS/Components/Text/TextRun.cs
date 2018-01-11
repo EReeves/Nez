@@ -1,9 +1,11 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Maths;
+using Nez.Utils;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS.Components.Text
 {
 	/// <summary>
 	///     provides a cached run of text for super fast text drawing. Note that this is only appropriate for text that doesnt
@@ -169,8 +171,8 @@ namespace Nez
 
                 sourceX = sourceRectangle.X * inverseTexW;
                 sourceY = sourceRectangle.Y * inverseTexH;
-                sourceW = Math.Max(sourceRectangle.Width, float.Epsilon) * inverseTexW;
-                sourceH = Math.Max(sourceRectangle.Height, float.Epsilon) * inverseTexH;
+                sourceW = System.Math.Max(sourceRectangle.Width, float.Epsilon) * inverseTexW;
+                sourceH = System.Math.Max(sourceRectangle.Height, float.Epsilon) * inverseTexH;
 
                 // Rotation Calculations
                 float rotationMatrix1X;
@@ -243,7 +245,7 @@ namespace Nez
         }
 
 
-        public void Render(Graphics graphics)
+        public void Render(Graphics.Graphics graphics)
         {
             for (var i = 0; i < _charDetails.Length; i++)
                 graphics.Batcher.DrawRaw(_charDetails[i].Texture, _charDetails[i].Verts, _charDetails[i].TexCoords,

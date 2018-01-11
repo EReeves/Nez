@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using Nez.Maths;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Transforms
 {
     public class SvgMatrix : SvgTransform
     {

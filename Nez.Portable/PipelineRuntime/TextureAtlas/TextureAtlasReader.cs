@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez.TextureAtlases
+namespace Nez.PipelineRuntime.TextureAtlas
 {
     public class TextureAtlasReader : ContentTypeReader<TextureAtlas>
     {

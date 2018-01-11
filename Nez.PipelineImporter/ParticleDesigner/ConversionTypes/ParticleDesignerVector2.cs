@@ -1,9 +1,7 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 
-
-namespace Nez.ParticleDesignerImporter
+namespace Nez.PipelineImporter.ParticleDesigner.ConversionTypes
 {
 	public class ParticleDesignerVector2
 	{

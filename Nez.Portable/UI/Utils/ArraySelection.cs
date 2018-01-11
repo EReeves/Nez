@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Nez.Debug;
+using Nez.Input;
 
-namespace Nez.UI
+namespace Nez.UI.Utils
 {
     public class ArraySelection<T> : Selection<T> where T : class
     {

@@ -1,9 +1,10 @@
-using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Physics.Shapes;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet.Constraints
 {
 	/// <summary>
 	///     maintains a specified distance betweeen two Particles. The stiffness adjusts how rigid or springy the constraint
@@ -170,10 +171,10 @@ namespace Nez.Verlet
             }
 
             // get a proper bounds for our line and update the Polygons bounds
-            var minX = Math.Min(_particleOne.Position.X, _particleTwo.Position.X);
-            var maxX = Math.Max(_particleOne.Position.X, _particleTwo.Position.X);
-            var minY = Math.Min(_particleOne.Position.Y, _particleTwo.Position.Y);
-            var maxY = Math.Max(_particleOne.Position.Y, _particleTwo.Position.Y);
+            var minX = System.Math.Min(_particleOne.Position.X, _particleTwo.Position.X);
+            var maxX = System.Math.Max(_particleOne.Position.X, _particleTwo.Position.X);
+            var minY = System.Math.Min(_particleOne.Position.Y, _particleTwo.Position.Y);
+            var maxY = System.Math.Max(_particleOne.Position.Y, _particleTwo.Position.Y);
             Polygon.Bounds = RectangleF.FromMinMax(minX, minY, maxX, maxY);
 
             Vector2 midPoint;
@@ -240,7 +241,7 @@ namespace Nez.Verlet
 
         public override void DebugRender(Batcher batcher)
         {
-            batcher.DrawLine(_particleOne.Position, _particleTwo.Position, Debug.Colors.VerletConstraintEdge);
+            batcher.DrawLine(_particleOne.Position, _particleTwo.Position, Debug.Debug.Colors.VerletConstraintEdge);
         }
     }
 }

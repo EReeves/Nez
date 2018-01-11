@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿namespace Nez.AI.BehaviorTree.Actions
 {
 	/// <summary>
 	///     runs an entire BehaviorTree as a child and returns success

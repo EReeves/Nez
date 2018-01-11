@@ -1,7 +1,10 @@
-﻿using Nez;
-using Nez.IEnumerableExtensions;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace System.Collections.Generic
+namespace Nez.Utils.Collections
 {
 	/// <summary>
 	///     sourced from: https://github.com/tejacques/Deque
@@ -520,7 +523,7 @@ namespace System.Collections.Generic
 
         private void DecrementCount(int value)
         {
-            Count = Math.Max(Count - value, 0);
+            Count = System.Math.Max(Count - value, 0);
         }
 
 	    /// <summary>

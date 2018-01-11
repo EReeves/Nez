@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Nez.Systems
+namespace Nez.Utils.Coroutines
 {
 	/// <summary>
 	///     basic CoroutineManager. Coroutines can do the following:
@@ -127,7 +127,7 @@ namespace Nez.Systems
             // deprecation warning for yielding an int/float
             if (coroutine.Enumerator.Current is int)
             {
-                Debug.Error(
+                Debug.Debug.Error(
                     "yield Coroutine.waitForSeconds instead of an int. Yielding an int will not work in a release build.");
                 coroutine.WaitTimer = (int) coroutine.Enumerator.Current;
                 return true;
@@ -135,7 +135,7 @@ namespace Nez.Systems
 
             if (coroutine.Enumerator.Current is float)
             {
-                Debug.Error(
+                Debug.Debug.Error(
                     "yield Coroutine.waitForSeconds instead of a float. Yielding a float will not work in a release build.");
                 coroutine.WaitTimer = (float) coroutine.Enumerator.Current;
                 return true;

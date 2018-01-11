@@ -1,12 +1,11 @@
+using System;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using System;
-using Nez.PipelineImporter;
+using Nez;
+using Nez.BitmapFonts;
 
-
-namespace Nez.BitmapFontImporter
+// ReSharper disable once CheckNamespace
+namespace Nez
 {
 	[ContentTypeWriter]
 	public class BitmapFontWriter : ContentTypeWriter<BitmapFontProcessorResult>
@@ -70,7 +69,7 @@ namespace Nez.BitmapFontImporter
 			foreach( var c in fontFile.chars )
 			{
 				if( c.width > 0 && c.height > 0 )
-					descent = Math.Min( fontFile.common.base_ + c.yOffset + fontFile.info.outLine, descent );
+					descent = System.Math.Min( fontFile.common.base_ + c.yOffset + fontFile.info.outLine, descent );
 			}
 
 			return descent + padBottom;
@@ -79,13 +78,13 @@ namespace Nez.BitmapFontImporter
 
 		public override string GetRuntimeType( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.BitmapFonts.BitmapFont ).AssemblyQualifiedName;
+			return typeof( BitmapFont ).AssemblyQualifiedName;
 		}
 
 
 		public override string GetRuntimeReader( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.BitmapFonts.BitmapFontReader ).AssemblyQualifiedName;
+			return typeof( BitmapFontReader ).AssemblyQualifiedName;
 		}
 	}
 }

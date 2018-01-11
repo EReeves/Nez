@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Maths
 {
     public static class Mathf
     {
@@ -14,21 +14,21 @@ namespace Nez
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Round(float f)
         {
-            return (float) Math.Round(f);
+            return (float) System.Math.Round(f);
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Ceil(float f)
         {
-            return (float) Math.Ceiling(f);
+            return (float) System.Math.Ceiling(f);
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int CeilToInt(float f)
         {
-            return (int) Math.Ceiling(f);
+            return (int) System.Math.Ceiling(f);
         }
 
 
@@ -47,14 +47,14 @@ namespace Nez
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Floor(float f)
         {
-            return (float) Math.Floor(f);
+            return (float) System.Math.Floor(f);
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int FloorToInt(float f)
         {
-            return (int) Math.Floor(f);
+            return (int) System.Math.Floor(f);
         }
 
 
@@ -74,7 +74,7 @@ namespace Nez
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int RoundToInt(float f)
         {
-            return (int) Math.Round(f);
+            return (int) System.Math.Round(f);
         }
 
 
@@ -86,7 +86,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int TruncateToInt(float f)
         {
-            return (int) Math.Truncate(f);
+            return (int) System.Math.Truncate(f);
         }
 
 
@@ -258,7 +258,7 @@ namespace Nez
         public static float PingPong(float t, float length)
         {
             t = Repeat(t, length * 2f);
-            return length - Math.Abs(t - length);
+            return length - System.Math.Abs(t - length);
         }
 
 
@@ -271,8 +271,8 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float SignThreshold(float value, float threshold)
         {
-            if (Math.Abs(value) >= threshold)
-                return Math.Sign(value);
+            if (System.Math.Abs(value) >= threshold)
+                return System.Math.Sign(value);
             return 0;
         }
 
@@ -322,8 +322,8 @@ namespace Nez
         public static float Approach(float start, float end, float shift)
         {
             if (start < end)
-                return Math.Min(start + shift, end);
-            return Math.Max(start - shift, end);
+                return System.Math.Min(start + shift, end);
+            return System.Math.Max(start - shift, end);
         }
 
 
@@ -336,7 +336,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Approximately(float value1, float value2, float tolerance = Epsilon)
         {
-            return Math.Abs(value1 - value2) <= tolerance;
+            return System.Math.Abs(value1 - value2) <= tolerance;
         }
 
 
@@ -350,7 +350,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float MinOf(float a, float b, float c)
         {
-            return Math.Min(a, Math.Min(b, c));
+            return System.Math.Min(a, System.Math.Min(b, c));
         }
 
 
@@ -364,7 +364,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float MaxOf(float a, float b, float c)
         {
-            return Math.Max(a, Math.Max(b, c));
+            return System.Math.Max(a, System.Math.Max(b, c));
         }
 
 
@@ -379,7 +379,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float MinOf(float a, float b, float c, float d)
         {
-            return Math.Min(a, Math.Min(b, Math.Min(c, d)));
+            return System.Math.Min(a, System.Math.Min(b, System.Math.Min(c, d)));
         }
 
 
@@ -394,7 +394,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float MinOf(float a, float b, float c, float d, float e)
         {
-            return Math.Min(a, Math.Min(b, Math.Min(c, Math.Min(d, e))));
+            return System.Math.Min(a, System.Math.Min(b, System.Math.Min(c, System.Math.Min(d, e))));
         }
 
 
@@ -409,7 +409,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float MaxOf(float a, float b, float c, float d)
         {
-            return Math.Max(a, Math.Max(b, Math.Max(c, d)));
+            return System.Math.Max(a, System.Math.Max(b, System.Math.Max(c, d)));
         }
 
 
@@ -424,7 +424,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float MaxOf(float a, float b, float c, float d, float e)
         {
-            return Math.Max(a, Math.Max(b, Math.Max(c, Math.Max(d, e))));
+            return System.Math.Max(a, System.Math.Max(b, System.Math.Max(c, System.Math.Max(d, e))));
         }
 
 
@@ -550,7 +550,7 @@ namespace Nez
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool WithinEpsilon(float floatA, float floatB)
         {
-            return Math.Abs(floatA - floatB) < Epsilon;
+            return System.Math.Abs(floatA - floatB) < Epsilon;
         }
 
 
@@ -589,14 +589,14 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Sqrt(float val)
         {
-            return (float) Math.Sqrt(val);
+            return (float) System.Math.Sqrt(val);
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Pow(float x, float y)
         {
-            return (float) Math.Pow(x, y);
+            return (float) System.Math.Pow(x, y);
         }
 
 
@@ -607,7 +607,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Sin(float f)
         {
-            return (float) Math.Sin(f);
+            return (float) System.Math.Sin(f);
         }
 
 
@@ -618,7 +618,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Cos(float f)
         {
-            return (float) Math.Cos(f);
+            return (float) System.Math.Cos(f);
         }
 
 
@@ -629,14 +629,14 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Acos(float f)
         {
-            return (float) Math.Acos(f);
+            return (float) System.Math.Acos(f);
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Exp(float power)
         {
-            return (float) Math.Exp(power);
+            return (float) System.Math.Exp(power);
         }
 
 
@@ -648,7 +648,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Atan2(float y, float x)
         {
-            return (float) Math.Atan2(y, x);
+            return (float) System.Math.Atan2(y, x);
         }
 
         #endregion

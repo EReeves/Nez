@@ -1,11 +1,10 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content.Pipeline;
-using System.Xml;
-using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Intermediate;
 using System.Text;
+using System.Xml;
+using Microsoft.Xna.Framework.Content.Pipeline;
+using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Intermediate;
 
-
-namespace Nez.XmlTemplateMaker
+namespace Nez.PipelineImporter.XMLTemplateMaker
 {
 	/// <summary>
 	/// Simple little importer that's sole purpose is to print out a template XML file for any class. The template XML can then be used to

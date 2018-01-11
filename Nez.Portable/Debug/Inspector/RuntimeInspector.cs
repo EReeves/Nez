@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Nez.Console;
+using Nez.ECS;
+using Nez.ECS.Components;
+using Nez.ECS.Components.Renderables;
 using Nez.UI;
+using Nez.UI.Base;
+using Nez.UI.Containers;
+using Nez.UI.Drawable;
+using Nez.UI.Widgets;
+using Nez.Utils;
+using Nez.Utils.DebugConsole;
 
 #if DEBUG
-namespace Nez
+namespace Nez.Debug.Inspector
 {
     public class RuntimeInspector : IDisposable
     {
@@ -87,10 +95,10 @@ namespace Nez
         public void Render()
         {
             // manually start a fresh batch and call the UICanvas Component lifecycle methods since it isnt attached to the Scene
-            Graphics.Instance.Batcher.Begin();
+            Graphics.Graphics.Instance.Batcher.Begin();
             (_ui as IUpdatable).Update();
-            _ui.Render(Graphics.Instance, _camera);
-            Graphics.Instance.Batcher.End();
+            _ui.Render(Graphics.Graphics.Instance, _camera);
+            Graphics.Graphics.Instance.Batcher.End();
         }
 
 

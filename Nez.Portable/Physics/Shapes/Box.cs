@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez.PhysicsShapes
+namespace Nez.Physics.Shapes
 {
 	/// <summary>
 	///     special case of a Polygon. When doing SAT collision checks we only need to check 2 axes instead of 8
@@ -88,7 +88,7 @@ namespace Nez.PhysicsShapes
         {
             // special, high-performance cases. otherwise we fall back to Polygon.
             if (IsUnrotated && other is Box && (other as Box).IsUnrotated)
-                return ShapeCollisions.BoxToBox(this, other as Box, out result);
+                return ShapeCollisions.ShapeCollisions.BoxToBox(this, other as Box, out result);
 
             // TODO: get Minkowski working for circle to box
             //if( other is Circle )
@@ -110,7 +110,7 @@ namespace Nez.PhysicsShapes
         public override bool PointCollidesWithShape(Vector2 point, out CollisionResult result)
         {
             if (IsUnrotated)
-                return ShapeCollisions.PointToBox(point, this, out result);
+                return ShapeCollisions.ShapeCollisions.PointToBox(point, this, out result);
 
             return base.PointCollidesWithShape(point, out result);
         }

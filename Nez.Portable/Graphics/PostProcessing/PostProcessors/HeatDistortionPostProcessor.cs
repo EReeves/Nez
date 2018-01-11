@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Effects;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
     public class HeatDistortionPostProcessor : PostProcessor
     {

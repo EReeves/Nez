@@ -1,4 +1,6 @@
-﻿namespace Nez
+﻿using Nez.ECS.Components.Renderables;
+
+namespace Nez.ECS.Components.Text
 {
 	/// <summary>
 	///     very basic wrapper around TextRun. Note that the TextRunComponent.compile method should be used not TextRun.compile
@@ -31,7 +33,7 @@
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             TextRun.Render(graphics);
         }

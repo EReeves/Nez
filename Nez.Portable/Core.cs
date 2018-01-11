@@ -3,13 +3,18 @@ using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Nez.Analysis;
-using Nez.BitmapFonts;
-using Nez.Console;
-using Nez.Systems;
-using Nez.Textures;
-using Nez.Timers;
-using Nez.Tweens;
+using Nez;
+using Nez.Debug;
+using Nez.ECS;
+using Nez.Graphics.Textures;
+using Nez.Graphics.Transitions;
+using Nez.Utils;
+using Nez.Utils.Analysis;
+using Nez.Utils.Collections;
+using Nez.Utils.Coroutines;
+using Nez.Utils.DebugConsole;
+using Nez.Utils.Timers;
+using Nez.Utils.Tweens;
 
 namespace Nez
 {
@@ -215,7 +220,7 @@ namespace Nez
             // prep the default Graphics system
             GraphicsDevice = base.GraphicsDevice;
             var font = Content.Load<BitmapFont>("nez://Nez.Content.NezDefaultBMFont.xnb");
-            Graphics.Instance = new Graphics(font);
+            Graphics.Graphics.Instance = new Graphics.Graphics(font);
         }
 
 
@@ -234,13 +239,13 @@ namespace Nez
 
             // update all our systems and global managers
             Time.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
-            Input.Update();
+            Input.Input.Update();
 
             for (var i = _globalManagers.Length - 1; i >= 0; i--)
                 _globalManagers.Buffer[i].Update();
 
             if (ExitOnEscapeKeypress &&
-                (Input.IsKeyDown(Keys.Escape) || Input.GamePads[0].IsButtonReleased(Buttons.Back)))
+                (Input.Input.IsKeyDown(Keys.Escape) || Input.Input.GamePads[0].IsButtonReleased(Buttons.Back)))
             {
                 base.Exit();
                 return;
@@ -292,7 +297,7 @@ namespace Nez
             }
 #endif
 
-	        SceneTransition?.PreRender(Graphics.Instance);
+	        SceneTransition?.PreRender(Graphics.Graphics.Instance);
 
 	        if (_scene != null)
             {
@@ -300,7 +305,7 @@ namespace Nez
 
 #if DEBUG
                 if (DebugRenderEnabled)
-                    Debug.Render();
+                    Debug.Debug.Render();
 #endif
 
                 // render as usual if we dont have an active SceneTransition
@@ -324,7 +329,7 @@ namespace Nez
 	                _scene?.PostRender();
                 }
 
-	            SceneTransition.Render(Graphics.Instance);
+	            SceneTransition.Render(Graphics.Graphics.Instance);
             }
 
 #if DEBUG

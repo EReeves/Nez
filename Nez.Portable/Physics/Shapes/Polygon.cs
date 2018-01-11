@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez.PhysicsShapes
+namespace Nez.Physics.Shapes
 {
     public class Polygon : Shape
     {
@@ -213,7 +216,7 @@ namespace Nez.PhysicsShapes
                 if (j == points.Length)
                     j = 0;
 
-                var closest = ShapeCollisions.ClosestPointOnLine(points[i], points[j], point);
+                var closest = ShapeCollisions.ShapeCollisions.ClosestPointOnLine(points[i], points[j], point);
                 Vector2.DistanceSquared(ref point, ref closest, out tempDistanceSquared);
 
                 if (tempDistanceSquared < distanceSquared)
@@ -319,11 +322,11 @@ namespace Nez.PhysicsShapes
         {
             CollisionResult result;
             if (other is Polygon)
-                return ShapeCollisions.PolygonToPolygon(this, other as Polygon, out result);
+                return ShapeCollisions.ShapeCollisions.PolygonToPolygon(this, other as Polygon, out result);
 
             if (other is Circle)
             {
-                if (ShapeCollisions.CircleToPolygon(other as Circle, this, out result))
+                if (ShapeCollisions.ShapeCollisions.CircleToPolygon(other as Circle, this, out result))
                 {
                     result.InvertResult();
                     return true;
@@ -338,11 +341,11 @@ namespace Nez.PhysicsShapes
         public override bool CollidesWithShape(Shape other, out CollisionResult result)
         {
             if (other is Polygon)
-                return ShapeCollisions.PolygonToPolygon(this, other as Polygon, out result);
+                return ShapeCollisions.ShapeCollisions.PolygonToPolygon(this, other as Polygon, out result);
 
             if (other is Circle)
             {
-                if (ShapeCollisions.CircleToPolygon(other as Circle, this, out result))
+                if (ShapeCollisions.ShapeCollisions.CircleToPolygon(other as Circle, this, out result))
                 {
                     result.InvertResult();
                     return true;
@@ -357,7 +360,7 @@ namespace Nez.PhysicsShapes
         public override bool CollidesWithLine(Vector2 start, Vector2 end, out RaycastHit hit)
         {
             hit = new RaycastHit();
-            return ShapeCollisions.LineToPoly(start, end, this, out hit);
+            return ShapeCollisions.ShapeCollisions.LineToPoly(start, end, this, out hit);
         }
 
 
@@ -386,7 +389,7 @@ namespace Nez.PhysicsShapes
 
         public override bool PointCollidesWithShape(Vector2 point, out CollisionResult result)
         {
-            return ShapeCollisions.PointToPoly(point, this, out result);
+            return ShapeCollisions.ShapeCollisions.PointToPoly(point, this, out result);
         }
 
         #endregion

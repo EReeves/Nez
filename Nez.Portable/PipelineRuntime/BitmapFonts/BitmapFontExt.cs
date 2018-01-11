@@ -1,8 +1,10 @@
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Utils.Fonts;
 
+// ReSharper disable once CheckNamespace
 namespace Nez
 {
 	/// <summary>

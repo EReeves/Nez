@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez.Overlap2D
+namespace Nez.PipelineRuntime.Overlap2D
 {
     public class O2DColorPrimitive : O2DMainItem
     {

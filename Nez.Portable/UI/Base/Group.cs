@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.UI.Widgets;
 
-namespace Nez.UI
+namespace Nez.UI.Base
 {
     public class Group : Element, ICullable
     {
@@ -148,7 +150,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             if (!IsVisible())
                 return;
@@ -165,7 +167,7 @@ namespace Nez.UI
         }
 
 
-        public void DrawChildren(Graphics graphics, float parentAlpha)
+        public void DrawChildren(Graphics.Graphics graphics, float parentAlpha)
         {
             parentAlpha *= Color.A / 255.0f;
 
@@ -248,7 +250,7 @@ namespace Nez.UI
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             if (Transform)
                 ApplyTransform(graphics, ComputeTransform());
@@ -263,7 +265,7 @@ namespace Nez.UI
         }
 
 
-        public void DebugRenderChildren(Graphics graphics, float parentAlpha)
+        public void DebugRenderChildren(Graphics.Graphics graphics, float parentAlpha)
         {
             parentAlpha *= Color.A / 255.0f;
             if (Transform)
@@ -347,7 +349,7 @@ namespace Nez.UI
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
 	    /// <param name="transform">Transform.</param>
-	    protected void ApplyTransform(Graphics graphics, Matrix transform)
+	    protected void ApplyTransform(Graphics.Graphics graphics, Matrix transform)
         {
             _previousBatcherTransform = graphics.Batcher.TransformMatrix;
             graphics.Batcher.End();
@@ -361,7 +363,7 @@ namespace Nez.UI
 	    ///     be flushed
 	    /// </summary>
 	    /// <param name="batch">Batch.</param>
-	    protected void ResetTransform(Graphics graphics)
+	    protected void ResetTransform(Graphics.Graphics graphics)
         {
             graphics.Batcher.End();
             graphics.Batcher.Begin(_previousBatcherTransform);

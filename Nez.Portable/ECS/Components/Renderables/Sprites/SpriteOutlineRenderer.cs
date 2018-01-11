@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.Sprites;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     renders a sprite with an outline in a very inefficient (but simple) way. The sprite is rendered multiple times
@@ -50,7 +50,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             _sprite.DrawOutline(graphics, camera, OutlineColor, OutlineWidth);
             _sprite.Render(graphics, camera);

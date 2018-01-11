@@ -1,9 +1,12 @@
-﻿using System.Runtime.CompilerServices;
-using Nez;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Nez.Debug;
 
 
 // sourced from: https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp
-namespace System.Collections.Generic
+namespace Nez.Utils.Collections
 {
 	/// <summary>
 	///     An implementation of a min-Priority Queue using a heap.  Has O(1) .Contains()!
@@ -296,7 +299,7 @@ namespace System.Collections.Generic
                 "Called Resize(" + maxNodes + "), but current queue contains " + Count + " nodes");
 
             var newArray = new T[maxNodes + 1];
-            var highestIndexToCopy = Math.Min(maxNodes, Count);
+            var highestIndexToCopy = System.Math.Min(maxNodes, Count);
             for (var i = 1; i <= highestIndexToCopy; i++)
                 newArray[i] = _nodes[i];
             _nodes = newArray;

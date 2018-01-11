@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.Spatial;
+using Nez.Debug;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.Physics
 {
     public static class Physics
     {

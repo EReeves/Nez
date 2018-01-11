@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.Utils
 {
 	/// <summary>
 	///     simple ear clipping triangulator. the final triangles will be present in the triangleIndices list
@@ -111,9 +112,9 @@ namespace Nez
             TriangleIndices.Clear();
 
             if (_triNext.Length < count)
-                Array.Resize(ref _triNext, Math.Max(_triNext.Length * 2, count));
+                Array.Resize(ref _triNext, System.Math.Max(_triNext.Length * 2, count));
             if (_triPrev.Length < count)
-                Array.Resize(ref _triPrev, Math.Max(_triPrev.Length * 2, count));
+                Array.Resize(ref _triPrev, System.Math.Max(_triPrev.Length * 2, count));
 
             for (var i = 0; i < count; i++)
             {

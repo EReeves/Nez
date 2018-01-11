@@ -1,6 +1,7 @@
-﻿using Nez.PhysicsShapes;
+﻿using Nez.Graphics.Batcher;
+using Nez.Physics.Shapes;
 
-namespace Nez
+namespace Nez.ECS.Components.Physics.Colliders
 {
     public class CircleCollider : Collider
     {
@@ -60,7 +61,7 @@ namespace Nez
                 IsPositionDirty = true;
 
                 if (Entity != null && IsParentEntityAddedToScene)
-                    Physics.UpdateCollider(this);
+                    Nez.Physics.Physics.UpdateCollider(this);
             }
             return this;
         }
@@ -68,14 +69,14 @@ namespace Nez
         #endregion
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
-            graphics.Batcher.DrawHollowRect(Bounds, Debug.Colors.ColliderBounds, Debug.Size.LineSizeMultiplier);
-            graphics.Batcher.DrawCircle(Shape.Position, ((Circle) Shape).Radius, Debug.Colors.ColliderEdge,
-                Debug.Size.LineSizeMultiplier);
-            graphics.Batcher.DrawPixel(Entity.Transform.Position, Debug.Colors.ColliderPosition,
-                4 * Debug.Size.LineSizeMultiplier);
-            graphics.Batcher.DrawPixel(Shape.Position, Debug.Colors.ColliderCenter, 2 * Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawHollowRect(Bounds, Debug.Debug.Colors.ColliderBounds, Debug.Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawCircle(Shape.Position, ((Circle) Shape).Radius, Debug.Debug.Colors.ColliderEdge,
+                Debug.Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawPixel(Entity.Transform.Position, Debug.Debug.Colors.ColliderPosition,
+                4 * Debug.Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawPixel(Shape.Position, Debug.Debug.Colors.ColliderCenter, 2 * Debug.Debug.Size.LineSizeMultiplier);
         }
 
 

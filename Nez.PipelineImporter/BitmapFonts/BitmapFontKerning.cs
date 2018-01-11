@@ -1,8 +1,6 @@
-using System;
 using System.Xml.Serialization;
-
-
-namespace Nez.BitmapFontImporter
+// ReSharper disable once CheckNamespace
+namespace Nez
 {
 	// ---- AngelCode BmFont XML serializer ----------------------
 	// ---- By DeadlyDan @ deadlydan@gmail.com -------------------

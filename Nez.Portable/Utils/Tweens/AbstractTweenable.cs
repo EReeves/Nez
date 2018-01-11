@@ -1,4 +1,6 @@
-﻿namespace Nez.Tweens
+﻿using Nez.Utils.Tweens.Interfaces;
+
+namespace Nez.Utils.Tweens
 {
 	/// <summary>
 	///     AbstractTweenable serves as a base for any custom classes you might want to make that can be ticked. These differ

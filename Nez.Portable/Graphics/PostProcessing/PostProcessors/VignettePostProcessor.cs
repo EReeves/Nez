@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Effects;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
     public class VignettePostProcessor : PostProcessor
     {

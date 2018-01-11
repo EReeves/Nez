@@ -4,9 +4,10 @@ using System.Net.Http;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Systems;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes
 {
 	/// <summary>
 	///     represents the image tag in an SVG document. This class will do its best to load the image from the href attribute.
@@ -76,7 +77,7 @@ namespace Nez.Svg
                 }
                 catch (ContentLoadException)
                 {
-                    Debug.Error("Could not load SvgImage from href: {0}", Href);
+                    Debug.Debug.Error("Could not load SvgImage from href: {0}", Href);
                 }
             }
             // attempt to parse the base64 string if it is embedded in the href

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.Graphics.Batcher
 {
 	/// <summary>
 	///     an assortment of helper methods to assist with drawing

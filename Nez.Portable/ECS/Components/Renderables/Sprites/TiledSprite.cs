@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Sprites;
-using Nez.Textures;
+using Nez.Graphics;
+using Nez.Graphics.Textures;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     Tiled sprite. Note that TiledSprite overrides the Material so that it can wrap the UVs. This class requires the
@@ -95,7 +96,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             var topLeft = Entity.Transform.Position + localOffset;
             var destinationRect = RectangleExt.FromFloats(topLeft.X, topLeft.Y,

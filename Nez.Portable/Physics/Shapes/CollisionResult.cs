@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
 
-namespace Nez
+namespace Nez.Physics.Shapes
 {
     public struct CollisionResult
     {
@@ -40,14 +40,14 @@ namespace Nez
             // fix dot normal = responseDistance
 
             // check if the lateral motion is undesirable and if so remove it and fix the response
-            if (Math.Sign(Normal.X) != Math.Sign(deltaMovement.X) || deltaMovement.X == 0f && Normal.X != 0f)
+            if (System.Math.Sign(Normal.X) != System.Math.Sign(deltaMovement.X) || deltaMovement.X == 0f && Normal.X != 0f)
             {
                 var responseDistance = MinimumTranslationVector.Length();
                 var fix = responseDistance / Normal.Y;
 
                 // check some edge cases. make sure we dont have normal.x == 1 and a super small y which will result in a huge
                 // fix value since we divide by normal
-                if (Math.Abs(Normal.X) != 1f && Math.Abs(fix) < Math.Abs(deltaMovement.Y * 3f))
+                if (System.Math.Abs(Normal.X) != 1f && System.Math.Abs(fix) < System.Math.Abs(deltaMovement.Y * 3f))
                     MinimumTranslationVector = new Vector2(0f, -fix);
             }
         }

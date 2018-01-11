@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.UtilityAI
+﻿namespace Nez.AI.UtilityAI.Actions
 {
 	/// <summary>
 	///     Action that logs text
@@ -16,7 +16,7 @@
 
         void IAction<T>.Execute(T context)
         {
-            Debug.Log(_text);
+            Debug.Debug.Log(_text);
         }
     }
 }

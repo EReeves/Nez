@@ -1,7 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.UI.Base;
+using Nez.UI.Drawable;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class Slider : ProgressBar, IInputListener, IGamepadFocusable
     {
@@ -106,8 +109,8 @@ namespace Nez.UI
                 var knobHeight = knob == null ? 0 : knob.MinHeight;
                 Position = mousePos.Y - _style.Background.BottomHeight - knobHeight * 0.5f;
                 value = Min + (Max - Min) * (Position / (height - knobHeight));
-                Position = Math.Max(0, Position);
-                Position = Math.Min(height - knobHeight, Position);
+                Position = System.Math.Max(0, Position);
+                Position = System.Math.Min(height - knobHeight, Position);
             }
             else
             {
@@ -115,8 +118,8 @@ namespace Nez.UI
                 var knobWidth = knob == null ? 0 : knob.MinWidth;
                 Position = mousePos.X - _style.Background.LeftWidth - knobWidth * 0.5f;
                 value = Min + (Max - Min) * (Position / (width - knobWidth));
-                Position = Math.Max(0, Position);
-                Position = Math.Min(width - knobWidth, Position);
+                Position = System.Math.Max(0, Position);
+                Position = System.Math.Min(width - knobWidth, Position);
             }
 
             SetValue(value);

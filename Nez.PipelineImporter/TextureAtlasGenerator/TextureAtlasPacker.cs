@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 
-
-namespace Nez.TextureAtlasGenerator
+namespace Nez.PipelineImporter.TextureAtlasGenerator
 {
 	/// <summary>
 	/// Helper for arranging many small sprites into a single larger sheet.
@@ -49,7 +47,7 @@ namespace Nez.TextureAtlasGenerator
 			{
 				positionSprite( sprites, i, outputWidth );
 
-				outputHeight = Math.Max( outputHeight, sprites[i].y + sprites[i].height );
+				outputHeight = System.Math.Max( outputHeight, sprites[i].y + sprites[i].height );
 				totalSpriteSize += sprites[i].width * sprites[i].height;
 			}
 
@@ -234,10 +232,10 @@ namespace Nez.TextureAtlasGenerator
 			var medianWidth = widths[widths.Count / 2];
 
 			// Heuristic assumes an NxN grid of median sized sprites.
-			var width = medianWidth * (int)Math.Round( Math.Sqrt( sprites.Count ) );
+			var width = medianWidth * (int)System.Math.Round( System.Math.Sqrt( sprites.Count ) );
 
 			// Make sure we never choose anything smaller than our largest sprite.
-			return Math.Max( width, maxWidth );
+			return System.Math.Max( width, maxWidth );
 		}
 	
 	}

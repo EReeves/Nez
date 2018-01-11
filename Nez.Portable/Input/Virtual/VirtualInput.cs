@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Input.Virtual
 {
 	/// <summary>
 	///     Represents a virtual button, axis or joystick whose state is determined by the state of its VirtualInputNodes

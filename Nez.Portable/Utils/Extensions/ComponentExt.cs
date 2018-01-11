@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Nez.ECS;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class ComponentExt
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez
+namespace Nez.Debug.Inspector.Attributes
 {
 	/// <summary>
 	///     putting this attribute on a class and specifying a subclass of Inspector lets you create custom inspectors for any

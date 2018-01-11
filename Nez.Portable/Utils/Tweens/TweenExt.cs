@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.Tweens;
+using Nez.ECS;
+using Nez.ECS.Components.Renderables;
+using Nez.Utils.Tweens.Interfaces;
 
-namespace Nez
+namespace Nez.Utils.Tweens
 {
     public static class TweenExt
     {

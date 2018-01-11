@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
+using Nez.Graphics.SVG.Transforms;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG
 {
 	/// <summary>
 	///     base class for all SVG elements. Has some helpers for parsing colors and dealing with transforms.

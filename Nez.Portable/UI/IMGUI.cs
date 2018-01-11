@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.UI
 {
 	/// <summary>
 	///     IMGUI is a very simple class with only static methods designed to make sticking buttons, checkboxes, sliders and
@@ -57,7 +58,7 @@ namespace Nez
         static Imgui()
         {
             SpriteBatch = new SpriteBatch(Core.GraphicsDevice);
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
 
             var scale = FontLineHeight / Font.LineHeight;
             _fontScale = new Vector2(scale, scale);
@@ -136,7 +137,7 @@ namespace Nez
             _windowHeight = height;
             _elementWidth = _windowWidth - 2f * ElementPadding;
 
-            var mousePos = useRawMousePosition ? Input.RawMousePosition : Input.ScaledMousePosition.ToPoint();
+            var mousePos = useRawMousePosition ? Input.Input.RawMousePosition : Input.Input.ScaledMousePosition.ToPoint();
             _mouseInWorldCoords = mousePos - new Point(Core.GraphicsDevice.Viewport.X, Core.GraphicsDevice.Viewport.Y);
         }
 
@@ -154,8 +155,8 @@ namespace Nez
             var color = ButtonColor;
             if (IsMouseOverElement())
             {
-                ret = Input.LeftMouseButtonReleased;
-                color = Input.LeftMouseButtonDown ? ButtonColorDown : ButtonColorActive;
+                ret = Input.Input.LeftMouseButtonReleased;
+                color = Input.Input.LeftMouseButtonDown ? ButtonColorDown : ButtonColorActive;
             }
 
             SpriteBatch.DrawRect(_elementX, _lastY + ElementPadding, _elementWidth, ElementHeight, color);
@@ -181,13 +182,13 @@ namespace Nez
             if (IsMouseBetween(toggleX, toggleX + ElementHeight))
             {
                 color = ToggleBgActive;
-                if (Input.LeftMouseButtonDown)
+                if (Input.Input.LeftMouseButtonDown)
                 {
                     isToggleActive = true;
                     toggleCheckColor = ToggleOnActive;
                 }
 
-                if (Input.LeftMouseButtonReleased)
+                if (Input.Input.LeftMouseButtonReleased)
                     isChecked = !isChecked;
             }
 
@@ -215,7 +216,7 @@ namespace Nez
             var color = SliderThumbBg;
 
             if (IsMouseOverElement())
-                if (Input.LeftMouseButtonDown)
+                if (Input.Input.LeftMouseButtonDown)
                 {
                     var localMouseX = _mouseInWorldCoords.X - _elementX - ShortElementHeight * 0.5f;
                     value = MathHelper.Clamp(localMouseX / workingWidth, 0, 1);
@@ -248,7 +249,7 @@ namespace Nez
             var color = SliderThumbBg;
 
             if (IsMouseOverElement())
-                if (Input.LeftMouseButtonDown)
+                if (Input.Input.LeftMouseButtonDown)
                 {
                     var localMouseX = _mouseInWorldCoords.X - _elementX;
                     value = MathHelper.Clamp(localMouseX / _elementWidth, 0, 1);

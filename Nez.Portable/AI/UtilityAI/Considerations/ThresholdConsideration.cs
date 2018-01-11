@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Nez.AI.UtilityAI.Actions;
+using Nez.AI.UtilityAI.Considerations.Appraisals;
 
-namespace Nez.AI.UtilityAI
+namespace Nez.AI.UtilityAI.Considerations
 {
 	/// <summary>
 	///     Scores by summing child Appraisals until a child scores below the threshold

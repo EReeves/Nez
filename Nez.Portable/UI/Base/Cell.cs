@@ -1,6 +1,9 @@
 ﻿using System;
+using Nez.Debug;
+using Nez.UI.Containers;
+using Nez.Utils;
 
-namespace Nez.UI
+namespace Nez.UI.Base
 {
     public class Cell : IPoolable
     {

@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables._3D
 {
     public class Sphere3D : GeometricPrimitive3D
     {
@@ -16,15 +15,15 @@ namespace Nez
 
             for (var latNumber = 0; latNumber <= latitudeBands; latNumber++)
             {
-                var theta = latNumber * (float) Math.PI / latitudeBands;
-                var sinTheta = (float) Math.Sin(theta);
-                var cosTheta = (float) Math.Cos(theta);
+                var theta = latNumber * (float) System.Math.PI / latitudeBands;
+                var sinTheta = (float) System.Math.Sin(theta);
+                var cosTheta = (float) System.Math.Cos(theta);
 
                 for (var longNumber = 0; longNumber <= longitudeBands; longNumber++)
                 {
-                    var phi = longNumber * 2.0f * (float) Math.PI / longitudeBands;
-                    var sinPhi = (float) Math.Sin(phi);
-                    var cosPhi = (float) Math.Cos(phi);
+                    var phi = longNumber * 2.0f * (float) System.Math.PI / longitudeBands;
+                    var sinPhi = (float) System.Math.Sin(phi);
+                    var cosPhi = (float) System.Math.Cos(phi);
 
                     normal.X = cosPhi * sinTheta;
                     normal.Y = cosTheta;

@@ -1,4 +1,7 @@
-﻿namespace Nez.UI
+﻿using Nez.UI.Base;
+using Nez.UI.Drawable;
+
+namespace Nez.UI.Widgets
 {
     public class TextTooltip : Tooltip
     {

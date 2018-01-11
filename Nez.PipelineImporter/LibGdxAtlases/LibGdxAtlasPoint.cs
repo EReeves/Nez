@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace Nez.LibGdxAtlases
+﻿namespace Nez.PipelineImporter.LibGdxAtlases
 {
 	public class LibGdxAtlasPoint
 	{

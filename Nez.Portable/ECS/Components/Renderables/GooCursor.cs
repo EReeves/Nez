@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     cursor with trails. Note that this should be rendered in screen space (ScreenSpaceRenderer) so it isnt transformed
@@ -72,7 +74,7 @@ namespace Nez
 
             // initialize all positions to the current mouse position to avoid jankiness
             for (var i = 0; i < _trailNodeCount; i++)
-                _trailNodes[i].Position = Input.ScaledMousePosition;
+                _trailNodes[i].Position = Input.Input.ScaledMousePosition;
         }
 
         public override float Width => _cursorTexture.Width;
@@ -82,7 +84,7 @@ namespace Nez
         void IUpdatable.Update()
         {
             // set position of first trail node;
-            _trailNodes[0].Position = Input.RawMousePosition.ToVector2();
+            _trailNodes[0].Position = Input.Input.RawMousePosition.ToVector2();
 
             // update the trails
             for (var i = 1; i < _trailNodeCount; i++)
@@ -111,7 +113,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             // First we draw all the trail nodes using the border color. we need to draw them slightly larger, so the border is left visible
             // when we draw the actual nodes

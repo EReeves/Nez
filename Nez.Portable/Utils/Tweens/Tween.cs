@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
+using Nez.Maths;
+using Nez.Utils.Tweens.Easing;
+using Nez.Utils.Tweens.Interfaces;
 
-namespace Nez.Tweens
+namespace Nez.Utils.Tweens
 {
     public enum LoopType
     {

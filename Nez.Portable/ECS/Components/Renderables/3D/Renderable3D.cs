@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables._3D
 {
 	/// <summary>
 	///     convenience base class for 3D objects. It reuses and wraps the Transform in Vector3s for easy access and provides a

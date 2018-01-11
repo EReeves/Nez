@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Nez
+namespace Nez.Utils
 {
 	/// <summary>
 	///     provides frame timing information

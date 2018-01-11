@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Debug;
+using Nez.UI.Base;
+using Nez.UI.Containers;
+using Nez.UI.Utils;
+using Nez.Utils.Fonts;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class SelectBox<T> : Element, IInputListener where T : class
     {
@@ -47,14 +53,14 @@ namespace Nez.UI
             var font = _style.Font;
 
             if (bg != null)
-                _prefHeight = Math.Max(bg.TopHeight + bg.BottomHeight + font.LineHeight - font.Descent * 2f,
+                _prefHeight = System.Math.Max(bg.TopHeight + bg.BottomHeight + font.LineHeight - font.Descent * 2f,
                     bg.MinHeight);
             else
                 _prefHeight = font.LineHeight - font.Descent * 2;
 
             float maxItemWidth = 0;
             for (var i = 0; i < _items.Count; i++)
-                maxItemWidth = Math.Max(font.MeasureString(_items[i].ToString()).X, maxItemWidth);
+                maxItemWidth = (float) System.Math.Max((double) font.MeasureString(_items[i].ToString()).X, maxItemWidth);
 
 
             _prefWidth = maxItemWidth;
@@ -67,13 +73,13 @@ namespace Nez.UI
             if (scrollStyle.Background != null)
                 listWidth += scrollStyle.Background.LeftWidth + scrollStyle.Background.RightWidth;
             if (_selectBoxList == null || !_selectBoxList.IsScrollingDisabledY())
-                listWidth += Math.Max(_style.ScrollStyle.VScroll != null ? _style.ScrollStyle.VScroll.MinWidth : 0,
+                listWidth += System.Math.Max(_style.ScrollStyle.VScroll != null ? _style.ScrollStyle.VScroll.MinWidth : 0,
                     _style.ScrollStyle.VScrollKnob != null ? _style.ScrollStyle.VScrollKnob.MinWidth : 0);
-            _prefWidth = Math.Max(_prefWidth, listWidth);
+            _prefWidth = System.Math.Max(_prefWidth, listWidth);
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
 
@@ -458,7 +464,7 @@ namespace Nez.UI
 
         public SelectBoxStyle()
         {
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
         }
 
         public SelectBoxStyle(BitmapFont font, Color fontColor, IDrawable background, ScrollPaneStyle scrollStyle,

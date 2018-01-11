@@ -1,13 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Nez.Overlap2D.Runtime;
-using System.IO;
-using Newtonsoft.Json;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+using Nez.PipelineImporter.Overlap2D.VOs;
 
-
-namespace Nez.Overlap2D
+namespace Nez.PipelineImporter.Overlap2D
 {
 	[ContentProcessor( DisplayName = "Overlap2D Processor" )]
 	public class Overlap2DProcessor : ContentProcessor<SceneVO,SceneVO>

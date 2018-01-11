@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
+using Nez.Maths;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet.Constraints
 {
 	/// <summary>
 	///     constrains 3 particles to an angle

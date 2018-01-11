@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Nez.Maths;
+using Nez.UI.Base;
 
-namespace Nez.UI
+namespace Nez.UI.Containers
 {
     public class HorizontalGroup : Group
     {
@@ -69,12 +70,12 @@ namespace Nez.UI
                 {
                     var layout = (ILayout) child;
                     _prefWidth += layout.PreferredWidth;
-                    _prefHeight = Math.Max(_prefHeight, layout.PreferredHeight);
+                    _prefHeight = System.Math.Max(_prefHeight, layout.PreferredHeight);
                 }
                 else
                 {
                     _prefWidth += child.Width;
-                    _prefHeight += Math.Max(_prefHeight, child.Height);
+                    _prefHeight += System.Math.Max(_prefHeight, child.Height);
                     ;
                 }
             }
@@ -105,8 +106,8 @@ namespace Nez.UI
                     if (Fill > 0)
                         height = groupHeight * Fill;
                     else
-                        height = Math.Min(layout.PreferredHeight, groupHeight);
-                    height = Math.Max(height, layout.MinHeight);
+                        height = System.Math.Min(layout.PreferredHeight, groupHeight);
+                    height = System.Math.Max(height, layout.MinHeight);
 
                     var maxheight = layout.MaxHeight;
                     if (maxheight > 0 && height > MaxHeight)

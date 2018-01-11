@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Input
 {
     public interface IClipboard
     {

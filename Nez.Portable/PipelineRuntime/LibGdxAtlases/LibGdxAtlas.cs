@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using Nez.TextureAtlases;
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez.LibGdxAtlases
+namespace Nez.PipelineRuntime.LibGdxAtlases
 {
     public class LibGdxAtlas
     {
         public Dictionary<string, List<Subtexture>> Animations = new Dictionary<string, List<Subtexture>>();
-        public List<TextureAtlas> Atlases = new List<TextureAtlas>();
+        public List<TextureAtlas.TextureAtlas> Atlases = new List<TextureAtlas.TextureAtlas>();
 
 
 	    /// <summary>

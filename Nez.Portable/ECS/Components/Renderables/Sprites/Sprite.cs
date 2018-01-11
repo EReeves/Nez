@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
+using Nez.Maths;
 
-namespace Nez.Sprites
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     the most basic and common Renderable. Renders a Subtexture/Texture.
@@ -114,13 +115,13 @@ namespace Nez.Sprites
 	    /// <param name="graphics">Graphics.</param>
 	    /// <param name="camera">Camera.</param>
 	    /// <param name="offset">Offset.</param>
-	    public void DrawOutline(Graphics graphics, Camera camera, int offset = 1)
+	    public void DrawOutline(Graphics.Graphics graphics, Camera camera, int offset = 1)
         {
             DrawOutline(graphics, camera, Color.Black, offset);
         }
 
 
-        public void DrawOutline(Graphics graphics, Camera camera, Color outlineColor, int offset = 1)
+        public void DrawOutline(Graphics.Graphics graphics, Camera camera, Color outlineColor, int offset = 1)
         {
             // save the stuff we are going to modify so we can restore it later
             var originalPosition = localOffset;
@@ -146,7 +147,7 @@ namespace Nez.Sprites
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             graphics.Batcher.Draw(Subtexture, Entity.Transform.Position + LocalOffset, Color,
                 Entity.Transform.Rotation, origin, Entity.Transform.Scale, SpriteEffects, LayerDepth);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug.Inspector.Attributes;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public class ScanlinesEffect : Effect
     {

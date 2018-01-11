@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
-namespace Nez
+namespace Nez.Input.Virtual
 {
 	/// <summary>
 	///     A virtual input that is represented as a int that is either -1, 0, or 1. It corresponds to input that can range
@@ -32,7 +31,7 @@ namespace Nez
                 {
                     var val = Nodes[i].Value;
                     if (val != 0)
-                        return Math.Sign(val);
+                        return System.Math.Sign(val);
                 }
 
                 return 0;

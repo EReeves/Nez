@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.ECS;
+using Nez.Graphics.Effects;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
 	/// <summary>
 	///     overlays a mosaic on top of the final render. Useful only for pixel perfect pixel art.

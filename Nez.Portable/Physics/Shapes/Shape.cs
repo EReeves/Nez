@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
 
-namespace Nez.PhysicsShapes
+namespace Nez.Physics.Shapes
 {
     public abstract class Shape
     {
@@ -21,7 +23,7 @@ namespace Nez.PhysicsShapes
 	    ///     to change the
 	    ///     Entity.position which triggers collider/bounds/hash updates.
 	    /// </summary>
-	    internal Vector2 Position;
+	    public Vector2 Position;
 
 
         internal abstract void RecalculateBounds(Collider collider);

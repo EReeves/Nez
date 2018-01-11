@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Transforms
 {
     public class SvgShear : SvgTransform
     {
@@ -12,7 +12,7 @@ namespace Nez.Svg
         {
             _shearX = shearX;
             _shearY = shearY;
-            Debug.Warn("SvgSkew shear is not implemented");
+            Debug.Debug.Warn("SvgSkew shear is not implemented");
         }
 
 

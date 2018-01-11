@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-#if !FNA
 using Microsoft.Xna.Framework.Input.Touch;
+#if !FNA
 
 #endif
 
 
-namespace Nez
+namespace Nez.Input
 {
 	/// <summary>
 	///     to enable touch input you must first call enableTouchSupport()

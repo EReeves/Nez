@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public static class EffectResource
     {

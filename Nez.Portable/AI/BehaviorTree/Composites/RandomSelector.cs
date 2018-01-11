@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿using Nez.Utils.Extensions;
+
+namespace Nez.AI.BehaviorTree.Composites
 {
 	/// <summary>
 	///     Same as Selector except it shuffles the children when started

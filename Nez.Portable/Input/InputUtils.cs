@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace Nez
+namespace Nez.Input
 {
     public static class InputUtils
     {

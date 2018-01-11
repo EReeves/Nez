@@ -2,11 +2,16 @@
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.IEnumerableExtensions;
+using Nez.Debug.Inspector.Attributes;
+using Nez.Graphics;
 using Nez.UI;
+using Nez.UI.Containers;
+using Nez.UI.Widgets;
+using Nez.Utils;
+using Nez.Utils.Extensions;
 
 #if DEBUG
-namespace Nez
+namespace Nez.Debug.Inspector.Inspectors
 {
     public class EffectInspector : Inspector
     {

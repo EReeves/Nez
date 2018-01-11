@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+using Nez.Maths;
+using Nez.Physics.Shapes;
+using Nez.Utils;
+using Nez.Utils.Extensions;
 
-namespace Nez.Particles
+namespace Nez.ECS.Components.Renderables.Particles
 {
 	/// <summary>
 	///     the internal fields are required for the ParticleEmitter to be able to render the Particle
@@ -222,7 +225,7 @@ namespace Nez.Particles
 
                     CircleCollisionShape.RecalculateBounds(ParticleSize * 0.5f * collisionConfig.RadiusScale,
                         pos + Position);
-                    var neighbors = Physics.BoxcastBroadphase(ref CircleCollisionShape.Bounds,
+                    var neighbors = Nez.Physics.Physics.BoxcastBroadphase(ref CircleCollisionShape.Bounds,
                         collisionConfig.CollidesWithLayers);
                     foreach (var neighbor in neighbors)
                     {

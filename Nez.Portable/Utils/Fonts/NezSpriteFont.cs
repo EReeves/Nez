@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.Utils.Fonts
 {
 #if !FNA
     public class NezSpriteFont : IFont
@@ -125,7 +128,7 @@ namespace Nez
                 //  so that text does not hang off the left side of its rectangle.
                 if (firstGlyphOfLine)
                 {
-                    offset.X = Math.Max(currentGlyph.LeftSideBearing, 0);
+                    offset.X = System.Math.Max(currentGlyph.LeftSideBearing, 0);
                     firstGlyphOfLine = false;
                 }
                 else
@@ -135,7 +138,7 @@ namespace Nez
 
                 offset.X += currentGlyph.Width;
 
-                var proposedWidth = offset.X + Math.Max(currentGlyph.RightSideBearing, 0);
+                var proposedWidth = offset.X + System.Math.Max(currentGlyph.RightSideBearing, 0);
                 if (proposedWidth > width)
                     width = proposedWidth;
 
@@ -271,7 +274,7 @@ namespace Nez
                 // so that text does not hang off the left side of its rectangle.
                 if (firstGlyphOfLine)
                 {
-                    offset.X += Math.Max(currentGlyph.LeftSideBearing, 0);
+                    offset.X += System.Math.Max(currentGlyph.LeftSideBearing, 0);
                     firstGlyphOfLine = false;
                 }
                 else

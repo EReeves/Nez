@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Utils;
 
-namespace Nez.Textures
+namespace Nez.Graphics.Textures
 {
 	/// <summary>
 	///     wrapper for a RenderTarget2D that optionally takes care of resizing itself automatcially when the screen size

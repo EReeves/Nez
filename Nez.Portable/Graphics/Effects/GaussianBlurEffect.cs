@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug.Inspector.Attributes;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public class GaussianBlurEffect : Effect
     {
@@ -176,8 +176,8 @@ namespace Nez
 	    /// </summary>
 	    private float ComputeGaussian(float n)
         {
-            return (float) (1.0 / Math.Sqrt(2 * Math.PI * _blurAmount) *
-                            Math.Exp(-(n * n) / (2 * _blurAmount * _blurAmount)));
+            return (float) (1.0 / System.Math.Sqrt(2 * System.Math.PI * _blurAmount) *
+                            System.Math.Exp(-(n * n) / (2 * _blurAmount * _blurAmount)));
         }
     }
 }

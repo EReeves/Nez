@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Utils.Extensions;
 
-namespace Nez.Textures
+namespace Nez.Graphics.Textures
 {
     public class GaussianBlur
     {
@@ -52,10 +52,10 @@ namespace Nez.Textures
             for (var i = 0; i < width; i++)
             for (var j = 0; j < height; j++)
             {
-                var r = (int) Math.Min(255, matrixR[i, j]);
-                var g = (int) Math.Min(255, matrixG[i, j]);
-                var b = (int) Math.Min(255, matrixB[i, j]);
-                var a = (int) Math.Min(255, matrixA[i, j]);
+                var r = (int) System.Math.Min(255, matrixR[i, j]);
+                var g = (int) System.Math.Min(255, matrixG[i, j]);
+                var b = (int) System.Math.Min(255, matrixB[i, j]);
+                var a = (int) System.Math.Min(255, matrixA[i, j]);
                 destData[i + j * width] = new Color(r, g, b, a);
             }
 
@@ -97,7 +97,7 @@ namespace Nez.Textures
             for (var i = 0; i < width; i++)
             for (var j = 0; j < height; j++)
             {
-                var val = (int) Math.Min(255, matrix[i, j]);
+                var val = (int) System.Math.Min(255, matrix[i, j]);
                 destData[i + j * width] = new Color(val, val, val, srcData[i + j * width].A);
             }
 
@@ -113,8 +113,8 @@ namespace Nez.Textures
             double half = (size - 1) / 2;
             for (var i = 0; i < size; i++)
             {
-                ret[i, 0] = 1 / (Math.Sqrt(2 * Math.PI) * deviation) *
-                            Math.Exp(-(i - half) * (i - half) / (2 * deviation * deviation));
+                ret[i, 0] = 1 / (System.Math.Sqrt(2 * System.Math.PI) * deviation) *
+                            System.Math.Exp(-(i - half) * (i - half) / (2 * deviation * deviation));
                 sum += ret[i, 0];
             }
             return ret;
@@ -123,7 +123,7 @@ namespace Nez.Textures
 
         private static double[,] Calculate1DSampleKernel(double deviation)
         {
-            var size = (int) Math.Ceiling(deviation * 3) * 2 + 1;
+            var size = (int) System.Math.Ceiling(deviation * 3) * 2 + 1;
             return Calculate1DSampleKernel(deviation, size);
         }
 

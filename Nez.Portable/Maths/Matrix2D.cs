@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.Maths
 {
 	/// <summary>
 	///     Represents the right-handed 3x3 floating point matrix, which can store translation, scale and rotation information.
@@ -138,16 +138,21 @@ namespace Nez
 	    /// <param name="result">The result of the matrix addition as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Add(ref Matrix2D matrix1, ref Matrix2D matrix2, out Matrix2D result)
-        {
-            result.M11 = matrix1.M11 + matrix2.M11;
-            result.M12 = matrix1.M12 + matrix2.M12;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = matrix1.M11 + matrix2.M11,
+			    M12 = matrix1.M12 + matrix2.M12,
+			    
+			    M21 = matrix1.M21 + matrix2.M21,
+			    M22 = matrix1.M22 + matrix2.M22,
+			    
+			    M31 = matrix1.M31 + matrix2.M31,
+			    M32 = matrix1.M32 + matrix2.M32
+		    };
 
-            result.M21 = matrix1.M21 + matrix2.M21;
-            result.M22 = matrix1.M22 + matrix2.M22;
 
-            result.M31 = matrix1.M31 + matrix2.M31;
-            result.M32 = matrix1.M32 + matrix2.M32;
-        }
+	    }
 
 
 	    /// <summary>
@@ -174,8 +179,8 @@ namespace Nez
         {
             result = Identity;
 
-            var val1 = (float) Math.Cos(radians);
-            var val2 = (float) Math.Sin(radians);
+            var val1 = (float) System.Math.Cos(radians);
+            var val2 = (float) System.Math.Sin(radians);
 
             result.M11 = val1;
             result.M12 = val2;
@@ -192,8 +197,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix2D CreateScale(float scale)
         {
-            Matrix2D result;
-            CreateScale(scale, scale, out result);
+	        CreateScale(scale, scale, out var result);
             return result;
         }
 
@@ -233,16 +237,21 @@ namespace Nez
 	    /// <param name="result">The scaling <see cref="Matrix2D" /> as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CreateScale(float xScale, float yScale, out Matrix2D result)
-        {
-            result.M11 = xScale;
-            result.M12 = 0;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = xScale,
+			    M12 = 0,
+			    
+			    M21 = 0,
+			    M22 = yScale,
+			    
+			    M31 = 0,
+			    M32 = 0
+		    };
 
-            result.M21 = 0;
-            result.M22 = yScale;
 
-            result.M31 = 0;
-            result.M32 = 0;
-        }
+	    }
 
 
 	    /// <summary>
@@ -253,8 +262,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix2D CreateScale(Vector2 scale)
         {
-            Matrix2D result;
-            CreateScale(ref scale, out result);
+	        CreateScale(ref scale, out var result);
             return result;
         }
 
@@ -266,16 +274,21 @@ namespace Nez
 	    /// <param name="result">The scaling <see cref="Matrix2D" /> as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CreateScale(ref Vector2 scale, out Matrix2D result)
-        {
-            result.M11 = scale.X;
-            result.M12 = 0;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = scale.X,
+			    M12 = 0,
+			    
+			    M21 = 0,
+			    M22 = scale.Y,
+			    
+			    M31 = 0,
+			    M32 = 0
+		    };
 
-            result.M21 = 0;
-            result.M22 = scale.Y;
 
-            result.M31 = 0;
-            result.M32 = 0;
-        }
+	    }
 
 
 	    /// <summary>
@@ -287,8 +300,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix2D CreateTranslation(float xPosition, float yPosition)
         {
-            Matrix2D result;
-            CreateTranslation(xPosition, yPosition, out result);
+	        CreateTranslation(xPosition, yPosition, out var result);
             return result;
         }
 
@@ -300,16 +312,21 @@ namespace Nez
 	    /// <param name="result">The translation <see cref="Matrix2D" /> as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CreateTranslation(ref Vector2 position, out Matrix2D result)
-        {
-            result.M11 = 1;
-            result.M12 = 0;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = 1,
+			    M12 = 0,
+			    
+			    M21 = 0,
+			    M22 = 1,
+			    
+			    M31 = position.X,
+			    M32 = position.Y
+		    };
 
-            result.M21 = 0;
-            result.M22 = 1;
 
-            result.M31 = position.X;
-            result.M32 = position.Y;
-        }
+	    }
 
 
 	    /// <summary>
@@ -320,8 +337,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix2D CreateTranslation(Vector2 position)
         {
-            Matrix2D result;
-            CreateTranslation(ref position, out result);
+	        CreateTranslation(ref position, out var result);
             return result;
         }
 
@@ -334,16 +350,21 @@ namespace Nez
 	    /// <param name="result">The translation <see cref="Matrix2D" /> as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CreateTranslation(float xPosition, float yPosition, out Matrix2D result)
-        {
-            result.M11 = 1;
-            result.M12 = 0;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = 1,
+			    M12 = 0,
+			    
+			    M21 = 0,
+			    M22 = 1,
+			    
+			    M31 = xPosition,
+			    M32 = yPosition
+		    };
 
-            result.M21 = 0;
-            result.M22 = 1;
 
-            result.M31 = xPosition;
-            result.M32 = yPosition;
-        }
+	    }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -358,14 +379,20 @@ namespace Nez
         {
             var det = 1 / matrix.Determinant();
 
-            result.M11 = matrix.M22 * det;
-            result.M12 = -matrix.M12 * det;
+	        result = new Matrix2D
+	        {
+		        M11 = matrix.M22 * det,
+		        M12 = -matrix.M12 * det,
+		        
+		        M21 = -matrix.M21 * det,
+		        M22 = matrix.M11 * det,
+		        
+		        M31 = (matrix.M32 * matrix.M21 - matrix.M31 * matrix.M22) * det,
+		        M32 = -(matrix.M32 * matrix.M11 - matrix.M31 * matrix.M12) * det
+	        };
 
-            result.M21 = -matrix.M21 * det;
-            result.M22 = matrix.M11 * det;
 
-            result.M31 = (matrix.M32 * matrix.M21 - matrix.M31 * matrix.M22) * det;
-            result.M32 = -(matrix.M32 * matrix.M11 - matrix.M31 * matrix.M12) * det;
+
         }
 
 
@@ -377,7 +404,7 @@ namespace Nez
 	    /// <returns>The result of dividing the matrix.</returns>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix2D Divide(Matrix2D matrix1, Matrix2D matrix2)
-        {
+	    {
             matrix1.M11 = matrix1.M11 / matrix2.M11;
             matrix1.M12 = matrix1.M12 / matrix2.M12;
 
@@ -398,16 +425,21 @@ namespace Nez
 	    /// <param name="result">The result of dividing the matrix as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Divide(ref Matrix2D matrix1, ref Matrix2D matrix2, out Matrix2D result)
-        {
-            result.M11 = matrix1.M11 / matrix2.M11;
-            result.M12 = matrix1.M12 / matrix2.M12;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = matrix1.M11 / matrix2.M11,
+			    M12 = matrix1.M12 / matrix2.M12,
+			    
+			    M21 = matrix1.M21 / matrix2.M21,
+			    M22 = matrix1.M22 / matrix2.M22,
+			    
+			    M31 = matrix1.M31 / matrix2.M31,
+			    M32 = matrix1.M32 / matrix2.M32
+		    };
 
-            result.M21 = matrix1.M21 / matrix2.M21;
-            result.M22 = matrix1.M22 / matrix2.M22;
 
-            result.M31 = matrix1.M31 / matrix2.M31;
-            result.M32 = matrix1.M32 / matrix2.M32;
-        }
+	    }
 
 
 	    /// <summary>
@@ -443,14 +475,20 @@ namespace Nez
         public static void Divide(ref Matrix2D matrix1, float divider, out Matrix2D result)
         {
             var num = 1f / divider;
-            result.M11 = matrix1.M11 * num;
-            result.M12 = matrix1.M12 * num;
 
-            result.M21 = matrix1.M21 * num;
-            result.M22 = matrix1.M22 * num;
+	        result = new Matrix2D
+	        {
+		        M11 = matrix1.M11 * num,
+		        M12 = matrix1.M12 * num,
+		        
+		        M21 = matrix1.M21 * num,
+		        M22 = matrix1.M22 * num,
+		        
+		        M31 = matrix1.M31 * num,
+		        M32 = matrix1.M32 * num
+	        };
 
-            result.M31 = matrix1.M31 * num;
-            result.M32 = matrix1.M32 * num;
+
         }
 
 
@@ -485,16 +523,21 @@ namespace Nez
 	    /// <param name="result">The result of linear interpolation of the specified matrixes as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Lerp(ref Matrix2D matrix1, ref Matrix2D matrix2, float amount, out Matrix2D result)
-        {
-            result.M11 = matrix1.M11 + (matrix2.M11 - matrix1.M11) * amount;
-            result.M12 = matrix1.M12 + (matrix2.M12 - matrix1.M12) * amount;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = matrix1.M11 + (matrix2.M11 - matrix1.M11) * amount,
+			    M12 = matrix1.M12 + (matrix2.M12 - matrix1.M12) * amount,
+			    
+			    M21 = matrix1.M21 + (matrix2.M21 - matrix1.M21) * amount,
+			    M22 = matrix1.M22 + (matrix2.M22 - matrix1.M22) * amount,
+			    
+			    M31 = matrix1.M31 + (matrix2.M31 - matrix1.M31) * amount,
+			    M32 = matrix1.M32 + (matrix2.M32 - matrix1.M32) * amount
+		    };
 
-            result.M21 = matrix1.M21 + (matrix2.M21 - matrix1.M21) * amount;
-            result.M22 = matrix1.M22 + (matrix2.M22 - matrix1.M22) * amount;
 
-            result.M31 = matrix1.M31 + (matrix2.M31 - matrix1.M31) * amount;
-            result.M32 = matrix1.M32 + (matrix2.M32 - matrix1.M32) * amount;
-        }
+	    }
 
 
 	    /// <summary>
@@ -536,6 +579,8 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Multiply(ref Matrix2D matrix1, ref Matrix2D matrix2, out Matrix2D result)
         {
+	        
+	        
             var m11 = matrix1.M11 * matrix2.M11 + matrix1.M12 * matrix2.M21;
             var m12 = matrix1.M11 * matrix2.M12 + matrix1.M12 * matrix2.M22;
 
@@ -545,14 +590,19 @@ namespace Nez
             var m31 = matrix1.M31 * matrix2.M11 + matrix1.M32 * matrix2.M21 + matrix2.M31;
             var m32 = matrix1.M31 * matrix2.M12 + matrix1.M32 * matrix2.M22 + matrix2.M32;
 
-            result.M11 = m11;
-            result.M12 = m12;
+	        result = new Matrix2D
+	        {
+		        M11 = m11,
+		        M12 = m12,
+		        
+		        M21 = m21,
+		        M22 = m22,
+		        
+		        M31 = m31,
+		        M32 = m32
+	        };
 
-            result.M21 = m21;
-            result.M22 = m22;
 
-            result.M31 = m31;
-            result.M32 = m32;
         }
 
 
@@ -585,16 +635,21 @@ namespace Nez
 	    /// <param name="result">Result of the matrix multiplication with a scalar as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Multiply(ref Matrix2D matrix1, float scaleFactor, out Matrix2D result)
-        {
-            result.M11 = matrix1.M11 * scaleFactor;
-            result.M12 = matrix1.M12 * scaleFactor;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = matrix1.M11 * scaleFactor,
+			    M12 = matrix1.M12 * scaleFactor,
+			    
+			    M21 = matrix1.M21 * scaleFactor,
+			    M22 = matrix1.M22 * scaleFactor,
+			    
+			    M31 = matrix1.M31 * scaleFactor,
+			    M32 = matrix1.M32 * scaleFactor
+		    };
 
-            result.M21 = matrix1.M21 * scaleFactor;
-            result.M22 = matrix1.M22 * scaleFactor;
 
-            result.M31 = matrix1.M31 * scaleFactor;
-            result.M32 = matrix1.M32 * scaleFactor;
-        }
+	    }
 
 
 	    /// <summary>
@@ -822,16 +877,21 @@ namespace Nez
 	    /// <param name="result">The result of the matrix subtraction as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Subtract(ref Matrix2D matrix1, ref Matrix2D matrix2, out Matrix2D result)
-        {
-            result.M11 = matrix1.M11 - matrix2.M11;
-            result.M12 = matrix1.M12 - matrix2.M12;
+	    {
+		    result = new Matrix2D
+		    {
+			    M11 = matrix1.M11 - matrix2.M11,
+			    M12 = matrix1.M12 - matrix2.M12,
+			    
+			    M21 = matrix1.M21 - matrix2.M21,
+			    M22 = matrix1.M22 - matrix2.M22,
+			    
+			    M31 = matrix1.M31 - matrix2.M31,
+			    M32 = matrix1.M32 - matrix2.M32
+		    };
 
-            result.M21 = matrix1.M21 - matrix2.M21;
-            result.M22 = matrix1.M22 - matrix2.M22;
 
-            result.M31 = matrix1.M31 - matrix2.M31;
-            result.M32 = matrix1.M32 - matrix2.M32;
-        }
+	    }
 
 
 	    /// <summary>
@@ -842,8 +902,7 @@ namespace Nez
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix2D Transpose(Matrix2D matrix)
         {
-            Matrix2D ret;
-            Transpose(ref matrix, out ret);
+	        Transpose(ref matrix, out var ret);
             return ret;
         }
 
@@ -855,8 +914,8 @@ namespace Nez
 	    /// <param name="result">The new <see cref="Matrix2D" /> which contains the transposing result as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transpose(ref Matrix2D matrix, out Matrix2D result)
-        {
-            Matrix2D ret;
+	    {
+		    Matrix2D ret = new Matrix2D();
             ret.M11 = matrix.M11;
             ret.M12 = matrix.M21;
 
@@ -911,8 +970,8 @@ namespace Nez
 	    /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
 	    public override bool Equals(object obj)
         {
-            if (obj is Matrix2D)
-                return Equals((Matrix2D) obj);
+            if (obj is Matrix2D d)
+                return Equals(d);
             return false;
         }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez
+namespace Nez.Debug.Inspector.Attributes
 {
 	/// <summary>
 	///     displays a tooltip when hovering over the label of any inspectable elements

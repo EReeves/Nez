@@ -1,6 +1,6 @@
 ﻿// common storage location for generic enums
 
-namespace Nez
+namespace Nez.Utils
 {
     public enum HorizontalAlign
     {

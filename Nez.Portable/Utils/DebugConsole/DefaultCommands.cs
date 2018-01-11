@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Nez.Debug.Inspector;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
+using Nez.Utils.Timers;
 
-namespace Nez.Console
+namespace Nez.Utils.DebugConsole
 {
-	/// <summary>
-	///     add this attribute to any static method
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Method)]
+    /// <summary>
+    ///     add this attribute to any static method
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method)]
     public class CommandAttribute : Attribute
     {
         public string Help;
@@ -20,12 +24,9 @@ namespace Nez.Console
             this.Help = help;
         }
     }
-}
 
 
 #if DEBUG
-namespace Nez.Console
-{
     public partial class DebugConsole
     {
         private static ITimer _drawCallTimer;
@@ -124,11 +125,11 @@ namespace Nez.Console
             {
                 _drawCallTimer.Stop();
                 _drawCallTimer = null;
-                Debug.Log("Draw call logging stopped");
+                Debug.Debug.Log("Draw call logging stopped");
             }
             else
             {
-                _drawCallTimer = Core.Schedule(delay, true, timer => { Debug.Log("Draw Calls: {0}", Core.DrawCalls); });
+                _drawCallTimer = Core.Schedule(delay, true, timer => { Debug.Debug.Log("Draw Calls: {0}", Core.DrawCalls); });
             }
         }
 
@@ -225,7 +226,7 @@ namespace Nez.Console
             var ticker = 0f;
             Core.Schedule(0f, true, null, timer =>
             {
-                Nez.Physics.DebugDraw(0f);
+                Nez.Physics.Physics.DebugDraw(0f);
                 ticker += Time.DeltaTime;
                 if (ticker >= secondsToDisplay)
                 {
@@ -234,7 +235,7 @@ namespace Nez.Console
                 }
             });
 
-            Instance.Log("Physics system collider count: " + ((HashSet<Collider>) Nez.Physics.GetAllColliders()).Count);
+            Instance.Log("Physics system collider count: " + ((HashSet<Collider>) Nez.Physics.Physics.GetAllColliders()).Count);
         }
 
 
@@ -282,5 +283,6 @@ namespace Nez.Console
             }
         }
     }
-}
+
 #endif
+}

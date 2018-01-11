@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Debug;
+using Nez.UI.Base;
+using Nez.UI.Utils;
+using Nez.Utils.Fonts;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
 	/// <summary>
 	///     displays textual items and highlights the currently selected item
@@ -53,7 +58,7 @@ namespace Nez.UI
 
             _prefWidth = 0;
             for (var i = 0; i < _items.Count; i++)
-                _prefWidth = Math.Max(font.MeasureString(_items[i].ToString()).X, _prefWidth);
+                _prefWidth = System.Math.Max(font.MeasureString(_items[i].ToString()).X, _prefWidth);
 
             _prefWidth += selectedDrawable.LeftWidth + selectedDrawable.RightWidth;
             _prefHeight = _items.Count * _itemHeight;
@@ -67,7 +72,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             // update our hoved item if the mouse is over the list
             if (_isMouseOverList)
@@ -183,8 +188,8 @@ namespace Nez.UI
 
             var lastSelectedItem = _selection.GetLastSelected();
             var index = GetItemIndexUnderMousePosition(mousePos);
-            index = Math.Max(0, index);
-            index = Math.Min(_items.Count - 1, index);
+            index = System.Math.Max(0, index);
+            index = System.Math.Min(_items.Count - 1, index);
             _selection.Choose(_items[index]);
 
             if (lastSelectedItem != _items[index] && OnChanged != null)
@@ -403,7 +408,7 @@ namespace Nez.UI
 
         public ListBoxStyle()
         {
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
         }
 
 

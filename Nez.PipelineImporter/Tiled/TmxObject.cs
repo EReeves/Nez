@@ -1,9 +1,8 @@
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
-
-namespace Nez.TiledMaps
+namespace Nez.PipelineImporter.Tiled
 {
 	public class TmxObject
 	{

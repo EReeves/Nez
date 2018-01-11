@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez.Particles
+namespace Nez.ECS.Components.Renderables.Particles
 {
     public class ParticleEmitterConfig
     {

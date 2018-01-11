@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Nez.Textures;
+using Nez.ECS;
+using Nez.ECS.Components.Renderables;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics.Renderers
 {
 	/// <summary>
 	///     Renderers are added to a Scene and handle all of the actual calls to RenderableComponent.render and

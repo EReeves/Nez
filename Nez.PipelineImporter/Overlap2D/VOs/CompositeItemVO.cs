@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Nez.Maths;
 
-
-namespace Nez.Overlap2D.Runtime
+namespace Nez.PipelineImporter.Overlap2D.VOs
 {
 	public class CompositeItemVO : MainItemVO
 	{

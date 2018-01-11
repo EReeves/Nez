@@ -1,4 +1,6 @@
-﻿namespace System.Collections.Generic
+﻿using System.Collections.Generic;
+
+namespace Nez.Utils.Collections
 {
 	/// <summary>
 	///     The IPriorityQueue interface.  This is mainly here for purists, and in case I decide to add more implementations

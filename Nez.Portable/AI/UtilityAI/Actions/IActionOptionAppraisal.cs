@@ -1,4 +1,4 @@
-﻿namespace Nez.AI.UtilityAI
+﻿namespace Nez.AI.UtilityAI.Actions
 {
 	/// <summary>
 	///     Appraisal for use with an ActionWithOptions

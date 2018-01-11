@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework;
-
-
-namespace Nez.BitmapFontImporter
+using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+// ReSharper disable once CheckNamespace
+namespace Nez
 {
 	public class BitmapFontProcessorResult
 	{

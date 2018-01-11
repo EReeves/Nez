@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.ECS;
+using Nez.Utils.Tweens.Easing;
 
-namespace Nez.Tweens
+namespace Nez.Utils.Tweens
 {
     public class TransformSpringTween : AbstractTweenable
     {
@@ -69,7 +71,7 @@ namespace Nez.Tweens
 	    /// <param name="lambda">Lambda.</param>
 	    public void UpdateDampingRatioWithHalfLife(float lambda)
         {
-            DampingRatio = -lambda / AngularFrequency * (float) Math.Log(0.5f);
+            DampingRatio = -lambda / AngularFrequency * (float) System.Math.Log(0.5f);
         }
 
 

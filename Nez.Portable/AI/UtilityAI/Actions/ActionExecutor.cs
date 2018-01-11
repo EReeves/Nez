@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez.AI.UtilityAI
+namespace Nez.AI.UtilityAI.Actions
 {
 	/// <summary>
 	///     wraps an Action for use as an IAction without having to create a new class

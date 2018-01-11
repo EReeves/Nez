@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public class WaterReflectionEffect : ReflectionEffect
     {

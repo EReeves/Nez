@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿using Nez.Maths;
+
+namespace Nez.AI.BehaviorTree.Conditionals
 {
 	/// <summary>
 	///     returns success when the random probability is above the successProbability probability. It will otherwise return

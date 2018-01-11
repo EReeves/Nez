@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
+using Nez.Utils.Extensions;
 
-namespace Nez.UI
+namespace Nez.UI.Drawable
 {
 	/// <summary>
 	///     The drawable sizes are set when the ninepatch is set, but they are separate values. Eg, {@link
@@ -84,7 +85,7 @@ namespace Nez.UI
         }
 
 
-        public void Draw(Graphics graphics, float x, float y, float width, float height, Color color)
+        public void Draw(Graphics.Graphics graphics, float x, float y, float width, float height, Color color)
         {
             if (TintColor.HasValue)
                 color = color.Multiply(TintColor.Value);

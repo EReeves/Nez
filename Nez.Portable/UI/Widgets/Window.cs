@@ -1,8 +1,12 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
+﻿using Microsoft.Xna.Framework;
+using Nez;
+using Nez.Debug;
+using Nez.Maths;
+using Nez.UI.Base;
+using Nez.UI.Containers;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
 	/// <summary>
 	///     A table that can be dragged and resized. The top padding is used as the window's title height.
@@ -95,7 +99,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             KeepWithinStage();
 
@@ -111,14 +115,14 @@ namespace Nez.UI
         }
 
 
-        protected void DrawStageBackground(Graphics graphics, float parentAlpha, float x, float y, float width,
+        protected void DrawStageBackground(Graphics.Graphics graphics, float parentAlpha, float x, float y, float width,
             float height)
         {
             _style.StageBackground.Draw(graphics, x, y, width, height, new Color(Color, (int) (Color.A * parentAlpha)));
         }
 
 
-        protected override void DrawBackground(Graphics graphics, float parentAlpha, float x, float y)
+        protected override void DrawBackground(Graphics.Graphics graphics, float parentAlpha, float x, float y)
         {
             base.DrawBackground(graphics, parentAlpha, x, y);
 
@@ -203,7 +207,7 @@ namespace Nez.UI
 
         public float GetPrefWidth()
         {
-            return Math.Max(PreferredWidth, _titleLabel.PreferredWidth + GetPadLeft() + GetPadRight());
+            return System.Math.Max(PreferredWidth, _titleLabel.PreferredWidth + GetPadLeft() + GetPadRight());
         }
 
 
@@ -373,13 +377,13 @@ namespace Nez.UI
 
         public WindowStyle()
         {
-            TitleFont = Graphics.Instance.BitmapFont;
+            TitleFont = Graphics.Graphics.Instance.BitmapFont;
         }
 
 
         public WindowStyle(BitmapFont titleFont, Color titleFontColor, IDrawable background)
         {
-            this.TitleFont = titleFont ?? Graphics.Instance.BitmapFont;
+            this.TitleFont = titleFont ?? Graphics.Graphics.Instance.BitmapFont;
             this.Background = background;
             this.TitleFontColor = titleFontColor;
         }

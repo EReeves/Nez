@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
 
-namespace Nez.PhysicsShapes
+namespace Nez.Physics.Shapes.ShapeCollisions
 {
 	/// <summary>
 	///     various collision routines for Shapes. Most of these expect the first Shape to be in the space of the second (i.e.
@@ -254,7 +255,7 @@ namespace Nez.PhysicsShapes
                 var v = Vector2.Dot(deltaMovement.Value, axis);
 
                 // small velocity, so only the overlap test will be relevant. 
-                if (Math.Abs(v) < 0.0000001f)
+                if (System.Math.Abs(v) < 0.0000001f)
                     return false;
 
                 var t0 = -d0 / v; // time of impact to d0 reaches 0
@@ -334,7 +335,7 @@ namespace Nez.PhysicsShapes
             }
 
             if (mini == -1)
-                Debug.Error("Error");
+                Debug.Debug.Error("Error");
 
             return mini != -1;
         }

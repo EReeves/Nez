@@ -1,7 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS;
+using Nez.ECS.Components.Renderables;
+using Nez.Graphics.Batcher;
+using Nez.Graphics.SVG.Shapes;
+using Nez.Graphics.SVG.Shapes.Paths;
+using Nez.Maths;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG
 {
 	/// <summary>
 	///     assists in debugging the data from an SVG file. All the supported shapes will be displayed.
@@ -67,7 +73,7 @@ namespace Nez.Svg
         }
 
 
-        private void RenderRects(Batcher batcher, SvgRectangle[] rects)
+        private void RenderRects(Batcher.Batcher batcher, SvgRectangle[] rects)
         {
             if (rects == null)
                 return;
@@ -82,7 +88,7 @@ namespace Nez.Svg
         }
 
 
-        private void RenderPaths(Batcher batcher, SvgPath[] paths)
+        private void RenderPaths(Batcher.Batcher batcher, SvgPath[] paths)
         {
             if (paths == null && _pathBuilder != null)
                 return;
@@ -99,7 +105,7 @@ namespace Nez.Svg
         }
 
 
-        private void RenderLines(Batcher batcher, SvgLine[] lines)
+        private void RenderLines(Batcher.Batcher batcher, SvgLine[] lines)
         {
             if (lines == null)
                 return;
@@ -112,7 +118,7 @@ namespace Nez.Svg
         }
 
 
-        private void RenderCircles(Batcher batcher, SvgCircle[] circles)
+        private void RenderCircles(Batcher.Batcher batcher, SvgCircle[] circles)
         {
             if (circles == null)
                 return;
@@ -122,7 +128,7 @@ namespace Nez.Svg
         }
 
 
-        private void RenderPolygons(Batcher batcher, SvgPolygon[] polygons)
+        private void RenderPolygons(Batcher.Batcher batcher, SvgPolygon[] polygons)
         {
             if (polygons == null)
                 return;
@@ -136,7 +142,7 @@ namespace Nez.Svg
         }
 
 
-        private void RenderPolylines(Batcher batcher, SvgPolyline[] polylines)
+        private void RenderPolylines(Batcher.Batcher batcher, SvgPolyline[] polylines)
         {
             if (polylines == null)
                 return;
@@ -155,7 +161,7 @@ namespace Nez.Svg
 	    /// </summary>
 	    /// <param name="batcher">Batcher.</param>
 	    /// <param name="images">Images.</param>
-	    private void RenderImages(Batcher batcher, SvgImage[] images)
+	    private void RenderImages(Batcher.Batcher batcher, SvgImage[] images)
         {
             if (images == null)
                 return;

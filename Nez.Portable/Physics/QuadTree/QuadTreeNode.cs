@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Debug;
 
-namespace Nez.Spatial
+namespace Nez.Physics.QuadTree
 {
 	/// <summary>
 	///     A QuadTree Object that provides fast and efficient storage of objects in a world space.

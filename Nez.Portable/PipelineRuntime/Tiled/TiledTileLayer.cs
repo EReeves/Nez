@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
     public class TiledTileLayer : TiledLayer
     {
@@ -321,8 +323,8 @@ namespace Nez.Tiled
                 return null;
 
             // which way we go
-            var stepX = Math.Sign(direction.X);
-            var stepY = Math.Sign(direction.Y);
+            var stepX = System.Math.Sign(direction.X);
+            var stepY = System.Math.Sign(direction.Y);
 
             // Calculate cell boundaries. when the step is positive, the next cell is after this one meaning we add 1.
             // If negative, cell is before this one in which case dont add to boundary

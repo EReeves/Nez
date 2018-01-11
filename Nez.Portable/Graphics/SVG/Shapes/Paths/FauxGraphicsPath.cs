@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.Utils;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes.Paths
 {
 	/// <summary>
 	///     THIS IS A HORRIBLE ABOMINATION! PCLs dont have access to System.Drawing so this class is a wrapper for accessing

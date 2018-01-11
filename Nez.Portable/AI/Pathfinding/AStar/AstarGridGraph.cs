@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.Tiled;
+using Nez.PipelineRuntime.Tiled;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.AStar
 {
 	/// <summary>
 	///     basic static grid graph for use with A*. Add walls to the walls HashSet and weighted nodes to the weightedNodes
@@ -112,7 +111,7 @@ namespace Nez.AI.Pathfinding
 
         int IAstarGraph<Point>.Heuristic(Point node, Point goal)
         {
-            return Math.Abs(node.X - goal.X) + Math.Abs(node.Y - goal.Y);
+            return System.Math.Abs(node.X - goal.X) + System.Math.Abs(node.Y - goal.Y);
         }
 
         #endregion

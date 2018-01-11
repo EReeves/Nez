@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Nez.ECS.Systems;
 
-namespace Nez
+namespace Nez.ECS.InternalUtils
 {
     public class EntityProcessorList
     {

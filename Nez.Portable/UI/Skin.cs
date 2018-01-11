@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
-using Nez.LibGdxAtlases;
-using Nez.Systems;
-using Nez.TextureAtlases;
-using Nez.Textures;
+using Nez;
+using Nez.Graphics.Textures;
+using Nez.PipelineRuntime.LibGdxAtlases;
+using Nez.PipelineRuntime.TextureAtlas;
+using Nez.PipelineRuntime.UISkin;
+using Nez.UI.Containers;
+using Nez.UI.Drawable;
+using Nez.UI.Widgets;
+using Nez.Utils;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
 namespace Nez.UI
 {
@@ -71,7 +76,7 @@ namespace Nez.UI
                     }
                     catch (Exception e)
                     {
-                        Debug.Error("Error creating style from UISkin: {0}", e);
+                        Debug.Debug.Error("Error creating style from UISkin: {0}", e);
                     }
                 }
             }
@@ -297,7 +302,7 @@ namespace Nez.UI
                         styleField.SetValue(styleClass, theStyle);
 
                         if (theStyle == null)
-                            Debug.Error("could not find a style reference named {0} when setting {1} on {2}",
+                            Debug.Debug.Error("could not find a style reference named {0} when setting {1} on {2}",
                                 identifier, name, styleName);
                     }
                 }
@@ -309,7 +314,7 @@ namespace Nez.UI
                     if (drawable != null)
                         ReflectionUtils.GetFieldInfo(styleClass, name).SetValue(styleClass, drawable);
                     else
-                        Debug.Error("could not find a drawable or color named {0} when setting {1} on {2}", identifier,
+                        Debug.Debug.Error("could not find a drawable or color named {0} when setting {1} on {2}", identifier,
                             name, styleName);
                 }
             }

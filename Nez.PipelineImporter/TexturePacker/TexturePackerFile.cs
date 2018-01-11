@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-
-namespace Nez.TexturePackerImporter
+namespace Nez.PipelineImporter.TexturePacker
 {
 	public class TexturePackerFile
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes
 {
     public class SvgCircle : SvgElement
     {

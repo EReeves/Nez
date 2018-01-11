@@ -1,7 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.Sprites;
+using Nez.ECS.Components.Renderables;
+using Nez.ECS.Components.Renderables.Sprites;
+using Nez.Maths;
+using Nez.Utils;
+using Nez.Utils.Fonts;
 
-namespace Nez
+namespace Nez.ECS.Components.Text
 {
     public class Text : Sprite
     {
@@ -101,7 +105,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             BatcherIFontExt.DrawString(graphics.Batcher, Font, (string) text, Entity.Transform.Position + localOffset, Color,
                 Entity.Transform.Rotation, origin, Entity.Transform.Scale, SpriteEffects, ((RenderableComponent) this).LayerDepth);

@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet.Composites
 {
 	/// <summary>
 	///     single Particle composite

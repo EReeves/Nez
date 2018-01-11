@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Nez.Maths;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Lights
 {
     public class SpotLight : PointLight
     {
@@ -42,7 +42,7 @@ namespace Nez.DeferredLighting
 	    /// <param name="direction">Direction.</param>
 	    public SpotLight SetDirection(Vector2 direction)
         {
-            Entity.Transform.Rotation = (float) Math.Atan2(direction.Y, direction.X);
+            Entity.Transform.Rotation = (float) System.Math.Atan2(direction.Y, direction.X);
             return this;
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez.AI.UtilityAI
+namespace Nez.AI.UtilityAI.Actions
 {
 	/// <summary>
 	///     Action that encompasses a List of options. The options are passed to Appraisals which score and locate the best

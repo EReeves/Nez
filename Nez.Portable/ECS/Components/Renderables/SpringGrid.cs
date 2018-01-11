@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     grid of springs
@@ -223,7 +224,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             // TODO: make culling smarter and only render the lines that are actually on the screen rather than all or nothing
             var width = _points.GetLength(0);
@@ -254,7 +255,7 @@ namespace Nez
 
                     // use Catmull-Rom interpolation to help smooth bends in the grid
                     left = ProjectToVector2(_points[x - 1, y].Position);
-                    var clampedX = Math.Min(x + 1, width - 1);
+                    var clampedX = System.Math.Min(x + 1, width - 1);
                     var mid = Vector2.CatmullRom(ProjectToVector2(_points[x - 2, y].Position), left, p,
                         ProjectToVector2(_points[clampedX, y].Position), 0.5f);
 
@@ -286,7 +287,7 @@ namespace Nez
                     }
 
                     up = ProjectToVector2(_points[x, y - 1].Position);
-                    var clampedY = Math.Min(y + 1, height - 1);
+                    var clampedY = System.Math.Min(y + 1, height - 1);
                     var mid = Vector2.CatmullRom(ProjectToVector2(_points[x, y - 2].Position), up, p,
                         ProjectToVector2(_points[x, clampedY].Position), 0.5f);
 
@@ -326,9 +327,9 @@ namespace Nez
         private void DrawLine(Batcher batcher, Vector2 start, Vector2 end, Color color, float thickness = 2f)
         {
             var delta = end - start;
-            var angle = (float) Math.Atan2(delta.Y, delta.X);
-            batcher.Draw(Graphics.Instance.PixelTexture, start + Entity.Transform.Position + LocalOffset,
-                Graphics.Instance.PixelTexture.SourceRect, color, angle, new Vector2(0, 0.5f),
+            var angle = (float) System.Math.Atan2(delta.Y, delta.X);
+            batcher.Draw(Graphics.Graphics.Instance.PixelTexture, start + Entity.Transform.Position + LocalOffset,
+                Graphics.Graphics.Instance.PixelTexture.SourceRect, color, angle, new Vector2(0, 0.5f),
                 new Vector2(delta.Length(), thickness), SpriteEffects.None, LayerDepth);
         }
 

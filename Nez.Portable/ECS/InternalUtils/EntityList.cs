@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Nez.Debug;
+using Nez.Utils;
+using Nez.Utils.Collections;
 
-namespace Nez
+namespace Nez.ECS.InternalUtils
 {
     public class EntityList
     {
@@ -72,7 +75,7 @@ namespace Nez
 	    /// <param name="entity">Entity.</param>
 	    public void Remove(Entity entity)
         {
-            Debug.WarnIf(_entitiesToRemove.Contains(entity),
+            Debug.Debug.WarnIf(_entitiesToRemove.Contains(entity),
                 "You are trying to remove an entity ({0}) that you already removed", entity.Name);
 
             // guard against adding and then removing an Entity in the same frame
@@ -169,7 +172,7 @@ namespace Nez
             // handle removals
             if (_entitiesToRemove.Count > 0)
             {
-                Utils.Swap(ref _entitiesToRemove, ref _tempEntityList);
+                Utils.Utils.Swap(ref _entitiesToRemove, ref _tempEntityList);
                 for (var i = 0; i < _tempEntityList.Count; i++)
                 {
                     var entity = _tempEntityList[i];
@@ -192,7 +195,7 @@ namespace Nez
             // handle additions
             if (_entitiesToAdd.Count > 0)
             {
-                Utils.Swap(ref _entitiesToAdd, ref _tempEntityList);
+                Utils.Utils.Swap(ref _entitiesToAdd, ref _tempEntityList);
                 for (var i = 0; i < _tempEntityList.Count; i++)
                 {
                     var entity = _tempEntityList[i];

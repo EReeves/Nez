@@ -1,7 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.UI.Base;
+using Nez.UI.Containers;
+using Nez.UI.Drawable;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class Button : Table, IInputListener, IGamepadFocusable
     {
@@ -24,11 +28,11 @@ namespace Nez.UI
             {
                 var width = base.PreferredWidth;
                 if (_style.Up != null)
-                    width = Math.Max(width, _style.Up.MinWidth);
+                    width = System.Math.Max(width, _style.Up.MinWidth);
                 if (_style.Down != null)
-                    width = Math.Max(width, _style.Down.MinWidth);
+                    width = System.Math.Max(width, _style.Down.MinWidth);
                 if (_style.Checkked != null)
-                    width = Math.Max(width, _style.Checkked.MinWidth);
+                    width = System.Math.Max(width, _style.Checkked.MinWidth);
                 return width;
             }
         }
@@ -39,11 +43,11 @@ namespace Nez.UI
             {
                 var height = base.PreferredHeight;
                 if (_style.Up != null)
-                    height = Math.Max(height, _style.Up.MinHeight);
+                    height = System.Math.Max(height, _style.Up.MinHeight);
                 if (_style.Down != null)
-                    height = Math.Max(height, _style.Down.MinHeight);
+                    height = System.Math.Max(height, _style.Down.MinHeight);
                 if (_style.Checkked != null)
-                    height = Math.Max(height, _style.Checkked.MinHeight);
+                    height = System.Math.Max(height, _style.Checkked.MinHeight);
                 return height;
             }
         }
@@ -144,7 +148,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
 

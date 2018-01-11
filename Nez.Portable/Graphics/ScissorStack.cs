@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.ECS;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.Graphics
 {
 	/// <summary>
 	///     A stack of Rectangle objects to be used for clipping via GraphicsDevice.ScissorRectangle. When a new
@@ -21,20 +22,20 @@ namespace Nez
             {
                 // merge scissors
                 var parent = Scissors.Peek();
-                var minX = Math.Max(parent.X, scissor.X);
-                var maxX = Math.Min(parent.X + parent.Width, scissor.X + scissor.Width);
+                var minX = System.Math.Max(parent.X, scissor.X);
+                var maxX = System.Math.Min(parent.X + parent.Width, scissor.X + scissor.Width);
                 if (maxX - minX < 1)
                     return false;
 
-                var minY = Math.Max(parent.Y, scissor.Y);
-                var maxY = Math.Min(parent.Y + parent.Height, scissor.Y + scissor.Height);
+                var minY = System.Math.Max(parent.Y, scissor.Y);
+                var maxY = System.Math.Min(parent.Y + parent.Height, scissor.Y + scissor.Height);
                 if (maxY - minY < 1)
                     return false;
 
                 scissor.X = minX;
                 scissor.Y = minY;
                 scissor.Width = maxX - minX;
-                scissor.Height = Math.Max(1, maxY - minY);
+                scissor.Height = System.Math.Max(1, maxY - minY);
             }
 
             Scissors.Push(scissor);

@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework.Content.Pipeline;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Serialization;
+using Microsoft.Xna.Framework.Content.Pipeline;
 
-
-namespace Nez.ParticleDesignerImporter
+namespace Nez.PipelineImporter.ParticleDesigner
 {
 	[ContentImporter( ".pex", DefaultProcessor = "ParticleDesignerProcessor", DisplayName = "Particle Designer Importer" )]
 	public class ParticleDesignerImporter : ContentImporter<ParticleDesignerContent>

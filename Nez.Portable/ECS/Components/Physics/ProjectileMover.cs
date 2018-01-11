@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.ECS.Components.Physics.Colliders;
 
-namespace Nez
+namespace Nez.ECS.Components.Physics
 {
 	/// <summary>
 	///     moves taking collision into account only for reporting to any ITriggerListeners. The object will always move the
@@ -34,7 +36,7 @@ namespace Nez
             Entity.Transform.Position += motion;
 
             // fetch anything that we might collide with us at our new position
-            var neighbors = Physics.BoxcastBroadphase(_collider.Bounds, _collider.CollidesWithLayers);
+            var neighbors = Nez.Physics.Physics.BoxcastBroadphase(_collider.Bounds, _collider.CollidesWithLayers);
             foreach (var neighbor in neighbors)
                 if (_collider.Overlaps(neighbor))
                 {

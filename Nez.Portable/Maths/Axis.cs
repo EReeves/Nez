@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Maths
 {
     public enum Axis
     {

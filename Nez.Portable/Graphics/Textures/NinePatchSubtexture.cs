@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez.Textures
+namespace Nez.Graphics.Textures
 {
     public class NinePatchSubtexture : Subtexture
     {

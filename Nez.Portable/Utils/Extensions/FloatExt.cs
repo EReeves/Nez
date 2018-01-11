@@ -1,4 +1,6 @@
-﻿namespace Nez
+﻿using Nez.Maths;
+
+namespace Nez.Utils.Extensions
 {
     public static class FloatExt
     {

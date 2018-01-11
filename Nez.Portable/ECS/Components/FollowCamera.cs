@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.ECS.Components
 {
 	/// <summary>
 	///     basic follow camera. LockOn mode uses no deadzone and just centers the camera on the target. CameraWindow mode
@@ -123,7 +127,7 @@ namespace Nez
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             if (_cameraStyle == CameraStyle.LockOn)
                 graphics.Batcher.DrawHollowRect(_worldSpaceDeadzone.X - 5, _worldSpaceDeadzone.Y - 5,

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Nez.Debug;
 
-namespace Nez
+namespace Nez.Utils.Collections
 {
 	/// <summary>
 	///     very basic wrapper around an array that auto-expands it when it reaches capacity. Note that when iterating it
@@ -67,7 +68,7 @@ namespace Nez
 	    public void Add(T item)
         {
             if (Length == Buffer.Length)
-                Array.Resize(ref Buffer, Math.Max(Buffer.Length << 1, 10));
+                Array.Resize(ref Buffer, System.Math.Max(Buffer.Length << 1, 10));
             Buffer[Length++] = item;
         }
 
@@ -137,7 +138,7 @@ namespace Nez
 	    public void EnsureCapacity(int additionalItemCount = 1)
         {
             if (Length + additionalItemCount >= Buffer.Length)
-                Array.Resize(ref Buffer, Math.Max(Buffer.Length << 1, Length + additionalItemCount));
+                Array.Resize(ref Buffer, System.Math.Max(Buffer.Length << 1, Length + additionalItemCount));
         }
 
 

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Nez.UISkinImporter
+namespace Nez.PipelineImporter.UISkin
 {
 	class JsonDictionaryConverter : CustomCreationConverter<IDictionary<string, object>>
 	{

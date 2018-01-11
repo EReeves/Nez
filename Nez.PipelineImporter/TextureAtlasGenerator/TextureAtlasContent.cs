@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 
-
-namespace Nez.TextureAtlasGenerator
+namespace Nez.PipelineImporter.TextureAtlasGenerator
 {
 	/// <summary>
 	/// Build-time type used to hold the output data from the SpriteSheetProcessor.

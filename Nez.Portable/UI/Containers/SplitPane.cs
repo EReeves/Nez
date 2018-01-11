@@ -1,7 +1,11 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.Graphics;
+using Nez.Maths;
+using Nez.UI.Base;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Containers
 {
     public class SplitPane : Group, IInputListener
     {
@@ -55,7 +59,7 @@ namespace Nez.UI
                     : (_secondWidget is ILayout ? ((ILayout) _secondWidget).PreferredWidth : _secondWidget.Width);
 
                 if (_vertical)
-                    return Math.Max(first, second);
+                    return System.Math.Max(first, second);
                 return first + _style.Handle.MinWidth + second;
             }
         }
@@ -72,7 +76,7 @@ namespace Nez.UI
                     : (_secondWidget is ILayout ? ((ILayout) _secondWidget).PreferredHeight : _secondWidget.Height);
 
                 if (!_vertical)
-                    return Math.Max(first, second);
+                    return System.Math.Max(first, second);
                 return first + _style.Handle.MinHeight + second;
             }
         }
@@ -107,7 +111,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
 
@@ -204,8 +208,8 @@ namespace Nez.UI
                 var availHeight = Height - _style.Handle.MinHeight;
                 var dragY = _handlePosition.Y + delta;
                 _handlePosition.Y = dragY;
-                dragY = Math.Max(0, dragY);
-                dragY = Math.Min(availHeight, dragY);
+                dragY = System.Math.Max(0, dragY);
+                dragY = System.Math.Min(availHeight, dragY);
                 _splitAmount = 1 - dragY / availHeight;
                 _splitAmount = Mathf.Clamp(_splitAmount, _minAmount, _maxAmount);
 
@@ -217,8 +221,8 @@ namespace Nez.UI
                 var availWidth = Width - _style.Handle.MinWidth;
                 var dragX = _handlePosition.X + delta;
                 _handlePosition.X = dragX;
-                dragX = Math.Max(0, dragX);
-                dragX = Math.Min(availWidth, dragX);
+                dragX = System.Math.Max(0, dragX);
+                dragX = System.Math.Min(availWidth, dragX);
                 _splitAmount = dragX / availWidth;
                 _splitAmount = Mathf.Clamp(_splitAmount, _minAmount, _maxAmount);
 

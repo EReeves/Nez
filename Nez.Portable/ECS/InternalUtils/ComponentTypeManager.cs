@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS.InternalUtils
 {
     public static class ComponentTypeManager
     {

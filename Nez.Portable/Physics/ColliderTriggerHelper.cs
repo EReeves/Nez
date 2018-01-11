@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using Nez.ECS;
+using Nez.ECS.Components.Physics;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Physics
 {
 	/// <summary>
 	///     helper class used by the Movers to manage trigger colliders interactions and calling ITriggerListeners.

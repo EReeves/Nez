@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Nez.Maths;
+using Nez.UI.Base;
 
-namespace Nez.UI
+namespace Nez.UI.Containers
 {
 	/// <summary>
 	///     A group that lays out its children on top of each other in a single column. This can be easier than using {@link
@@ -74,12 +75,12 @@ namespace Nez.UI
                 if (child is ILayout)
                 {
                     var layout = (ILayout) child;
-                    _prefWidth = Math.Max(_prefWidth, layout.PreferredWidth);
+                    _prefWidth = System.Math.Max(_prefWidth, layout.PreferredWidth);
                     _prefHeight += layout.PreferredHeight;
                 }
                 else
                 {
-                    _prefWidth = Math.Max(_prefWidth, child.Width);
+                    _prefWidth = System.Math.Max(_prefWidth, child.Width);
                     _prefHeight += child.Height;
                 }
             }
@@ -110,8 +111,8 @@ namespace Nez.UI
                     if (_fill > 0)
                         width = groupWidth * _fill;
                     else
-                        width = Math.Min(layout.PreferredWidth, groupWidth);
-                    width = Math.Max(width, layout.MinWidth);
+                        width = System.Math.Min(layout.PreferredWidth, groupWidth);
+                    width = System.Math.Max(width, layout.MinWidth);
 
                     if (layout.MaxWidth > 0 && width > layout.MaxWidth)
                         width = layout.MaxWidth;

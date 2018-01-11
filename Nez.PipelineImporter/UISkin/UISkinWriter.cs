@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
+using Nez.PipelineRuntime.UISkin;
 using Nez.UI;
-using Microsoft.Xna.Framework.Content.Pipeline;
 
-
-namespace Nez.UISkinImporter
+namespace Nez.PipelineImporter.UISkin
 {
 	[ContentTypeWriter]
 	public class UISkinWriter : ContentTypeWriter<UiSkinConfig>
@@ -55,13 +54,13 @@ namespace Nez.UISkinImporter
 
 		public override string GetRuntimeType( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.UI.UiSkinConfig ).AssemblyQualifiedName;
+			return typeof( UiSkinConfig ).AssemblyQualifiedName;
 		}
 
 
 		public override string GetRuntimeReader( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.UI.UiSkinConfigReader ).AssemblyQualifiedName;
+			return typeof( UiSkinConfigReader ).AssemblyQualifiedName;
 		}
 	}
 }

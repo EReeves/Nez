@@ -1,7 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     concrete implementation of IRenderable. Contains convenience
@@ -179,21 +183,21 @@ namespace Nez
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
 	    /// <param name="camera">Camera.</param>
-	    public abstract void Render(Graphics graphics, Camera camera);
+	    public abstract void Render(Graphics.Graphics graphics, Camera camera);
 
 
 	    /// <summary>
 	    ///     renders the bounds only if there is no collider. Always renders a square on the origin.
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
-	    public override void DebugRender(Graphics graphics)
+	    public override void DebugRender(Graphics.Graphics graphics)
         {
             // if we have no collider draw our bounds
             if (Entity.GetComponent<Collider>() == null)
-                graphics.Batcher.DrawHollowRect(Bounds, Debug.Colors.RenderableBounds);
+                graphics.Batcher.DrawHollowRect(Bounds, Debug.Debug.Colors.RenderableBounds);
 
             // draw a square for our pivot/origin
-            graphics.Batcher.DrawPixel(Entity.Transform.Position + localOffset, Debug.Colors.RenderableCenter, 4);
+            graphics.Batcher.DrawPixel(Entity.Transform.Position + localOffset, Debug.Debug.Colors.RenderableCenter, 4);
         }
 
 

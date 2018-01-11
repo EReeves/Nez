@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.Physics
 {
 	/// <summary>
 	///     while technically not a ray (rays are just start and direction) it does double duty as both a line and a ray.

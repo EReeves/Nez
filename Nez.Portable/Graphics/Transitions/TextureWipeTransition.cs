@@ -2,9 +2,11 @@
 using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Tweens;
+using Nez.ECS;
+using Nez.Utils;
+using Nez.Utils.Tweens.Easing;
 
-namespace Nez
+namespace Nez.Graphics.Transitions
 {
 	/// <summary>
 	///     uses a texture (transitionTexture) to control a wipe animation. the blue channel of the texture determines if color

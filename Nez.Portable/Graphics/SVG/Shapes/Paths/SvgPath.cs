@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
-using Nez.Splines;
+using Nez.Debug;
+using Nez.Maths;
+using Nez.Utils;
+using Nez.Utils.Extensions;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes.Paths
 {
 	/// <summary>
 	///     representation of a path element. Note that the best way to get points from the path is to use the

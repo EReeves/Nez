@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Nez.Utils.Collections;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.Dijkstra
 {
 	/// <summary>
 	///     calculates paths given an IWeightedGraph and start/goal positions

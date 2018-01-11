@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS.InternalUtils
 {
     public class Matcher
     {

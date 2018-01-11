@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework;
 
-
-namespace Nez.PipelineImporter
+namespace Nez.PipelineImporter.Common
 {
 	public static class PixelBitmapContentExt
 	{

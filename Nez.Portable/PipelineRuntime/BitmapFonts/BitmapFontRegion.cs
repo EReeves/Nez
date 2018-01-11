@@ -1,6 +1,6 @@
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez.BitmapFonts
+namespace Nez
 {
     public class BitmapFontRegion
     {

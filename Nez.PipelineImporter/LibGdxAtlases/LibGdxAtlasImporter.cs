@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Xml.Serialization;
-using Microsoft.Xna.Framework.Content.Pipeline;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Microsoft.Xna.Framework.Content.Pipeline;
 
-
-namespace Nez.LibGdxAtlases
+namespace Nez.PipelineImporter.LibGdxAtlases
 {
 	[ContentImporter( ".atlas", DefaultProcessor = "LibGdxAtlasProcessor", DisplayName = "libGDX Atlas Importer" )]
 	public class LibGdxAtlasImporter : ContentImporter<LibGdxAtlasFile>

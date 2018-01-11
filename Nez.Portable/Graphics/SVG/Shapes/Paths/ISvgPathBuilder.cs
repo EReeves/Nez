@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes.Paths
 {
 	/// <summary>
 	///     dummy interface used by SvgPath.getTransformedDrawingPoints to workaround PCL not having System.Drawing

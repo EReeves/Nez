@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez
+namespace Nez.ECS.Systems
 {
 	/// <summary>
 	///     A basic processing system that doesn't rely on entities.

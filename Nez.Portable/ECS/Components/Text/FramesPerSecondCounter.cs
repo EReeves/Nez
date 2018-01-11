@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
-using Nez.Sprites;
+using Nez;
+using Nez.ECS.Components.Renderables;
+using Nez.ECS.Components.Renderables.Sprites;
+using Nez.Graphics.Batcher;
+using Nez.Utils;
+using Nez.Utils.Fonts;
 
-namespace Nez
+namespace Nez.ECS.Components.Text
 {
     public class FramesPerSecondCounter : Text, IUpdatable
     {
@@ -143,7 +147,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             // we override render and use position instead of entityPosition. this keeps the text in place even if the entity moves
             BatcherIFontExt.DrawString(graphics.Batcher, Font, (string) text, ((RenderableComponent) this).LocalOffset, Color, Entity.Transform.Rotation, ((Sprite) this).Origin,
@@ -151,7 +155,7 @@ namespace Nez
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             // due to the override of position in render we have to do the same here
             var rect = Bounds;

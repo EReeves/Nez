@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing
 {
 	/// <summary>
 	///     Post Processing step for rendering actions after everthing done.

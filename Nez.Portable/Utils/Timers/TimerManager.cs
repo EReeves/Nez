@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nez.Timers
+namespace Nez.Utils.Timers
 {
     public class TimerManager : IUpdatableManager
     {

@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.UtilityAI
+﻿using Nez.AI.UtilityAI.Actions;
+
+namespace Nez.AI.UtilityAI.Considerations
 {
 	/// <summary>
 	///     always returns a fixed score. Serves double duty as a default Consideration.

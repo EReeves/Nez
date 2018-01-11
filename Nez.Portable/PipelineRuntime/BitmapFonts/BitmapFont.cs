@@ -2,8 +2,14 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez;
+using Nez.Utils.Extensions;
+using Nez.Utils.Fonts;
 
-namespace Nez.BitmapFonts
+// ReSharper disable once CheckNamespace
+namespace Nez
 {
     public class BitmapFont : IFont
     {
@@ -65,7 +71,7 @@ namespace Nez.BitmapFonts
             set
             {
                 if (!_characterMap.TryGetValue(value, out DefaultCharacterRegion))
-                    Debug.Error("BitmapFont does not contain a region for the default character being set: {0}", value);
+                    Debug.Debug.Error("BitmapFont does not contain a region for the default character being set: {0}", value);
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace Nez.Particles
+﻿namespace Nez.ECS.Components.Renderables.Particles
 {
     public enum ParticleEmitterType
     {

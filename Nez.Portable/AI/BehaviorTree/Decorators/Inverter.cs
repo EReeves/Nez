@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿using Nez.Debug;
+
+namespace Nez.AI.BehaviorTree.Decorators
 {
 	/// <summary>
 	///     inverts the result of the child node

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-
-namespace Nez.Overlap2D.Runtime
+namespace Nez.PipelineImporter.Overlap2D.VOs
 {
 	public class SceneVO
 	{

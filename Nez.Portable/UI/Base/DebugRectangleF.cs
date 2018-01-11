@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Maths;
 
-namespace Nez.UI
+namespace Nez.UI.Base
 {
     public struct DebugRectangleF
     {

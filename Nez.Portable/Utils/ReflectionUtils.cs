@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Nez
+namespace Nez.Utils
 {
 	/// <summary>
 	///     helper class to fetch property delegates

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Nez.ECS.InternalUtils;
 
-namespace Nez
+namespace Nez.ECS.Systems
 {
 	/// <summary>
 	///     Basic entity processing system. Use this as the base for processing many entities with specific components

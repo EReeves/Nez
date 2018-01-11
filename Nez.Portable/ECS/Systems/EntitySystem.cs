@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Nez.ECS.InternalUtils;
 
-namespace Nez
+namespace Nez.ECS.Systems
 {
     public class EntitySystem
     {
@@ -12,7 +13,7 @@ namespace Nez
 
         public EntitySystem()
         {
-            matcher = Nez.Matcher.Empty();
+            matcher = Matcher.Empty();
         }
 
 

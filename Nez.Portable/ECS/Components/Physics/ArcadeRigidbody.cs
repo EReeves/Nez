@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
+using Nez.Physics.Shapes;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS.Components.Physics
 {
 	/// <summary>
 	///     Note that this is not a full, multi-iteration physics system! This can be used for simple, arcade style physics.
@@ -88,13 +92,13 @@ namespace Nez
             }
 
             if (ShouldUseGravity)
-                Velocity += Physics.Gravity * Time.DeltaTime;
+                Velocity += Nez.Physics.Physics.Gravity * Time.DeltaTime;
 
             Entity.Transform.Position += Velocity * Time.DeltaTime;
 
             CollisionResult collisionResult;
             // fetch anything that we might collide with at our new position
-            var neighbors = Physics.BoxcastBroadphaseExcludingSelf(_collider, _collider.CollidesWithLayers);
+            var neighbors = Nez.Physics.Physics.BoxcastBroadphaseExcludingSelf(_collider, _collider.CollidesWithLayers);
             foreach (var neighbor in neighbors)
                 if (_collider.CollidesWith(neighbor, out collisionResult))
                 {

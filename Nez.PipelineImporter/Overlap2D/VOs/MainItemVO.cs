@@ -1,9 +1,9 @@
-﻿using System;
+﻿using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using System.Text.RegularExpressions;
+using Nez.Maths;
+using Nez.PipelineImporter.Overlap2D.VOs.NotImplemented;
 
-
-namespace Nez.Overlap2D.Runtime
+namespace Nez.PipelineImporter.Overlap2D.VOs
 {
 	public class MainItemVO
 	{

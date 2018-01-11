@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.Tiled;
+using Nez.PipelineRuntime.Tiled;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.BreadthFirst
 {
 	/// <summary>
 	///     basic unweighted grid graph for use with the BreadthFirstPathfinder

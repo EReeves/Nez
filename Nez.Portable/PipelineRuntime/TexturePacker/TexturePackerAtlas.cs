@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Sprites;
-using Nez.Textures;
+using Nez.Debug;
+using Nez.ECS.Components.Renderables.Sprites;
+using Nez.Graphics.Textures;
 
-namespace Nez.TextureAtlases
+namespace Nez.PipelineRuntime.TexturePacker
 {
     public class TexturePackerAtlas
     {

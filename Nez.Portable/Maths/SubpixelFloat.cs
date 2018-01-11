@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Maths
 {
 	/// <summary>
 	///     simple helper class that manages a float value. It stores the value until the total accumulated is greater than 1.

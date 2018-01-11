@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.UtilityAI
+﻿using Nez.AI.UtilityAI.Considerations;
+
+namespace Nez.AI.UtilityAI.Reasoners
 {
 	/// <summary>
 	///     The first Consideration to score above the score of the Default Consideration is selected

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public class CrosshatchEffect : Effect
     {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Utils.Extensions;
 
-namespace Nez.Textures
+namespace Nez.Graphics.Textures
 {
 	/// <summary>
 	///     various utilties for creating textures on the fly. These can be pretty heavy on the CPU so it's best to not try to

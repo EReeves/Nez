@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public class SpriteBlinkEffect : Effect
     {

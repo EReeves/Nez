@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez
+namespace Nez.Debug.Inspector.Attributes
 {
 	/// <summary>
 	///     Range attribute.

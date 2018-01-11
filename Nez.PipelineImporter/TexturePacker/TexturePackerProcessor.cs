@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework.Content.Pipeline;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using Microsoft.Xna.Framework.Content.Pipeline;
 
-
-namespace Nez.TexturePackerImporter
+namespace Nez.PipelineImporter.TexturePacker
 {
 	[ContentProcessor( DisplayName = "TexturePacker Processor" )]
 	public class TexturePackerProcessor : ContentProcessor<TexturePackerFile, TexturePackerFile>

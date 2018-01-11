@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
 	/// <summary>
 	///     retro palette swap/cycle effect. If cycleSpeed is 0 (the default) this works as a plain old palette swap. It should

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
     public class TiledObject
     {

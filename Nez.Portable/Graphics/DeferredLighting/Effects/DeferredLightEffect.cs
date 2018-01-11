@@ -1,8 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS;
+using Nez.Graphics.DeferredLighting.Lights;
+using Nez.Graphics.Effects;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Effects
 {
     public class DeferredLightEffect : Effect
     {
@@ -297,7 +299,7 @@ namespace Nez.DeferredLighting
 	    public void SetSpotLightDirection(float degrees)
         {
             var radians = MathHelper.ToRadians(degrees);
-            var dir = new Vector2((float) Math.Cos(radians), (float) Math.Sin(radians));
+            var dir = new Vector2((float) System.Math.Cos(radians), (float) System.Math.Sin(radians));
             SetSpotLightDirection(dir);
         }
 

@@ -1,9 +1,9 @@
 using System.IO;
-using Microsoft.Xna.Framework.Content.Pipeline;
 using System.Xml.Serialization;
+using Microsoft.Xna.Framework.Content.Pipeline;
 
-
-namespace Nez.BitmapFontImporter
+// ReSharper disable once CheckNamespace
+namespace Nez
 {
 	[ContentImporter( ".fnt", DefaultProcessor = "BitmapFontProcessor", DisplayName = "BMFont Importer" )]
 	public class BitmapFontImporter : ContentImporter<BitmapFontFile>

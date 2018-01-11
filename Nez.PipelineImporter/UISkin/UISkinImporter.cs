@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.Xna.Framework.Content.Pipeline;
-using Nez.UI;
+﻿using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework.Content.Pipeline;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
-
-namespace Nez.UISkinImporter
+namespace Nez.PipelineImporter.UISkin
 {
 	[ContentImporter( ".uiskin", DefaultProcessor = "UISkinProcessor", DisplayName = "UISkin Importer" )]
 	public class UISkinImporter : ContentImporter<IDictionary<string,object>>

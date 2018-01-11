@@ -1,4 +1,4 @@
-﻿namespace Nez.Shadows
+﻿namespace Nez.ECS.Components.Renderables.PolygonLight
 {
 	/// <summary>
 	///     Represents an occluding line segment in the visibility mesh

@@ -1,4 +1,4 @@
-﻿namespace Nez.Spatial
+﻿namespace Nez.Physics.QuadTree
 {
 	/// <summary>
 	///     Used internally to attach an Owner to each object stored in the QuadTree

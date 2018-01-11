@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez
+namespace Nez.ECS.Systems
 {
     public abstract class PassiveSystem : EntitySystem
     {

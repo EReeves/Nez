@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Graphics.Batcher;
+using Nez.Utils;
+using Nez.Utils.Fonts;
 
-namespace Nez
+namespace Nez.Debug
 {
     internal class DebugDrawItem
     {
@@ -88,7 +91,7 @@ namespace Nez
 
         public DebugDrawItem(string text, Color color, float duration, float scale)
         {
-            BitmapFont = Graphics.Instance.BitmapFont;
+            BitmapFont = Graphics.Graphics.Instance.BitmapFont;
             this.Text = text;
             this.Color = color;
             this.Scale = scale;
@@ -100,7 +103,7 @@ namespace Nez
 	    /// <summary>
 	    ///     returns true if we are done with this debug draw item
 	    /// </summary>
-	    public bool Draw(Graphics graphics)
+	    public bool Draw(Graphics.Graphics graphics)
         {
             switch (DrawType)
             {

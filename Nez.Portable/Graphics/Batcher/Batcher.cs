@@ -6,9 +6,12 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Debug;
+using Nez.Graphics.Textures;
+using Nez.Maths;
+using SpriteEffect = Nez.Graphics.Effects.SpriteEffect;
 
-namespace Nez
+namespace Nez.Graphics.Batcher
 {
     public class Batcher : GraphicsResource
     {

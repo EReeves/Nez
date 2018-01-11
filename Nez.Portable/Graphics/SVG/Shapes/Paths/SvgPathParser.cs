@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
+using Nez.Utils.Extensions;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes.Paths
 {
     public static class SvgPathParser
     {
@@ -39,7 +40,7 @@ namespace Nez.Svg
             }
             catch (Exception exc)
             {
-                Debug.Error("Error parsing path \"{0}\": {1}", path, exc.Message);
+                Debug.Debug.Error("Error parsing path \"{0}\": {1}", path, exc.Message);
             }
 
             return segments;
@@ -254,8 +255,8 @@ namespace Nez.Svg
         private static Vector2 Reflect(Vector2 point, Vector2 mirror)
         {
             float x, y, dx, dy;
-            dx = Math.Abs(mirror.X - point.X);
-            dy = Math.Abs(mirror.Y - point.Y);
+            dx = System.Math.Abs(mirror.X - point.X);
+            dy = System.Math.Abs(mirror.Y - point.Y);
 
             if (mirror.X >= point.X)
                 x = mirror.X + dx;

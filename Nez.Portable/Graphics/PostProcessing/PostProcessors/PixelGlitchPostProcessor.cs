@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Effects;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
 	/// <summary>
 	///     glitch effect where the screen is divided into rows verticalSize high. Each row is shifted horizonalAmount left or

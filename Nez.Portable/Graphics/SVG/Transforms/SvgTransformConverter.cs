@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Transforms
 {
 	/// <summary>
 	///     helpers for converting the transform string into SvgTransform objects

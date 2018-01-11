@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing
 {
 	/// <summary>
 	///     helper subclass for strongly typed Effects loaded from EffectResource. The effect will automatically be unloaded

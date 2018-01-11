@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez.Analysis
+namespace Nez.Utils.Analysis
 {
 	/// <summary>
 	///     Stopwatch is used to measure the general performance of Silverlight functionality. Silverlight

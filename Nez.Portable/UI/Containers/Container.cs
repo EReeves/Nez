@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.UI.Base;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Containers
 {
 	/// <summary>
 	///     A group with a single child that sizes and positions the child using constraints. This provides layout similar to a
@@ -39,7 +42,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
             if (Transform)
@@ -72,7 +75,7 @@ namespace Nez.UI
 	    /// <param name="parentAlpha">Parent alpha.</param>
 	    /// <param name="x">The x coordinate.</param>
 	    /// <param name="y">The y coordinate.</param>
-	    protected void DrawBackground(Graphics graphics, float parentAlpha, float x, float y)
+	    protected void DrawBackground(Graphics.Graphics graphics, float parentAlpha, float x, float y)
         {
             if (_background == null)
                 return;
@@ -139,7 +142,7 @@ namespace Nez.UI
             if (_fillX > 0)
                 width = containerWidth * _fillX;
             else
-                width = Math.Min(prefWidth, containerWidth);
+                width = System.Math.Min(prefWidth, containerWidth);
             if (width < minWidth)
                 width = minWidth;
             if (maxWidth > 0 && width > maxWidth)
@@ -149,7 +152,7 @@ namespace Nez.UI
             if (_fillY > 0)
                 height = containerHeight * _fillY;
             else
-                height = Math.Min(prefHeight, containerHeight);
+                height = System.Math.Min(prefHeight, containerHeight);
 
             if (height < minHeight)
                 height = minHeight;
@@ -886,8 +889,8 @@ namespace Nez.UI
         {
             var v = _prefWidthValue.Get(_element);
             if (_background != null)
-                v = Math.Max(v, _background.MinWidth);
-            return Math.Max(GetMinWidth(), v + _padLeft.Get(this) + _padRight.Get(this));
+                v = System.Math.Max(v, _background.MinWidth);
+            return System.Math.Max(GetMinWidth(), v + _padLeft.Get(this) + _padRight.Get(this));
         }
 
 
@@ -901,8 +904,8 @@ namespace Nez.UI
         {
             var v = _prefHeightValue.Get(_element);
             if (_background != null)
-                v = Math.Max(v, _background.MinHeight);
-            return Math.Max(GetMinHeight(), v + _padTop.Get(this) + _padBottom.Get(this));
+                v = System.Math.Max(v, _background.MinHeight);
+            return System.Math.Max(GetMinHeight(), v + _padTop.Get(this) + _padBottom.Get(this));
         }
 
 
@@ -1080,7 +1083,7 @@ namespace Nez.UI
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             Validate();
             if (Transform)

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     Renders a trail behind a moving object
@@ -230,7 +232,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             CalculateVertices();
             _basicEffect.Projection = camera.ProjectionMatrix;

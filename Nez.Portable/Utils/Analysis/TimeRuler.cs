@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Microsoft.Xna.Framework;
-using Nez.Console;
+using Nez.Graphics.Batcher;
+using Nez.Utils.DebugConsole;
+using Nez.Utils.Fonts;
 
-namespace Nez.Analysis
+namespace Nez.Utils.Analysis
 {
 #if DEBUG
 
@@ -266,8 +268,8 @@ namespace Nez.Analysis
         private static void ToggleTimeRuler()
         {
             Instance.ShowLog = !Instance.ShowLog;
-            DebugConsole.Instance.Log("TimeRuler enabled: " + (Instance.ShowLog ? "yes" : "no"));
-            DebugConsole.Instance.IsOpen = false;
+            DebugConsole.DebugConsole.Instance.Log("TimeRuler enabled: " + (Instance.ShowLog ? "yes" : "no"));
+            DebugConsole.DebugConsole.Instance.IsOpen = false;
         }
 
         #endregion
@@ -338,8 +340,8 @@ namespace Nez.Analysis
                         else
                         {
                             // Process after first frame.
-                            m.Logs[barIdx].Min = Math.Min(m.Logs[barIdx].Min, duration);
-                            m.Logs[barIdx].Max = Math.Min(m.Logs[barIdx].Max, duration);
+                            m.Logs[barIdx].Min = System.Math.Min(m.Logs[barIdx].Min, duration);
+                            m.Logs[barIdx].Max = System.Math.Min(m.Logs[barIdx].Max, duration);
                             m.Logs[barIdx].Avg += duration;
                             m.Logs[barIdx].Avg *= 0.5f;
 
@@ -545,8 +547,8 @@ namespace Nez.Analysis
                 return;
 
             // Gets Batcher, SpriteFont, and WhiteTexture from Graphics.
-            var batcher = Graphics.Instance.Batcher;
-            var font = Graphics.Instance.BitmapFont;
+            var batcher = Graphics.Graphics.Instance.Batcher;
+            var font = Graphics.Graphics.Instance.BitmapFont;
 
             // Adjust size and position based of number of bars we should draw.
             var height = 0;
@@ -555,7 +557,7 @@ namespace Nez.Analysis
                 if (bar.MarkCount > 0)
                 {
                     height += BarHeight + BarPadding * 2;
-                    maxTime = Math.Max(maxTime, bar.Markers[bar.MarkCount - 1].EndTime);
+                    maxTime = System.Math.Max(maxTime, bar.Markers[bar.MarkCount - 1].EndTime);
                 }
 
             // Auto display frame adjustment.
@@ -565,14 +567,14 @@ namespace Nez.Analysis
             var sampleSpan = _sampleFrames * frameSpan;
 
             if (maxTime > sampleSpan)
-                _frameAdjust = Math.Max(0, _frameAdjust) + 1;
+                _frameAdjust = System.Math.Max(0, _frameAdjust) + 1;
             else
-                _frameAdjust = Math.Min(0, _frameAdjust) - 1;
+                _frameAdjust = System.Math.Min(0, _frameAdjust) - 1;
 
-            if (Math.Abs(_frameAdjust) > AutoAdjustDelay)
+            if (System.Math.Abs(_frameAdjust) > AutoAdjustDelay)
             {
-                _sampleFrames = Math.Min(MaxSampleFrames, _sampleFrames);
-                _sampleFrames = Math.Max(TargetSampleFrames, (int) (maxTime / frameSpan) + 1);
+                _sampleFrames = System.Math.Min(MaxSampleFrames, _sampleFrames);
+                _sampleFrames = System.Math.Max(TargetSampleFrames, (int) (maxTime / frameSpan) + 1);
 
                 _frameAdjust = 0;
             }
@@ -605,7 +607,7 @@ namespace Nez.Analysis
                         var sx = (int) (position.X + bt * msToPs);
                         var ex = (int) (position.X + et * msToPs);
                         rc.X = sx;
-                        rc.Width = Math.Max(ex - sx, 1);
+                        rc.Width = System.Math.Max(ex - sx, 1);
 
                         batcher.DrawRect(rc, bar.Markers[j].Color);
                     }

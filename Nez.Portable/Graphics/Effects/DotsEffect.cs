@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
     public class DotsEffect : Effect
     {

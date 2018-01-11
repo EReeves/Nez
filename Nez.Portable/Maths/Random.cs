@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.Maths
 {
     public static class Random
     {

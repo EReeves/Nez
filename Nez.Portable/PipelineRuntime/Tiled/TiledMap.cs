@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
     public class TiledMap
     {

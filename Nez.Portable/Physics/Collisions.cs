@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.Physics
 {
     public static class Collisions
     {

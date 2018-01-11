@@ -1,12 +1,14 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-#if !FNA
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
+using Nez.Debug;
+using Nez.Maths;
+using Nez.Utils.Extensions;
+#if !FNA
 
 #endif
 
 
-namespace Nez
+namespace Nez.ECS
 {
     public class Camera : Component
     {
@@ -308,7 +310,7 @@ namespace Nez
             get
             {
                 var targetHeight = Core.GraphicsDevice.Viewport.Height / _zoom;
-                var fov = (float) Math.Atan(targetHeight / (2f * PositionZ3D)) * 2f;
+                var fov = (float) System.Math.Atan(targetHeight / (2f * PositionZ3D)) * 2f;
                 return Matrix.CreatePerspectiveFieldOfView(fov, Core.GraphicsDevice.Viewport.AspectRatio,
                     NearClipPlane3D, FarClipPlane3D);
             }
@@ -528,7 +530,7 @@ namespace Nez
 	    /// <returns>The to world point.</returns>
 	    public Vector2 MouseToWorldPoint()
         {
-            return ScreenToWorldPoint(Input.MousePosition);
+            return ScreenToWorldPoint(Input.Input.MousePosition);
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Maths;
 
-namespace Nez.PhysicsShapes
+namespace Nez.Physics.Shapes.ShapeCollisions
 {
     public static partial class ShapeCollisions
     {

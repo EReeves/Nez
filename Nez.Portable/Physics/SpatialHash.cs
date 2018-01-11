@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+using Nez.Debug;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
+using Nez.Physics.Shapes;
+using Nez.Utils.Extensions;
 
-namespace Nez.Spatial
+namespace Nez.Physics
 {
     public class SpatialHash
     {
@@ -188,14 +192,14 @@ namespace Nez.Spatial
         private void DebugDrawCellDetails(int x, int y, int cellCount, float secondsToDisplay = 0.5f,
             float textScale = 1f)
         {
-            Debug.DrawHollowRect(new Rectangle(x * _cellSize, y * _cellSize, _cellSize, _cellSize), Color.Red,
+            Debug.Debug.DrawHollowRect(new Rectangle(x * _cellSize, y * _cellSize, _cellSize, _cellSize), Color.Red,
                 secondsToDisplay);
 
             if (cellCount > 0)
             {
                 var textPosition = new Vector2(x * (float) _cellSize + 0.5f * _cellSize,
                     y * (float) _cellSize + 0.5f * _cellSize);
-                Debug.DrawText(Graphics.Instance.BitmapFont, cellCount.ToString(), textPosition, Color.DarkGreen,
+                Debug.Debug.DrawText(Graphics.Graphics.Instance.BitmapFont, cellCount.ToString(), textPosition, Color.DarkGreen,
                     secondsToDisplay, textScale);
             }
         }
@@ -276,8 +280,8 @@ namespace Nez.Spatial
             var intY = Mathf.FloorToInt(start.Y);
 
             // which way we go
-            var stepX = Math.Sign(ray.Direction.X);
-            var stepY = Math.Sign(ray.Direction.Y);
+            var stepX = System.Math.Sign(ray.Direction.X);
+            var stepY = System.Math.Sign(ray.Direction.Y);
 
             // we make sure that if we're on the same line or row we don't step 
             // in the unneeded direction

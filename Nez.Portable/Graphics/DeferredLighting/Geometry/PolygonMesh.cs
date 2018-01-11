@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Geometry
 {
 	/// <summary>
 	///     builds a Polygon from the passed in verts. Verts should be relative to 0,0 and contain the outer perimeter of the
@@ -118,7 +118,7 @@ namespace Nez.DeferredLighting
             for (var i = 0; i < vertCount; i++)
             {
                 var a = 2.0f * MathHelper.Pi * (i / (float) vertCount);
-                points[i] = new Vector2((float) Math.Cos(a) * radius, (float) Math.Sin(a) * radius);
+                points[i] = new Vector2((float) System.Math.Cos(a) * radius, (float) System.Math.Sin(a) * radius);
             }
 
             return points;

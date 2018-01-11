@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace Nez.UI
+namespace Nez.PipelineRuntime.UISkin
 {
     public class UiSkinConfigReader : ContentTypeReader<UiSkinConfig>
     {

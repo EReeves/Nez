@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez.PhysicsShapes.BETA
+namespace Nez.Physics.Shapes
 {
     public static class RealtimeCollisions
     {
@@ -36,12 +38,12 @@ namespace Nez.PhysicsShapes.BETA
 
             // if all 3 bits are set then point is in a vertex region
             if (m == 3)
-                Debug.Log("m == 3. corner {0}", Time.FrameCount);
+                Debug.Debug.Log("m == 3. corner {0}", Time.FrameCount);
 
             // if only one bit is set in m then point is in a face region
             if ((m & (m - 1)) == 0)
             {
-                Debug.DrawHollowBox(point, 4, Color.Black, 0.4f);
+                Debug.Debug.DrawHollowBox(point, 4, Color.Black, 0.4f);
                 // do nothing. time from the expanded rect intersection is the correct time
                 return true;
             }
@@ -108,7 +110,7 @@ namespace Nez.PhysicsShapes.BETA
             second.Radius += first.Radius;
 
             RaycastHit hit;
-            var result = ShapeCollisions.LineToCircle(first.Position, first.Position + movement, second, out hit);
+            var result = ShapeCollisions.ShapeCollisions.LineToCircle(first.Position, first.Position + movement, second, out hit);
             time = hit.Fraction;
 
             // undo the radius addition

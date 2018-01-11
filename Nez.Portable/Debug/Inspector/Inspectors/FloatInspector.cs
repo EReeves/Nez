@@ -1,7 +1,10 @@
-﻿using Nez.UI;
+﻿using Nez.Debug.Inspector.Attributes;
+using Nez.UI;
+using Nez.UI.Containers;
+using Nez.UI.Widgets;
 
 #if DEBUG
-namespace Nez
+namespace Nez.Debug.Inspector.Inspectors
 {
     public class FloatInspector : Inspector
     {

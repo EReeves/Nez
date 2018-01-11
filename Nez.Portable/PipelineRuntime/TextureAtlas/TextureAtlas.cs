@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.Sprites;
-using Nez.Textures;
+using Nez.ECS.Components.Renderables.Sprites;
+using Nez.Graphics.Textures;
+using Nez.Utils.Extensions;
 
-namespace Nez.TextureAtlases
+namespace Nez.PipelineRuntime.TextureAtlas
 {
 	/// <summary>
 	///     runtime component of the TextureAtlasGenerator. Stores the main Texture2D and all relevant metadata

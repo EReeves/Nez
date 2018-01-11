@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class SpriteBatchExt
     {
@@ -108,7 +109,7 @@ namespace Nez
         public static void DrawLineAngle(this SpriteBatch spriteBatch, Vector2 start, float angle, float length,
             Color color)
         {
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, start, Graphics.Instance.PixelTexture.SourceRect, color,
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, start, Graphics.Graphics.Instance.PixelTexture.SourceRect, color,
                 angle, Vector2.Zero, new Vector2(length, 1), SpriteEffects.None, 0);
         }
 
@@ -116,7 +117,7 @@ namespace Nez
         public static void DrawLineAngle(this SpriteBatch spriteBatch, Vector2 start, float angle, float length,
             Color color, float thickness)
         {
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, start, Graphics.Instance.PixelTexture.SourceRect, color,
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, start, Graphics.Graphics.Instance.PixelTexture.SourceRect, color,
                 angle, new Vector2(0f, 0.5f), new Vector2(length, thickness), SpriteEffects.None, 0);
         }
 
@@ -172,7 +173,7 @@ namespace Nez
             _tempRect.Y = (int) y;
             _tempRect.Width = (int) width;
             _tempRect.Height = (int) height;
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, _tempRect, Graphics.Instance.PixelTexture.SourceRect,
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, _tempRect, Graphics.Graphics.Instance.PixelTexture.SourceRect,
                 color);
         }
 
@@ -187,7 +188,7 @@ namespace Nez
         public static void DrawRect(this SpriteBatch spriteBatch, Rectangle rect, Color color)
         {
             _tempRect = rect;
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, rect, Graphics.Instance.PixelTexture.SourceRect, color);
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, rect, Graphics.Graphics.Instance.PixelTexture.SourceRect, color);
         }
 
         #endregion
@@ -203,24 +204,24 @@ namespace Nez
             _tempRect.Width = (int) width;
             _tempRect.Height = 1;
 
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, _tempRect, Graphics.Instance.PixelTexture.SourceRect,
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, _tempRect, Graphics.Graphics.Instance.PixelTexture.SourceRect,
                 color);
 
             _tempRect.Y += (int) height - 1;
 
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, _tempRect, Graphics.Instance.PixelTexture.SourceRect,
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, _tempRect, Graphics.Graphics.Instance.PixelTexture.SourceRect,
                 color);
 
             _tempRect.Y -= (int) height - 1;
             _tempRect.Width = 1;
             _tempRect.Height = (int) height;
 
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, _tempRect, Graphics.Instance.PixelTexture.SourceRect,
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, _tempRect, Graphics.Graphics.Instance.PixelTexture.SourceRect,
                 color);
 
             _tempRect.X += (int) width - 1;
 
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, _tempRect, Graphics.Instance.PixelTexture.SourceRect,
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, _tempRect, Graphics.Graphics.Instance.PixelTexture.SourceRect,
                 color);
         }
 
@@ -256,7 +257,7 @@ namespace Nez
 
         public static void DrawPixel(this SpriteBatch spriteBatch, Vector2 position, Color color, int size = 1)
         {
-            var sourceRect = Graphics.Instance.PixelTexture.SourceRect;
+            var sourceRect = Graphics.Graphics.Instance.PixelTexture.SourceRect;
             if (size != 1)
             {
                 position.X -= size * 0.5f;
@@ -264,7 +265,7 @@ namespace Nez
                 sourceRect.Width *= size;
                 sourceRect.Height *= size;
             }
-            spriteBatch.Draw(Graphics.Instance.PixelTexture, position, sourceRect, color);
+            spriteBatch.Draw(Graphics.Graphics.Instance.PixelTexture, position, sourceRect, color);
         }
 
         #endregion

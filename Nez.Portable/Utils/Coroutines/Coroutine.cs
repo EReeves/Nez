@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Utils.Coroutines
 {
 	/// <summary>
 	///     interface returned by startCoroutine which provides the ability to stop the coroutine mid-flight
@@ -28,7 +28,7 @@
 	    /// <param name="seconds">Seconds.</param>
 	    public static object WaitForSeconds(float seconds)
         {
-            return Nez.WaitForSeconds.Waiter.Wait(seconds);
+            return Coroutines.WaitForSeconds.Waiter.Wait(seconds);
         }
     }
 

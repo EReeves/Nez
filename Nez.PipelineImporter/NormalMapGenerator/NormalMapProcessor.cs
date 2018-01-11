@@ -1,14 +1,12 @@
-﻿using System;
-using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Processors;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+﻿using System.ComponentModel;
 using Microsoft.Xna.Framework;
-using Nez.PipelineImporter;
-using System.ComponentModel;
-using Nez.Textures;
+using Microsoft.Xna.Framework.Content.Pipeline;
+using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+using Microsoft.Xna.Framework.Content.Pipeline.Processors;
+using Nez.Graphics.Textures;
+using Nez.PipelineImporter.Common;
 
-
-namespace Nez.NormalMapGenerator
+namespace Nez.PipelineImporter.NormalMapGenerator
 {
 	[ContentProcessor( DisplayName = "Normal Map Generator" )]
 	public class NormalMapProcessor : TextureProcessor
@@ -23,29 +21,29 @@ namespace Nez.NormalMapGenerator
 
 		#region Processor properties
 
-		[DefaultValueAttribute( false )]
+		[DefaultValue( false )]
 		public virtual bool flattenImage { get; set; }
 
-		[DefaultValueAttribute( typeof( Color ), "255,255,255,255" )]
+		[DefaultValue( typeof( Color ), "255,255,255,255" )]
 		public Color opaqueColor { get; set; } = Color.White;
 
-		[DefaultValueAttribute( typeof( Color ), "0,0,0,255" )]
+		[DefaultValue( typeof( Color ), "0,0,0,255" )]
 		public Color transparentColor { get; set; } = Color.Black;
 
-		[DefaultValueAttribute( typeof( BlurType ), "BlurType.Grayscale" )]
+		[DefaultValue( typeof( BlurType ), "BlurType.Grayscale" )]
 		public BlurType blurType { get; set; } = BlurType.Grayscale;
 
 		public float blurDeviation { get; set; } = 0.5f;
 
-		[DefaultValueAttribute( typeof( TextureUtils.EdgeDetectionFilter ), "TextureUtils.EdgeDetectionFilter.Sobel" )]
+		[DefaultValue( typeof( TextureUtils.EdgeDetectionFilter ), "TextureUtils.EdgeDetectionFilter.Sobel" )]
 		public TextureUtils.EdgeDetectionFilter edgeDetectionFilter { get; set; }
 
 		public float normalStrength { get; set; } = 1f;
 
-		[DefaultValueAttribute( false )]
+		[DefaultValue( false )]
 		public bool invertX { get; set; }
 
-		[DefaultValueAttribute( false )]
+		[DefaultValue( false )]
 		public bool invertY { get; set; }
 
 		#endregion

@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Debug;
+using Nez.UI.Base;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class ImageTextButton : Button
     {
@@ -20,7 +23,7 @@ namespace Nez.UI
             _image.SetScaling(Scaling.Fit);
 
             _label = new Label(text, style.Font, style.FontColor);
-            _label.SetAlignment(UI.Align.Center);
+            _label.SetAlignment(Base.Align.Center);
 
             Add(_image);
             Add(_label);
@@ -79,7 +82,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             UpdateImage();
 
@@ -149,7 +152,7 @@ namespace Nez.UI
 
         public ImageTextButtonStyle()
         {
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
         }
 
 

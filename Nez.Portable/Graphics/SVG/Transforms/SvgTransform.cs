@@ -1,4 +1,6 @@
-﻿namespace Nez.Svg
+﻿using Nez.Maths;
+
+namespace Nez.Graphics.SVG.Transforms
 {
     public abstract class SvgTransform
     {

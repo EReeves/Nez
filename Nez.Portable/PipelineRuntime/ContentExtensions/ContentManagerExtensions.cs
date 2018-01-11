@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez.Pipeline.Content
+namespace Nez.PipelineRuntime.ContentExtensions
 {
     public static class ContentManagerExtensions
     {

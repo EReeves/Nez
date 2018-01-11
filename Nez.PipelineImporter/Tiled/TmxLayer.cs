@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
-namespace Nez.TiledMaps
+namespace Nez.PipelineImporter.Tiled
 {
 	[XmlInclude( typeof( TmxTileLayer ) )]
 	[XmlInclude( typeof( TmxImageLayer ) )]

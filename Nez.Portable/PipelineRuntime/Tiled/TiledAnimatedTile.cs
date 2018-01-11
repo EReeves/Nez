@@ -1,4 +1,7 @@
-﻿namespace Nez.Tiled
+﻿using Nez.Maths;
+using Nez.Utils;
+
+namespace Nez.PipelineRuntime.Tiled
 {
     public class TiledAnimatedTile : TiledTile
     {

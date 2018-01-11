@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Utils.Timers
 {
     public interface ITimer
     {

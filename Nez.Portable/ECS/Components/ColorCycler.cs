@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Renderables;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS.Components
 {
     public enum Colorchannels
     {

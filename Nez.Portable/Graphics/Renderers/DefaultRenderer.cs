@@ -1,4 +1,6 @@
-﻿namespace Nez
+﻿using Nez.ECS;
+
+namespace Nez.Graphics.Renderers
 {
     public class DefaultRenderer : Renderer
     {

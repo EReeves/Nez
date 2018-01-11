@@ -1,4 +1,4 @@
-﻿namespace System.Collections.Generic
+﻿namespace Nez.Utils.Collections
 {
     public class PriorityQueueNode
     {

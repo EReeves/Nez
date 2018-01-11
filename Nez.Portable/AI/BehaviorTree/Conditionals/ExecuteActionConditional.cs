@@ -1,6 +1,7 @@
 ﻿using System;
+using Nez.AI.BehaviorTree.Actions;
 
-namespace Nez.AI.BehaviorTrees
+namespace Nez.AI.BehaviorTree.Conditionals
 {
 	/// <summary>
 	///     wraps an ExecuteAction so that it can be used as a Conditional

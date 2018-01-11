@@ -7,8 +7,11 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS.Components.Renderables;
+using Nez.Utils;
+using Nez.Utils.Fonts;
 
-namespace Nez
+namespace Nez.ECS.Components.Text
 {
 	/// <summary>
 	///     MarkupText lets you set fonts, textures and conditionals and provide some XML text to render that uses them. You
@@ -36,7 +39,7 @@ namespace Nez
 
         public MarkupText()
         {
-            SetFont("default", Graphics.Instance.BitmapFont);
+            SetFont("default", Graphics.Graphics.Instance.BitmapFont);
         }
 
 
@@ -123,7 +126,7 @@ namespace Nez
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
 	    /// <param name="camera">Camera.</param>
-	    public override void Render(Graphics graphics, Camera camera)
+	    public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             if (_compiledMarkup == null)
                 return;
@@ -408,7 +411,7 @@ namespace Nez
             // figure out the max height for anything in the line
             for (var i = 0; i < lineBuffer.Count; i++)
             {
-                currentLineHeight = Math.Max(currentLineHeight, lineBuffer[i].Size.Y);
+                currentLineHeight = System.Math.Max(currentLineHeight, lineBuffer[i].Size.Y);
                 lineWidth += lineBuffer[i].Size.X;
             }
 
@@ -497,7 +500,7 @@ namespace Nez
     {
         Vector2 Size { get; }
         Vector2 Position { get; set; }
-        void Render(Graphics graphics, Vector2 offset);
+        void Render(Graphics.Graphics graphics, Vector2 offset);
     }
 
 
@@ -519,7 +522,7 @@ namespace Nez
         }
 
 
-        public void Render(Graphics graphics, Vector2 offset)
+        public void Render(Graphics.Graphics graphics, Vector2 offset)
         {
             var origin = new Vector2(0, Size.Y / (2 * _formatInstruction.Scale.Y));
             graphics.Batcher.DrawString(_formatInstruction.Font, _text, offset + Position, _formatInstruction.Color, 0,
@@ -548,7 +551,7 @@ namespace Nez
         }
 
 
-        public void Render(Graphics graphics, Vector2 offset)
+        public void Render(Graphics.Graphics graphics, Vector2 offset)
         {
             var origin = new Vector2(0, _image.Height / 2f);
             graphics.Batcher.Draw(_image, offset + Position, null, _color, 0, origin, _scale, SpriteEffects.None, 0);

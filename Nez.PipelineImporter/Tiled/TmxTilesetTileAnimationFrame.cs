@@ -1,8 +1,6 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
-
-namespace Nez.TiledMaps
+namespace Nez.PipelineImporter.Tiled
 {
 	[XmlRoot( ElementName = "frame" )]
 	public class TmxTilesetTileAnimationFrame

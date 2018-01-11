@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.Input
 {
     public class GamePadData
     {

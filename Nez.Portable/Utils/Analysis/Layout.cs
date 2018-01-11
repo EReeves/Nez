@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez.Analysis
+namespace Nez.Utils.Analysis
 {
 	/// <summary>
 	///     Alignment for layout.

@@ -1,7 +1,8 @@
 using System;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS;
 
-namespace Nez
+namespace Nez.Graphics
 {
 	/// <summary>
 	///     convenience subclass with a single property that casts the Effect for cleaner configuration

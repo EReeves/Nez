@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.BreadthFirst
 {
 	/// <summary>
 	///     basic implementation of an UnweightedGraph. All edges are cached. This type of graph is best suited for non-grid

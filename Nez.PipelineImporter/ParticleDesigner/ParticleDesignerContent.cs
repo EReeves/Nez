@@ -1,9 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline;
+﻿using Microsoft.Xna.Framework.Content.Pipeline;
 
-
-namespace Nez.ParticleDesignerImporter
+namespace Nez.PipelineImporter.ParticleDesigner
 {
 	public class ParticleDesignerContent
 	{

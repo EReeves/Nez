@@ -1,6 +1,7 @@
 ﻿using System;
+using Nez.ECS;
 
-namespace Nez
+namespace Nez.Graphics.Renderers
 {
 	/// <summary>
 	///     Renderer that renders using its own Camera which doesnt move.

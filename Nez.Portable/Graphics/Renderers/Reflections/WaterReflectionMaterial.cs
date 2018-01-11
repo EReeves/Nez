@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS;
+using Nez.Graphics.Effects;
 
-namespace Nez
+namespace Nez.Graphics.Renderers.Reflections
 {
 	/// <summary>
 	///     used by the WaterReflectionPlane

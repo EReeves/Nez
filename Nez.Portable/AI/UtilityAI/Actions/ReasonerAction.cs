@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.UtilityAI
+﻿using Nez.AI.UtilityAI.Reasoners;
+
+namespace Nez.AI.UtilityAI.Actions
 {
 	/// <summary>
 	///     Action that calls through to another Reasoner

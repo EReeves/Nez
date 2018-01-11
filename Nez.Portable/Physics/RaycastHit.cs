@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
 
-namespace Nez
+namespace Nez.Physics
 {
     public struct RaycastHit
     {

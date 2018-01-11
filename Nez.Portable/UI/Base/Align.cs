@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez.UI
+namespace Nez.UI.Base
 {
     [Flags]
     public enum Align

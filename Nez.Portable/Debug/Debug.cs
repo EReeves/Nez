@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Utils.Fonts;
 
-namespace Nez
+namespace Nez.Debug
 {
     // TODO: add Conditionals for all log levels
     public static partial class Debug
@@ -168,24 +169,24 @@ namespace Nez
             if (DebugDrawItems.Count > 0)
             {
                 if (Core.Scene != null && Core.Scene.Camera != null)
-                    Graphics.Instance.Batcher.Begin(Core.Scene.Camera.TransformMatrix);
+                    Graphics.Graphics.Instance.Batcher.Begin(Core.Scene.Camera.TransformMatrix);
                 else
-                    Graphics.Instance.Batcher.Begin();
+                    Graphics.Graphics.Instance.Batcher.Begin();
 
                 for (var i = DebugDrawItems.Count - 1; i >= 0; i--)
                 {
                     var item = DebugDrawItems[i];
-                    if (item.Draw(Graphics.Instance))
+                    if (item.Draw(Graphics.Graphics.Instance))
                         DebugDrawItems.RemoveAt(i);
                 }
 
-                Graphics.Instance.Batcher.End();
+                Graphics.Graphics.Instance.Batcher.End();
             }
 
             if (ScreenSpaceDebugDrawItems.Count > 0)
             {
                 var pos = DrawTextFromBottom ? new Vector2(0, Core.Scene.SceneRenderTargetSize.Y) : Vector2.Zero;
-                Graphics.Instance.Batcher.Begin();
+                Graphics.Graphics.Instance.Batcher.Begin();
 
                 for (var i = ScreenSpaceDebugDrawItems.Count - 1; i >= 0; i--)
                 {
@@ -197,7 +198,7 @@ namespace Nez
                     else
                         item.Position = pos;
 
-                    if (item.Draw(Graphics.Instance))
+                    if (item.Draw(Graphics.Graphics.Instance))
                         ScreenSpaceDebugDrawItems.RemoveAt(i);
 
                     if (DrawTextFromBottom)
@@ -206,7 +207,7 @@ namespace Nez
                         pos.Y += itemHeight;
                 }
 
-                Graphics.Instance.Batcher.End();
+                Graphics.Graphics.Instance.Batcher.End();
             }
         }
 

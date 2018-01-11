@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Nez.UI
+namespace Nez.PipelineRuntime.UISkin
 {
     public class UiSkinConfig
     {

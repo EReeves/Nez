@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Random = Nez.Maths.Random;
 
-namespace Nez
+namespace Nez.ECS.Components
 {
     public class CameraShake : Component, IUpdatable
     {
@@ -13,7 +13,7 @@ namespace Nez
 
         void IUpdatable.Update()
         {
-            if (Math.Abs(_shakeIntensity) > 0f)
+            if (System.Math.Abs(_shakeIntensity) > 0f)
             {
                 _shakeOffset = _shakeDirection;
                 if (_shakeOffset.X != 0f || _shakeOffset.Y != 0f)
@@ -29,7 +29,7 @@ namespace Nez
                 // TODO: this needs to be multiplied by camera zoom so that less shake gets applied when zoomed in
                 _shakeOffset *= _shakeIntensity;
                 _shakeIntensity *= -_shakeDegredation;
-                if (Math.Abs(_shakeIntensity) <= 0.01f)
+                if (System.Math.Abs(_shakeIntensity) <= 0.01f)
                 {
                     _shakeIntensity = 0f;
                     Enabled = false;

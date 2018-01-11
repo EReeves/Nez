@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug;
+using Nez.Graphics.Batcher;
 
-namespace Nez
+namespace Nez.Utils.Fonts
 {
 	/// <summary>
 	///     provides the full SpriteFont assortment of drawString methods

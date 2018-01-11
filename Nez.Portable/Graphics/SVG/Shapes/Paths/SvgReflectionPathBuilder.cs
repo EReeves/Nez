@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes.Paths
 {
 	/// <summary>
 	///     helper class used to parse paths and also fetch the drawing points from a series of SvgPathSegments. This is an
@@ -61,7 +61,7 @@ namespace Nez.Svg
                 }
                 else
                 {
-                    Debug.Warn("unknown type in getDrawingPoints");
+                    Debug.Debug.Warn("unknown type in getDrawingPoints");
                 }
             }
 

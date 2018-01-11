@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables.Particles
 {
     public struct ParticleCollisionConfig
     {

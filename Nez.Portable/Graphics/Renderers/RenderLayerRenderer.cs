@@ -1,6 +1,7 @@
 ﻿using System;
+using Nez.ECS;
 
-namespace Nez
+namespace Nez.Graphics.Renderers
 {
 	/// <summary>
 	///     Renderer that only renders the specified renderLayers. Useful to keep UI rendering separate from the rest of the

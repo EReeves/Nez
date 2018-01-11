@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Nez
+namespace Nez.ECS
 {
 	/// <summary>
 	///     Execution order:
@@ -112,7 +112,7 @@ namespace Nez
         }
 
 
-        public virtual void DebugRender(Graphics graphics)
+        public virtual void DebugRender(Graphics.Graphics graphics)
         {
         }
 

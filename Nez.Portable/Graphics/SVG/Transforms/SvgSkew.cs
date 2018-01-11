@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Transforms
 {
     public class SvgSkew : SvgTransform
     {
@@ -13,7 +13,7 @@ namespace Nez.Svg
             _angleX = angleX;
             _angleY = angleY;
 
-            Debug.Warn("SvgSkew matrix is not implemented");
+            Debug.Debug.Warn("SvgSkew matrix is not implemented");
             //matrix = Matrix2D.Shear(
             //	(float)System.Math.Tan( _angleX / 180 * MathHelper.Pi ),
             //	(float)System.Math.Tan( _angleY / 180 * MathHelper.Pi ) );

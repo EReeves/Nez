@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
+using Nez.Physics.Shapes;
+using Nez.Utils;
 
-namespace Nez.Shadows
+namespace Nez.ECS.Components.Renderables.PolygonLight
 {
 	/// <summary>
 	///     Class which computes a mesh that represents which regions are visibile from the origin point given a set of
@@ -100,8 +102,8 @@ namespace Nez.Shadows
 
             for (var i = 0; i < 4; i++)
                 CornerCache[i] = new Vector2(
-                    (float) Math.Cos(rotation + i * Math.PI * 0.5) * radius + x,
-                    (float) Math.Sin(rotation + i * Math.PI * 0.5) * radius + y
+                    (float) System.Math.Cos(rotation + i * System.Math.PI * 0.5) * radius + x,
+                    (float) System.Math.Sin(rotation + i * System.Math.PI * 0.5) * radius + y
                 );
 
             AddSegment(CornerCache[0], CornerCache[1]);

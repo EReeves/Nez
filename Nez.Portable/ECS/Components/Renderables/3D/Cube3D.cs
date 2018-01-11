@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables._3D
 {
     public class Cube3D : GeometricPrimitive3D
     {

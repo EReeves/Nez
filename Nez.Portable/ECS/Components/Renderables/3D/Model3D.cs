@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Nez;
+using Nez.Maths;
 
-namespace Nez3D
+namespace Nez.ECS.Components.Renderables._3D
 {
 	/// <summary>
 	///     Model3D represents a normal 3D Model but it is rendered by a standard Nez Camera on the same plane as all the 2D
@@ -54,7 +54,7 @@ namespace Nez3D
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             // flush the 2D batch so we render appropriately depth-wise
             graphics.Batcher.FlushBatch();

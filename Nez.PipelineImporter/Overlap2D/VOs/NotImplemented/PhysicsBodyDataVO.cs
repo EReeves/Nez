@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
-
-namespace Nez.Overlap2D.Runtime
+namespace Nez.PipelineImporter.Overlap2D.VOs.NotImplemented
 {
 	public class PhysicsBodyDataVO
 	{

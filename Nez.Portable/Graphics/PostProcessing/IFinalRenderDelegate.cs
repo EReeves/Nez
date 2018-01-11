@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.ECS;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing
 {
 	/// <summary>
 	///     optional interface that can be added to any object for special cases where the final render to screen needs to be

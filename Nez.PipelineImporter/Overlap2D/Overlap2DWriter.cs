@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework.Content.Pipeline;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using Nez.Overlap2D.Runtime;
-using Microsoft.Xna.Framework;
-using System.Linq;
+using Nez.PipelineImporter.Overlap2D.VOs;
+using Nez.PipelineImporter.Overlap2D.VOs.NotImplemented;
+using Nez.PipelineRuntime.Overlap2D;
 
-namespace Nez.Overlap2D
+namespace Nez.PipelineImporter.Overlap2D
 {
 	[ContentTypeWriter]
 	public class Overlap2DWriter : ContentTypeWriter<SceneVO>
@@ -120,13 +121,13 @@ namespace Nez.Overlap2D
 
 		public override string GetRuntimeType( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.Overlap2D.O2DScene ).AssemblyQualifiedName;
+			return typeof( O2DScene ).AssemblyQualifiedName;
 		}
 
 
 		public override string GetRuntimeReader( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.Overlap2D.O2DSceneReader ).AssemblyQualifiedName;
+			return typeof( O2DSceneReader ).AssemblyQualifiedName;
 		}
 	}
 }

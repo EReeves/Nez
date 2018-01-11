@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez.UI
+namespace Nez.UI.Base
 {
     public interface ICullable
     {

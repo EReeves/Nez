@@ -1,14 +1,13 @@
 using System;
-using System.IO;
-using Microsoft.Xna.Framework.Content.Pipeline;
 using System.ComponentModel;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+using System.IO;
 using Microsoft.Xna.Framework;
-using Nez.PipelineImporter;
+using Microsoft.Xna.Framework.Content.Pipeline;
+using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+using Nez.PipelineImporter.Common;
 
-
-namespace Nez.BitmapFontImporter
+// ReSharper disable once CheckNamespace
+namespace Nez
 {
 	[ContentProcessor( DisplayName = "BMFont Processor" )]
 	public class BitmapFontProcessor : ContentProcessor<BitmapFontFile,BitmapFontProcessorResult>

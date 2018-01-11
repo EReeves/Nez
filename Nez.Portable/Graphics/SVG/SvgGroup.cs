@@ -1,6 +1,8 @@
 ﻿using System.Xml.Serialization;
+using Nez.Graphics.SVG.Shapes;
+using Nez.Graphics.SVG.Shapes.Paths;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG
 {
 	/// <summary>
 	///     container in SVG. The 'g' XML tag.

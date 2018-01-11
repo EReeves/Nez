@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez
+namespace Nez.Maths
 {
 	/// <summary>
 	///     utility class to assist with dealing with bitmasks. All methods except isFlagSet expect the flag parameter to be a

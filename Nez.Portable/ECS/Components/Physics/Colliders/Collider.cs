@@ -1,8 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+﻿using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.ECS.Components.Renderables;
+using Nez.Maths;
+using Nez.Physics.Shapes;
 
-namespace Nez
+namespace Nez.ECS.Components.Physics.Colliders
 {
     public abstract class Collider : Component
     {
@@ -29,7 +31,7 @@ namespace Nez
 	    ///     layer mask of all the layers this Collider should collide with when Entity.move methods are used. defaults to all
 	    ///     layers.
 	    /// </summary>
-	    public int CollidesWithLayers = Physics.AllLayers;
+	    public int CollidesWithLayers = Nez.Physics.Physics.AllLayers;
 
 	    /// <summary>
 	    ///     if this collider is a trigger it will not cause collisions but it will still trigger events
@@ -114,7 +116,7 @@ namespace Nez
             // entity could be null if properties such as origin are changed before we are added to an Entity
             if (IsParentEntityAddedToScene && !IsColliderRegistered)
             {
-                Physics.AddCollider(this);
+                Nez.Physics.Physics.AddCollider(this);
                 IsColliderRegistered = true;
             }
         }
@@ -126,7 +128,7 @@ namespace Nez
 	    public virtual void UnregisterColliderWithPhysicsSystem()
         {
             if (IsParentEntityAddedToScene && IsColliderRegistered)
-                Physics.RemoveCollider(this);
+                Nez.Physics.Physics.RemoveCollider(this);
             IsColliderRegistered = false;
         }
 
@@ -195,7 +197,7 @@ namespace Nez
                     "Only box and circle colliders can be created automatically");
 
                 var renderable = Entity.GetComponent<RenderableComponent>();
-                Debug.WarnIf(renderable == null,
+                Debug.Debug.WarnIf(renderable == null,
                     "Collider has no shape and no RenderableComponent. Can't figure out how to size it.");
                 if (renderable != null)
                 {
@@ -209,7 +211,7 @@ namespace Nez
                     if (this is CircleCollider)
                     {
                         var circleCollider = this as CircleCollider;
-                        circleCollider.Radius = Math.Max(width, height) * 0.5f;
+                        circleCollider.Radius = System.Math.Max(width, height) * 0.5f;
 
                         // fetch the Renderable's center, transfer it to local coordinates and use that as the localOffset of our collider
                         LocalOffset = renderableBounds.Center - Entity.Transform.Position;
@@ -254,7 +256,7 @@ namespace Nez
             }
 
             if (IsColliderRegistered)
-                Physics.UpdateCollider(this);
+                Nez.Physics.Physics.UpdateCollider(this);
         }
 
 
@@ -343,7 +345,7 @@ namespace Nez
             result = new CollisionResult();
 
             // fetch anything that we might collide with at our new position
-            var neighbors = Physics.BoxcastBroadphaseExcludingSelf(this, CollidesWithLayers);
+            var neighbors = Nez.Physics.Physics.BoxcastBroadphaseExcludingSelf(this, CollidesWithLayers);
 
             foreach (var neighbor in neighbors)
             {
@@ -377,7 +379,7 @@ namespace Nez
             var colliderBounds = Bounds;
             colliderBounds.X += motion.X;
             colliderBounds.Y += motion.Y;
-            var neighbors = Physics.BoxcastBroadphaseExcludingSelf(this, ref colliderBounds, CollidesWithLayers);
+            var neighbors = Nez.Physics.Physics.BoxcastBroadphaseExcludingSelf(this, ref colliderBounds, CollidesWithLayers);
 
             // alter the shapes position so that it is in the place it would be after movement so we can check for overlaps
             var oldPosition = Shape.Position;

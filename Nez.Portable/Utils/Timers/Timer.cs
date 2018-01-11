@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez.Timers
+namespace Nez.Utils.Timers
 {
 	/// <summary>
 	///     private class hiding the implementation of ITimer

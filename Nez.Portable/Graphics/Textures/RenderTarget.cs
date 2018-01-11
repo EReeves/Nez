@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug;
+using Nez.Utils;
 
-namespace Nez.Textures
+namespace Nez.Graphics.Textures
 {
     public class RenderTarget : IUpdatableManager
     {

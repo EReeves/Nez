@@ -1,4 +1,4 @@
-﻿namespace Nez.Tweens
+﻿namespace Nez.Utils.Tweens.Interfaces
 {
     public interface ITweenable
     {

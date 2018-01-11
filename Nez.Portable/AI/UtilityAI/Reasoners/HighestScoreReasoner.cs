@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.UtilityAI
+﻿using Nez.AI.UtilityAI.Considerations;
+
+namespace Nez.AI.UtilityAI.Reasoners
 {
 	/// <summary>
 	///     The Consideration with the highest score is selected

@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Nez.Debug;
 
-namespace Nez.IEnumerableExtensions
+namespace Nez.Utils.Extensions
 {
     public static class EnumerableExt
     {

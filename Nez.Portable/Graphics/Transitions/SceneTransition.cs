@@ -4,9 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Tweens;
+using Nez.ECS;
+using Nez.Utils;
+using Nez.Utils.Tweens.Easing;
 
-namespace Nez
+namespace Nez.Graphics.Transitions
 {
 	/// <summary>
 	///     SceneTransition is used to transition from one Scene to another or within a scene with an effect. If

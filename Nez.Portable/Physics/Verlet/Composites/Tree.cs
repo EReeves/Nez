@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.Physics.Verlet.Constraints;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet.Composites
 {
 	/// <summary>
 	///     fractal tree. Converted from https://github.com/subprotocol/verlet-js/blob/master/examples/tree.html

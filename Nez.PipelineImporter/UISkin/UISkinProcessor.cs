@@ -1,11 +1,13 @@
-﻿using Microsoft.Xna.Framework.Content.Pipeline;
+﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content.Pipeline;
+using Newtonsoft.Json.Linq;
+using Nez.PipelineRuntime.UISkin;
 using Nez.UI;
-using System;
+using Nez.Utils.Extensions;
 
-namespace Nez.UISkinImporter
+namespace Nez.PipelineImporter.UISkin
 {
 	[ContentProcessor( DisplayName = "UISkin Processor" )]
 	public class UISkinProcessor : ContentProcessor<Dictionary<string, object>, UiSkinConfig>

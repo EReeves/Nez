@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Physics.Verlet.Constraints;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet.Composites
 {
 	/// <summary>
 	///     creates a simple box with diagonal contraints to keep it rigid

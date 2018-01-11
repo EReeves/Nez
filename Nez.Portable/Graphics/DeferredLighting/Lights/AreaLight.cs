@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Lights
 {
 	/// <summary>
 	///     AreaLights work like DirLights except they only affect a specific area specified by the width/height. Note that

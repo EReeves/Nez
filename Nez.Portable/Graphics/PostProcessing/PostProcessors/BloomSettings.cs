@@ -1,4 +1,4 @@
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
 	/// <summary>
 	///     Class holds all the settings used to tweak the bloom effect.

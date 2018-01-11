@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Ionic.Zlib;
-using Microsoft.Xna.Framework.Content.Pipeline;
-using System.ComponentModel;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework;
-using Nez.TextureAtlasGenerator;
-using Microsoft.Xna.Framework.Graphics;
-using Nez.PipelineImporter;
+using Microsoft.Xna.Framework.Content.Pipeline;
+using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+using Nez.PipelineImporter.Common;
+using Nez.PipelineImporter.TextureAtlasGenerator;
 
-
-namespace Nez.TiledMaps
+namespace Nez.PipelineImporter.Tiled
 {
 	[ContentProcessor( DisplayName = "Tiled Map Processor" )]
 	public class TiledMapProcessor : ContentProcessor<TmxMap,TmxMap>

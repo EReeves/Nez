@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez.UI
+namespace Nez.UI.Drawable
 {
 	/// <summary>
 	///     Draws a {@link Subtexture} repeatedly to fill the area, instead of stretching it
@@ -19,7 +19,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float x, float y, float width, float height, Color color)
+        public override void Draw(Graphics.Graphics graphics, float x, float y, float width, float height, Color color)
         {
             float regionWidth = Subtexture.SourceRect.Width, regionHeight = Subtexture.SourceRect.Height;
             int fullX = (int) (width / regionWidth), fullY = (int) (height / regionHeight);

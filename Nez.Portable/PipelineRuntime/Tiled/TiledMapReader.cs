@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Pipeline.Content;
+using Nez.PipelineRuntime.ContentExtensions;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
     public class TiledMapReader : ContentTypeReader<TiledMap>
     {

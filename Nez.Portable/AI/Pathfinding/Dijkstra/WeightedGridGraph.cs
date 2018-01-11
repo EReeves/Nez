@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Nez.Tiled;
+using Nez.PipelineRuntime.Tiled;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.Dijkstra
 {
 	/// <summary>
 	///     basic grid graph with support for one type of weighted node

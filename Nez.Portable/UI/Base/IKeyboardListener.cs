@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace Nez.UI
+namespace Nez.UI.Base
 {
     public interface IKeyboardListener
     {

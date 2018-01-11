@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.UI.Base;
+using Nez.UI.Widgets;
+using Nez.Utils;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Containers
 {
 	/// <summary>
 	///     A group that sizes and positions children using table constraints. By default, {@link #getTouchable()} is
@@ -94,7 +100,7 @@ namespace Nez.UI
                     ComputeSize();
                 var width = _tablePrefWidth;
                 if (Background != null)
-                    return Math.Max(width, Background.MinWidth);
+                    return System.Math.Max(width, Background.MinWidth);
                 return width;
             }
         }
@@ -107,7 +113,7 @@ namespace Nez.UI
                     ComputeSize();
                 var height = _tablePrefHeight;
                 if (Background != null)
-                    return Math.Max(height, Background.MinHeight);
+                    return System.Math.Max(height, Background.MinHeight);
                 return height;
             }
         }
@@ -121,7 +127,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
             if (Transform)
@@ -162,7 +168,7 @@ namespace Nez.UI
 	    /// <param name="parentAlpha">Parent alpha.</param>
 	    /// <param name="x">The x coordinate.</param>
 	    /// <param name="y">The y coordinate.</param>
-	    protected virtual void DrawBackground(Graphics graphics, float parentAlpha, float x, float y)
+	    protected virtual void DrawBackground(Graphics.Graphics graphics, float parentAlpha, float x, float y)
         {
             if (Background == null)
                 return;
@@ -407,7 +413,7 @@ namespace Nez.UI
                 rowColumns += cell.Colspan.Value;
             }
 
-            _columns = Math.Max(_columns, rowColumns);
+            _columns = System.Math.Max(_columns, rowColumns);
             _rows++;
             _cells.Last().EndRow = true;
         }
@@ -530,7 +536,7 @@ namespace Nez.UI
             }
             else
             {
-                var extraWidth = Math.Min(totalGrowWidth, Math.Max(0, layoutWidth - _tableMinWidth));
+                var extraWidth = System.Math.Min(totalGrowWidth, System.Math.Max(0, layoutWidth - _tableMinWidth));
                 columnWeightedWidth = _columnWeightedWidth = EnsureSize(_columnWeightedWidth, columns);
                 float[] columnMinWidth = _columnMinWidth, columnPrefWidth = _columnPrefWidth;
                 for (var i = 0; i < columns; i++)
@@ -550,7 +556,7 @@ namespace Nez.UI
             else
             {
                 rowWeightedHeight = _rowWeightedHeight = EnsureSize(_rowWeightedHeight, rows);
-                var extraHeight = Math.Min(totalGrowHeight, Math.Max(0, layoutHeight - _tableMinHeight));
+                var extraHeight = System.Math.Min(totalGrowHeight, System.Math.Max(0, layoutHeight - _tableMinHeight));
                 float[] rowMinHeight = _rowMinHeight, rowPrefHeight = _rowPrefHeight;
                 for (var i = 0; i < rows; i++)
                 {
@@ -588,14 +594,14 @@ namespace Nez.UI
                 if (maxHeight > 0 && prefHeight > maxHeight)
                     prefHeight = maxHeight;
 
-                cell.ElementWidth = Math.Min(spannedWeightedWidth - cell.ComputedPadLeft - cell.ComputedPadRight,
+                cell.ElementWidth = System.Math.Min(spannedWeightedWidth - cell.ComputedPadLeft - cell.ComputedPadRight,
                     prefWidth);
                 cell.ElementHeight =
-                    Math.Min(weightedHeight - cell.ComputedPadTop - cell.ComputedPadBottom, prefHeight);
+                    System.Math.Min(weightedHeight - cell.ComputedPadTop - cell.ComputedPadBottom, prefHeight);
 
                 if (colspan == 1)
-                    columnWidth[column] = Math.Max(columnWidth[column], spannedWeightedWidth);
-                rowHeight[row] = Math.Max(rowHeight[row], weightedHeight);
+                    columnWidth[column] = System.Math.Max(columnWidth[column], spannedWeightedWidth);
+                rowHeight[row] = System.Math.Max(rowHeight[row], weightedHeight);
             }
 
             // distribute remaining space to any expanding columns/rows.
@@ -651,7 +657,7 @@ namespace Nez.UI
                 var extraWidth = 0f;
                 for (int column = c.Column, nn = column + colspan; column < nn; column++)
                     extraWidth += columnWeightedWidth[column] - columnWidth[column];
-                extraWidth -= Math.Max(0, c.ComputedPadLeft + c.ComputedPadRight);
+                extraWidth -= System.Math.Max(0, c.ComputedPadLeft + c.ComputedPadRight);
 
                 extraWidth /= colspan;
                 if (extraWidth > 0)
@@ -695,18 +701,18 @@ namespace Nez.UI
                 float fillX = c.FillX.Value, fillY = c.FillY.Value;
                 if (fillX > 0)
                 {
-                    c.ElementWidth = Math.Max(spannedCellWidth * fillX, c.MinWidth.Get(c.Element));
+                    c.ElementWidth = System.Math.Max(spannedCellWidth * fillX, c.MinWidth.Get(c.Element));
                     var maxWidth = c.MaxWidth.Get(c.Element);
                     if (maxWidth > 0)
-                        c.ElementWidth = Math.Min(c.ElementWidth, maxWidth);
+                        c.ElementWidth = System.Math.Min(c.ElementWidth, maxWidth);
                 }
                 if (fillY > 0)
                 {
-                    c.ElementHeight = Math.Max(rowHeight[c.Row] * fillY - c.ComputedPadTop - c.ComputedPadBottom,
+                    c.ElementHeight = System.Math.Max(rowHeight[c.Row] * fillY - c.ComputedPadTop - c.ComputedPadBottom,
                         c.MinHeight.Get(c.Element));
                     var maxHeight = c.MaxHeight.Get(c.Element);
                     if (maxHeight > 0)
-                        c.ElementHeight = Math.Min(c.ElementHeight, maxHeight);
+                        c.ElementHeight = System.Math.Min(c.ElementHeight, maxHeight);
                 }
 
                 var cellAlign = c.Align.Value;
@@ -786,12 +792,12 @@ namespace Nez.UI
                 cell.ComputedPadLeft = cell.PadLeft.Get(cell.Element) +
                                        (column == 0
                                            ? 0
-                                           : Math.Max(0, cell.SpaceLeft.Get(cell.Element) - spaceRightLast));
+                                           : System.Math.Max(0, cell.SpaceLeft.Get(cell.Element) - spaceRightLast));
                 cell.ComputedPadTop = cell.PadTop.Get(cell.Element);
                 if (cell.CellAboveIndex != -1)
                 {
                     var above = _cells[cell.CellAboveIndex];
-                    cell.ComputedPadTop += Math.Max(0,
+                    cell.ComputedPadTop += System.Math.Max(0,
                         cell.SpaceTop.Get(cell.Element) - above.SpaceBottom.Get(cell.Element));
                 }
 
@@ -823,12 +829,12 @@ namespace Nez.UI
                 {
                     // Spanned column min and pref width is added later.
                     var Hpadding = cell.ComputedPadLeft + cell.ComputedPadRight;
-                    _columnPrefWidth[column] = Math.Max(_columnPrefWidth[column], prefWidth + Hpadding);
-                    _columnMinWidth[column] = Math.Max(_columnMinWidth[column], minWidth + Hpadding);
+                    _columnPrefWidth[column] = System.Math.Max(_columnPrefWidth[column], prefWidth + Hpadding);
+                    _columnMinWidth[column] = System.Math.Max(_columnMinWidth[column], minWidth + Hpadding);
                 }
                 var Vpadding = cell.ComputedPadTop + cell.ComputedPadBottom;
-                _rowPrefHeight[row] = Math.Max(_rowPrefHeight[row], prefHeight + Vpadding);
-                _rowMinHeight[row] = Math.Max(_rowMinHeight[row], minHeight + Vpadding);
+                _rowPrefHeight[row] = System.Math.Max(_rowPrefHeight[row], prefHeight + Vpadding);
+                _rowMinHeight[row] = System.Math.Max(_rowMinHeight[row], minHeight + Vpadding);
             }
 
             float uniformMinWidth = 0, uniformMinHeight = 0;
@@ -856,15 +862,15 @@ namespace Nez.UI
                 if (c.UniformX.HasValue && c.UniformX.Value && c.Colspan == 1)
                 {
                     var Hpadding = c.ComputedPadLeft + c.ComputedPadRight;
-                    uniformMinWidth = Math.Max(uniformMinWidth, _columnMinWidth[c.Column] - Hpadding);
-                    uniformPrefWidth = Math.Max(uniformPrefWidth, _columnPrefWidth[c.Column] - Hpadding);
+                    uniformMinWidth = System.Math.Max(uniformMinWidth, _columnMinWidth[c.Column] - Hpadding);
+                    uniformPrefWidth = System.Math.Max(uniformPrefWidth, _columnPrefWidth[c.Column] - Hpadding);
                 }
 
                 if (c.UniformY.HasValue && c.UniformY.Value)
                 {
                     var Vpadding = c.ComputedPadTop + c.ComputedPadBottom;
-                    uniformMinHeight = Math.Max(uniformMinHeight, _rowMinHeight[c.Row] - Vpadding);
-                    uniformPrefHeight = Math.Max(uniformPrefHeight, _rowPrefHeight[c.Row] - Vpadding);
+                    uniformMinHeight = System.Math.Max(uniformMinHeight, _rowMinHeight[c.Row] - Vpadding);
+                    uniformPrefHeight = System.Math.Max(uniformPrefHeight, _rowPrefHeight[c.Row] - Vpadding);
                 }
             }
 
@@ -915,8 +921,8 @@ namespace Nez.UI
                         _expandWidth[ii]; // Distribute extra space using expand, if any columns have expand.
                 }
 
-                var extraMinWidth = Math.Max(0, minWidth - spannedMinWidth);
-                var extraPrefWidth = Math.Max(0, prefWidth - spannedPrefWidth);
+                var extraMinWidth = System.Math.Max(0, minWidth - spannedMinWidth);
+                var extraPrefWidth = System.Math.Max(0, prefWidth - spannedPrefWidth);
                 for (int ii = c.Column, nn = ii + colspan; ii < nn; ii++)
                 {
                     var ratio = totalExpandWidth == 0 ? 1f / colspan : _expandWidth[ii] / totalExpandWidth;
@@ -939,15 +945,15 @@ namespace Nez.UI
             for (var i = 0; i < rows; i++)
             {
                 _tableMinHeight += _rowMinHeight[i];
-                _tablePrefHeight += Math.Max(_rowMinHeight[i], _rowPrefHeight[i]);
+                _tablePrefHeight += System.Math.Max(_rowMinHeight[i], _rowPrefHeight[i]);
             }
 
             var hpadding = _padLeft.Get(this) + _padRight.Get(this);
             var vpadding = _padTop.Get(this) + _padBottom.Get(this);
             _tableMinWidth = _tableMinWidth + hpadding;
             _tableMinHeight = _tableMinHeight + vpadding;
-            _tablePrefWidth = Math.Max(_tablePrefWidth + hpadding, _tableMinWidth);
-            _tablePrefHeight = Math.Max(_tablePrefHeight + vpadding, _tableMinHeight);
+            _tablePrefWidth = System.Math.Max(_tablePrefWidth + hpadding, _tableMinWidth);
+            _tablePrefHeight = System.Math.Max(_tablePrefHeight + vpadding, _tableMinHeight);
         }
 
 
@@ -1500,7 +1506,7 @@ namespace Nez.UI
 
         #region Debug
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             if (_debugRects != null)
                 foreach (var d in _debugRects)

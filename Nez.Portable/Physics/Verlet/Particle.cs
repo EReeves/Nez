@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Nez.Verlet
+namespace Nez.Physics.Verlet
 {
     public class Particle
     {

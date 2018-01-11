@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez.Particles
+namespace Nez.ECS.Components.Renderables.Particles
 {
     public class ParticleEmitter : RenderableComponent, IUpdatable
     {
@@ -47,7 +49,7 @@ namespace Nez.Particles
             // set some sensible defaults
             CollisionConfig.Elasticity = 0.5f;
             CollisionConfig.Friction = 0.5f;
-            CollisionConfig.CollidesWithLayers = Physics.AllLayers;
+            CollisionConfig.CollidesWithLayers = Nez.Physics.Physics.AllLayers;
             CollisionConfig.Gravity = _emitterConfig.Gravity;
             CollisionConfig.LifetimeLoss = 0f;
             CollisionConfig.MinKillSpeedSquared = float.MinValue;
@@ -237,7 +239,7 @@ namespace Nez.Particles
                     pos += currentParticle.Position;
                     Vector2.Min(ref min, ref pos, out min);
                     Vector2.Max(ref max, ref pos, out max);
-                    maxParticleSize = Math.Max(maxParticleSize, currentParticle.ParticleSize);
+                    maxParticleSize = System.Math.Max(maxParticleSize, currentParticle.ParticleSize);
                 }
             }
 
@@ -258,7 +260,7 @@ namespace Nez.Particles
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             // we still render when we are paused
             if (!_active && !IsPaused)

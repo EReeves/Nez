@@ -1,13 +1,13 @@
-using System.IO;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using System.ComponentModel;
-using Microsoft.Xna.Framework;
-using System;
+using Nez.Utils.Extensions;
 
-
-namespace Nez.TextureAtlasGenerator
+namespace Nez.PipelineImporter.TextureAtlasGenerator
 {
 	/// <summary>
 	/// Custom content processor takes an array of individual sprite filenames (which
@@ -169,7 +169,7 @@ namespace Nez.TextureAtlasGenerator
 					if( padStart == -1 )
 						padStart = x / 4;
 					else
-						padEnd = Math.Max( padEnd, x / 4 );
+						padEnd = System.Math.Max( padEnd, x / 4 );
 				}
 			}
 
@@ -191,7 +191,7 @@ namespace Nez.TextureAtlasGenerator
 					if( padStart == -1 )
 						padStart = y / 4;
 					else
-						padEnd = Math.Max( padEnd, y / 4 );
+						padEnd = System.Math.Max( padEnd, y / 4 );
 				}
 			}
 

@@ -1,4 +1,4 @@
-﻿namespace Nez.Overlap2D
+﻿namespace Nez.PipelineRuntime.Overlap2D
 {
     public class O2DCompositeItem : O2DMainItem
     {

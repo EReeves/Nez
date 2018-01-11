@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Utils;
 
-namespace Nez.Splines
+namespace Nez.Maths
 {
 	/// <summary>
 	///     cubic and quadratic bezier helper
@@ -115,8 +115,8 @@ namespace Nez.Splines
             // try to approximate the full cubic curve by a single straight line
             var deltaLine = end - start;
 
-            var d2 = Math.Abs((firstCtrlPoint.X - end.X) * deltaLine.Y - (firstCtrlPoint.Y - end.Y) * deltaLine.X);
-            var d3 = Math.Abs((secondCtrlPoint.X - end.X) * deltaLine.Y - (secondCtrlPoint.Y - end.Y) * deltaLine.X);
+            var d2 = System.Math.Abs((firstCtrlPoint.X - end.X) * deltaLine.Y - (firstCtrlPoint.Y - end.Y) * deltaLine.X);
+            var d3 = System.Math.Abs((secondCtrlPoint.X - end.X) * deltaLine.Y - (secondCtrlPoint.Y - end.Y) * deltaLine.X);
 
             if ((d2 + d3) * (d2 + d3) < distanceTolerance * (deltaLine.X * deltaLine.X + deltaLine.Y * deltaLine.Y))
             {

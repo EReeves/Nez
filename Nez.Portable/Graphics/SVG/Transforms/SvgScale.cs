@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
+using Nez.Maths;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Transforms
 {
     public class SvgScale : SvgTransform
     {

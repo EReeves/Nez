@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Debug;
+using Nez.Graphics.Textures;
+using Nez.Maths;
+using Nez.Utils;
+using Nez.Utils.Extensions;
 
-namespace Nez.Sprites
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     renders and fades a series of copies of the Sprite on the same Entity. minDistanceBetweenInstances determines how
@@ -88,7 +91,7 @@ namespace Nez.Sprites
             }
             else
             {
-                var distanceMoved = Math.Abs(Vector2.Distance(Entity.Transform.Position + localOffset, _lastPosition));
+                var distanceMoved = System.Math.Abs(Vector2.Distance(Entity.Transform.Position + localOffset, _lastPosition));
                 if (distanceMoved >= MinDistanceBetweenInstances)
                     SpawnInstance();
             }
@@ -191,7 +194,7 @@ namespace Nez.Sprites
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             for (var i = 0; i < _liveSpriteTrailInstances.Count; i++)
                 _liveSpriteTrailInstances[i].Render(graphics, camera);
@@ -268,7 +271,7 @@ namespace Nez.Sprites
 
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public void Render(Graphics graphics, Camera camera)
+            public void Render(Graphics.Graphics graphics, Camera camera)
             {
                 graphics.Batcher.Draw(_subtexture, Position, _renderColor, _rotation, _origin, _scale, _spriteEffects,
                     _layerDepth);

@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
+using Nez.Utils.Extensions;
 
-namespace Nez.UI
+namespace Nez.UI.Drawable
 {
 	/// <summary>
 	///     Drawable for a {@link Subtexture}
@@ -61,7 +62,7 @@ namespace Nez.UI
         }
 
 
-        public virtual void Draw(Graphics graphics, float x, float y, float width, float height, Color color)
+        public virtual void Draw(Graphics.Graphics graphics, float x, float y, float width, float height, Color color)
         {
             if (TintColor.HasValue)
                 color = color.Multiply(TintColor.Value);

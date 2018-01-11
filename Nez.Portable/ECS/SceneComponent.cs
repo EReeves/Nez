@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez
+namespace Nez.ECS
 {
     public class SceneComponent : IComparable<SceneComponent>
     {

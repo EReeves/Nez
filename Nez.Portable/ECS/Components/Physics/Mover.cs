@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Physics;
+using Nez.Physics.Shapes;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS.Components.Physics
 {
 	/// <summary>
 	///     helper class illustrating one way to handle movement taking into account all Collisions including triggers. The
@@ -54,7 +58,7 @@ namespace Nez
                 bounds.X += motion.X;
                 bounds.Y += motion.Y;
                 var neighbors =
-                    Physics.BoxcastBroadphaseExcludingSelf(collider, ref bounds, collider.CollidesWithLayers);
+                    Nez.Physics.Physics.BoxcastBroadphaseExcludingSelf(collider, ref bounds, collider.CollidesWithLayers);
 
                 foreach (var neighbor in neighbors)
                 {

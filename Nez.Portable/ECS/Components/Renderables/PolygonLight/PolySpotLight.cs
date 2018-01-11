@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.PhysicsShapes;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Physics.Shapes;
 
-namespace Nez.Shadows
+namespace Nez.ECS.Components.Renderables.PolygonLight
 {
 	/// <summary>
 	///     WIP: still has some odd rendering bugs that need to get worked out
@@ -117,11 +119,11 @@ namespace Nez.Shadows
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             base.DebugRender(graphics);
-            graphics.Batcher.DrawPolygon(_polygon.Position, _polygon.Points, Debug.Colors.ColliderEdge, true,
-                Debug.Size.LineSizeMultiplier);
+            graphics.Batcher.DrawPolygon(_polygon.Position, _polygon.Points, Debug.Debug.Colors.ColliderEdge, true,
+                Debug.Debug.Size.LineSizeMultiplier);
         }
 
 
@@ -145,7 +147,7 @@ namespace Nez.Shadows
             var totalCollisions = 0;
             _polygon.Position = Entity.Transform.Position + localOffset;
 
-            var neighbors = Physics.BoxcastBroadphase(Bounds, CollidesWithLayers);
+            var neighbors = Nez.Physics.Physics.BoxcastBroadphase(Bounds, CollidesWithLayers);
             foreach (var neighbor in neighbors)
             {
                 // skip triggers

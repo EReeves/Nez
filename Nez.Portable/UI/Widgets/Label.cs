@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.UI.Base;
+using Nez.Utils.Fonts;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class Label : Element
     {
@@ -52,7 +55,7 @@ namespace Nez.UI
         }
 
 
-        public Label(string text) : this(text, Graphics.Instance.BitmapFont)
+        public Label(string text) : this(text, Graphics.Graphics.Instance.BitmapFont)
         {
         }
 
@@ -208,7 +211,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             Validate();
 
@@ -371,13 +374,13 @@ namespace Nez.UI
 
         public LabelStyle()
         {
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
         }
 
 
         public LabelStyle(BitmapFont font, Color fontColor)
         {
-            this.Font = font ?? Graphics.Instance.BitmapFont;
+            this.Font = font ?? Graphics.Graphics.Instance.BitmapFont;
             this.FontColor = fontColor;
         }
 

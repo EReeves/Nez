@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nez
+namespace Nez.Debug.Inspector.Attributes
 {
 	/// <summary>
 	///     Attribute that is used to indicate that the field/property should be present in the inspector

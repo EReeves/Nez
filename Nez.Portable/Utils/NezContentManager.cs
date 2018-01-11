@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Effects;
 
-namespace Nez.Systems
+namespace Nez.Utils
 {
 	/// <summary>
 	///     ContentManager subclass that also manages Effects from ogl files. Adds asynchronous loading of assets as well.
@@ -236,7 +237,7 @@ namespace Nez.Systems
                 }
                 catch (Exception e)
                 {
-                    Debug.Error("Could not unload asset {0}. {1}", assetName, e);
+                    Debug.Debug.Error("Could not unload asset {0}. {1}", assetName, e);
                 }
         }
 

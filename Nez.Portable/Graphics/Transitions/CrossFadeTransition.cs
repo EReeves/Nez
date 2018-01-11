@@ -2,9 +2,11 @@
 using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Tweens;
+using Nez.ECS;
+using Nez.Utils;
+using Nez.Utils.Tweens.Easing;
 
-namespace Nez
+namespace Nez.Graphics.Transitions
 {
 	/// <summary>
 	///     fades from the current Scene to the new Scene

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Debug;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
-namespace Nez.Textures
+namespace Nez.Graphics.Textures
 {
 	/// <summary>
 	///     represents a single element in a texture atlas consisting of a texture and the source rectangle for the frame

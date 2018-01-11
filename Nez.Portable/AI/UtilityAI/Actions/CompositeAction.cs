@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez.AI.UtilityAI
+namespace Nez.AI.UtilityAI.Actions
 {
 	/// <summary>
 	///     Action that contains a List of Actions that it will execute sequentially

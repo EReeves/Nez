@@ -2,11 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Pipeline.Content;
-using Nez.TextureAtlases;
-using Nez.Textures;
+using Nez.Graphics.Textures;
+using Nez.PipelineRuntime.ContentExtensions;
 
-namespace Nez.LibGdxAtlases
+namespace Nez.PipelineRuntime.LibGdxAtlases
 {
     public class LibGdxAtlasReader : ContentTypeReader<LibGdxAtlas>
     {
@@ -67,7 +66,7 @@ namespace Nez.LibGdxAtlases
                     regionNames[i] = name;
                 }
 
-                var atlas = new TextureAtlas(regionNames, subtextures);
+                var atlas = new TextureAtlas.TextureAtlas(regionNames, subtextures);
                 atlasContainer.Atlases.Add(atlas);
             }
 

@@ -1,4 +1,6 @@
-﻿namespace Nez
+﻿using Nez.ECS.Components.Physics.Colliders;
+
+namespace Nez.ECS.Components.Physics
 {
 	/// <summary>
 	///     when added to a Component, whenever a Collider on the Entity overlaps/exits another Component these methods will be

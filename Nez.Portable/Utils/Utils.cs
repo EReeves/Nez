@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
+using Random = Nez.Maths.Random;
 
-namespace Nez
+namespace Nez.Utils
 {
 	/// <summary>
 	///     utility methods that don't yet have a proper home that makes sense
@@ -15,7 +16,7 @@ namespace Nez
             char ch;
             for (var i = 0; i < size; i++)
             {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * Random.NextFloat() + 65)));
+                ch = Convert.ToChar(Convert.ToInt32(System.Math.Floor(26 * Random.NextFloat() + 65)));
                 builder.Append(ch);
             }
 

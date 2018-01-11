@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Nez.Utils.Collections;
 
-namespace Nez.AI.Pathfinding
+namespace Nez.AI.Pathfinding.AStar
 {
 	/// <summary>
 	///     calculates paths given an IAstarGraph and start/goal positions

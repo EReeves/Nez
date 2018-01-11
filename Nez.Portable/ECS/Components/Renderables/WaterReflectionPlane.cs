@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics;
+using Nez.Graphics.Renderers.Reflections;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     adds a water reflection effect designed to be placed on the bottom of the screen. Note that transform.position is
@@ -22,7 +24,7 @@ namespace Nez
         public WaterReflectionPlane(float width, float height)
         {
             // we need a separate texture (not part of an atlas) so that we get uvs in the 0 - 1 range that the Effect requires
-            _texture = Graphics.CreateSingleColorTexture(1, 1, Color.Bisque);
+            _texture = Graphics.Graphics.CreateSingleColorTexture(1, 1, Color.Bisque);
             this.Width = width;
             this.Height = height;
 
@@ -46,7 +48,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             // we need to send the top of of the plane to the Effect
             var screenSpaceTop = Entity.Scene.Camera.WorldToScreenPoint(Entity.Transform.Position);

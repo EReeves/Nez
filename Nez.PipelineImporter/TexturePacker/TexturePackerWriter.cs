@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
+using Nez.PipelineRuntime.TexturePacker;
 
-
-namespace Nez.TexturePackerImporter
+namespace Nez.PipelineImporter.TexturePacker
 {
 	[ContentTypeWriter]
 	public class TexturePackerWriter : ContentTypeWriter<TexturePackerFile>
@@ -37,13 +37,13 @@ namespace Nez.TexturePackerImporter
 
 		public override string GetRuntimeType( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.TextureAtlases.TexturePackerAtlas ).AssemblyQualifiedName;
+			return typeof( TexturePackerAtlas ).AssemblyQualifiedName;
 		}
 
 
 		public override string GetRuntimeReader( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.TextureAtlases.TexturePackerAtlasReader ).AssemblyQualifiedName;
+			return typeof( TexturePackerAtlasReader ).AssemblyQualifiedName;
 		}
 	}
 }

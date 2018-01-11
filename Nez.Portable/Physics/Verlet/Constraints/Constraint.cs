@@ -1,4 +1,7 @@
-namespace Nez.Verlet
+using Nez.Graphics.Batcher;
+using Nez.Physics.Verlet.Composites;
+
+namespace Nez.Physics.Verlet.Constraints
 {
     public abstract class Constraint
     {

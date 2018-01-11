@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez.UI;
+using Nez.UI.Drawable;
+using Nez.UI.Widgets;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     simple component that houses a Stage and delegates update/render/debugRender calls
@@ -55,13 +57,13 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             Stage.Render(graphics, camera);
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             Stage.GetRoot().DebugRender(graphics);
         }

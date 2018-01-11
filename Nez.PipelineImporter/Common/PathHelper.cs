@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 
-
-namespace Nez.PipelineImporter
+namespace Nez.PipelineImporter.Common
 {
 	public static class PathHelper
 	{

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez
+namespace Nez.Graphics.Effects
 {
 	/// <summary>
 	///     draws the sprite with just vertical or horizonal lines of the specified color. The effect works in screen space.

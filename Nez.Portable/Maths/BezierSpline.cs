@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Utils.Collections;
 
-namespace Nez.Splines
+namespace Nez.Maths
 {
 	/// <summary>
 	///     houses a series of cubic bezier points and provides helper methods to access the bezier

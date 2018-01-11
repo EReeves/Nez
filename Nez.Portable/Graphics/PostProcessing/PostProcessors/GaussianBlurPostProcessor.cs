@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Effects;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
     public class GaussianBlurPostProcessor : PostProcessor<GaussianBlurEffect>
     {

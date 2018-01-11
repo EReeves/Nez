@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Nez.Utils;
 
 namespace Nez.AI.GOAP
 {
@@ -29,12 +30,12 @@ namespace Nez.AI.GOAP
 
             if (nodes != null && nodes.Count > 0)
             {
-                Debug.Log("---- ActionPlanner plan ----");
-                Debug.Log("plan cost = {0}\n", nodes[nodes.Count - 1].CostSoFar);
-                Debug.Log("{0}\t{1}", "start".PadRight(15), GetWorldState().Describe(Planner));
+                Debug.Debug.Log("---- ActionPlanner plan ----");
+                Debug.Debug.Log("plan cost = {0}\n", nodes[nodes.Count - 1].CostSoFar);
+                Debug.Debug.Log("{0}\t{1}", "start".PadRight(15), GetWorldState().Describe(Planner));
                 for (var i = 0; i < nodes.Count; i++)
                 {
-                    Debug.Log("{0}: {1}\t{2}", i, nodes[i].Action.GetType().Name.PadRight(15),
+                    Debug.Debug.Log("{0}: {1}\t{2}", i, nodes[i].Action.GetType().Name.PadRight(15),
                         nodes[i].WorldState.Describe(Planner));
                     Pool<AStarNode>.Free(nodes[i]);
                 }

@@ -1,9 +1,15 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Debug;
+using Nez.ECS;
+using Nez.Graphics.DeferredLighting.Effects;
+using Nez.Graphics.DeferredLighting.Geometry;
+using Nez.Graphics.DeferredLighting.Lights;
+using Nez.Graphics.Renderers;
+using Nez.Graphics.Textures;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting
 {
 	/// <summary>
 	///     handles deferred lighting. This Renderer should be ordered after any of your Renderers that render to a

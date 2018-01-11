@@ -1,7 +1,8 @@
 ﻿using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
+using Nez.Utils.Extensions;
 
-namespace Nez.Svg
+namespace Nez.Graphics.SVG.Shapes
 {
     public class SvgLine : SvgElement
     {

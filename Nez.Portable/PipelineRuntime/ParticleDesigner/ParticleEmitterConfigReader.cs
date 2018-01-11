@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Particles;
-using Nez.Textures;
+using Nez.ECS.Components.Renderables.Particles;
+using Nez.Graphics.Textures;
 
-namespace Nez.ParticleDesigner
+namespace Nez.PipelineRuntime.ParticleDesigner
 {
     public class ParticleEmitterConfigReader : ContentTypeReader<ParticleEmitterConfig>
     {

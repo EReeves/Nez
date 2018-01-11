@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Nez.PipelineImporter.Overlap2D.VOs.NotImplemented;
 
-
-namespace Nez.Overlap2D.Runtime
+namespace Nez.PipelineImporter.Overlap2D.VOs
 {
 	public class CompositeVO
 	{
@@ -33,14 +31,14 @@ namespace Nez.Overlap2D.Runtime
 			var maxIndex = int.MinValue;
 
 			for( var i = 0; i < sImages.Count; i++ )
-				maxIndex = Math.Max( maxIndex, sImages[i].zIndex );
+				maxIndex = System.Math.Max( maxIndex, sImages[i].zIndex );
 
 			for( var i = 0; i < sComposites.Count; i++ )
 			{
-				maxIndex = Math.Max( maxIndex, sComposites[i].zIndex );
+				maxIndex = System.Math.Max( maxIndex, sComposites[i].zIndex );
 
 				if( sComposites[i].composite != null )
-					maxIndex = Math.Max( maxIndex, sComposites[i].composite.findMaxZindex() );
+					maxIndex = System.Math.Max( maxIndex, sComposites[i].composite.findMaxZindex() );
 			}
 
 			return maxIndex;
@@ -60,8 +58,8 @@ namespace Nez.Overlap2D.Runtime
 				if( !minIndicies.ContainsKey( renderLayer ) )
 					minIndicies[renderLayer] = int.MaxValue;
 				
-				maxIndicies[renderLayer] = Math.Max( maxIndicies[renderLayer], sImages[i].zIndex );
-				minIndicies[renderLayer] = Math.Min( minIndicies[renderLayer], sImages[i].zIndex );
+				maxIndicies[renderLayer] = System.Math.Max( maxIndicies[renderLayer], sImages[i].zIndex );
+				minIndicies[renderLayer] = System.Math.Min( minIndicies[renderLayer], sImages[i].zIndex );
 			}
 
 			for( var i = 0; i < sComposites.Count; i++ )
@@ -72,8 +70,8 @@ namespace Nez.Overlap2D.Runtime
 				if( !minIndicies.ContainsKey( renderLayer ) )
 					minIndicies[renderLayer] = int.MaxValue;
 				
-				maxIndicies[renderLayer] = Math.Max( maxIndicies[renderLayer], sComposites[i].zIndex );
-				minIndicies[renderLayer] = Math.Min( minIndicies[renderLayer], sComposites[i].zIndex );
+				maxIndicies[renderLayer] = System.Math.Max( maxIndicies[renderLayer], sComposites[i].zIndex );
+				minIndicies[renderLayer] = System.Math.Min( minIndicies[renderLayer], sComposites[i].zIndex );
 
 				if( sComposites[i].composite != null )
 				{
@@ -82,8 +80,8 @@ namespace Nez.Overlap2D.Runtime
 					var compositeMaxIndices = compositeIndices.Item2;
 					if( compositeMaxIndices.ContainsKey( renderLayer ) )
 					{
-						maxIndicies[renderLayer] = Math.Max( maxIndicies[renderLayer], compositeMaxIndices[renderLayer] );
-						minIndicies[renderLayer] = Math.Min( minIndicies[renderLayer], compositeMinIndices[renderLayer] );
+						maxIndicies[renderLayer] = System.Math.Max( maxIndicies[renderLayer], compositeMaxIndices[renderLayer] );
+						minIndicies[renderLayer] = System.Math.Min( minIndicies[renderLayer], compositeMinIndices[renderLayer] );
 					}
 				}
 			}

@@ -1,8 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Nez.UI.Base;
+using Nez.UI.Containers;
+using Nez.Utils;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class SelectBoxList<T> : ScrollPane where T : class
     {
@@ -50,7 +52,7 @@ namespace Nez.UI
             var itemHeight = ListBox.GetItemHeight();
             var height = itemHeight * (MaxListCount <= 0
                              ? _selectBox.GetItems().Count
-                             : Math.Min(MaxListCount, _selectBox.GetItems().Count));
+                             : System.Math.Min(MaxListCount, _selectBox.GetItems().Count));
             var scrollPaneBackground = GetStyle().Background;
             if (scrollPaneBackground != null)
                 height += scrollPaneBackground.TopHeight + scrollPaneBackground.BottomHeight;
@@ -65,7 +67,7 @@ namespace Nez.UI
                 if (heightAbove > heightBelow)
                 {
                     _isListBelowSelectBox = false;
-                    height = Math.Min(height, heightAbove);
+                    height = System.Math.Min(height, heightAbove);
                 }
                 else
                 {
@@ -80,7 +82,7 @@ namespace Nez.UI
             SetHeight(height);
             Validate();
 
-            var width = Math.Max(PreferredWidth, _selectBox.GetWidth());
+            var width = System.Math.Max(PreferredWidth, _selectBox.GetWidth());
             if (PreferredHeight > height && !DisableY)
                 width += GetScrollBarWidth();
             SetWidth(width);
@@ -113,7 +115,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             var temp = _selectBox.LocalToStageCoordinates(Vector2.Zero);
             if (temp != _screenPosition)
@@ -125,13 +127,13 @@ namespace Nez.UI
 
         protected override void Update()
         {
-            if (Input.IsKeyPressed(Keys.Escape))
+            if (Input.Input.IsKeyPressed(Keys.Escape))
             {
                 Core.Schedule(0f, false, this, t => ((SelectBoxList<T>) t.Context).Hide());
                 return;
             }
 
-            if (Input.LeftMouseButtonPressed)
+            if (Input.Input.LeftMouseButtonPressed)
             {
                 var point = Stage.GetMousePosition();
                 point = ScreenToLocalCoordinates(point);

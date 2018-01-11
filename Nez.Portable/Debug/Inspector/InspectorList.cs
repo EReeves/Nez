@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.ECS;
+using Nez.Graphics.PostProcessing;
 using Nez.UI;
+using Nez.UI.Containers;
+using Nez.UI.Widgets;
 
 #if DEBUG
-namespace Nez
+namespace Nez.Debug.Inspector
 {
 	/// <summary>
 	///     container for a Component/PostProcessor/Transform and all of its inspectable properties
@@ -12,7 +16,7 @@ namespace Nez
     {
         private CheckBox _enabledCheckbox;
 
-        private readonly List<Inspector> _inspectors;
+        private readonly List<Inspectors.Inspector> _inspectors;
         public string Name;
         public object Target;
 
@@ -21,14 +25,14 @@ namespace Nez
         {
             this.Target = target;
             Name = target.GetType().Name;
-            _inspectors = Inspector.GetInspectableProperties(target);
+            _inspectors = Inspectors.Inspector.GetInspectableProperties(target);
         }
 
 
         public InspectorList(Transform transform)
         {
             Name = "Transform";
-            _inspectors = Inspector.GetTransformProperties(transform);
+            _inspectors = Inspectors.Inspector.GetTransformProperties(transform);
         }
 
 

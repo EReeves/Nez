@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.BitmapFonts;
+using Nez;
+using Nez.Debug;
+using Nez.UI.Base;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
 	/// <summary>
 	///     A checkbox is a button that contains an image indicating the checked or unchecked state and a label
@@ -19,7 +22,7 @@ namespace Nez.UI
             var label = GetLabel();
             _imageCell = Add(_image = new Image(style.CheckboxOff));
             Add(label);
-            label.SetAlignment(UI.Align.Left);
+            label.SetAlignment(Base.Align.Left);
             GetLabelCell().SetPadLeft(10);
             SetSize(PreferredWidth, PreferredHeight);
         }
@@ -50,7 +53,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             IDrawable checkbox = null;
             if (isDisabled)
@@ -98,7 +101,7 @@ namespace Nez.UI
 
         public CheckBoxStyle()
         {
-            Font = Graphics.Instance.BitmapFont;
+            Font = Graphics.Graphics.Instance.BitmapFont;
         }
 
 
@@ -106,7 +109,7 @@ namespace Nez.UI
         {
             this.CheckboxOff = checkboxOff;
             this.CheckboxOn = checkboxOn;
-            this.Font = font ?? Graphics.Instance.BitmapFont;
+            this.Font = font ?? Graphics.Graphics.Instance.BitmapFont;
             this.FontColor = fontColor;
         }
     }

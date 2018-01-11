@@ -43,8 +43,9 @@
 
 using System;
 using System.Text;
+using Nez.Debug;
 
-namespace Nez
+namespace Nez.Utils
 {
 	/// <summary>
 	///     This class can be thought of in two ways.  You can see it as a vector of bits or as a set of non-negative integers.
@@ -157,7 +158,7 @@ namespace Nez
 	    /// <param name="bs">the second bit set</param>
 	    public void And(BitSet bs)
         {
-            var max = Math.Min(_bits.Length, bs._bits.Length);
+            var max = System.Math.Min(_bits.Length, bs._bits.Length);
             int i;
             for (i = 0; i < max; ++i)
                 _bits[i] &= bs._bits[i];
@@ -177,7 +178,7 @@ namespace Nez
 	    /// <param name="bs">the second bit set</param>
 	    public void AndNot(BitSet bs)
         {
-            var i = Math.Min(_bits.Length, bs._bits.Length);
+            var i = System.Math.Min(_bits.Length, bs._bits.Length);
             while (--i >= 0)
                 _bits[i] &= ~bs._bits[i];
         }
@@ -367,14 +368,14 @@ namespace Nez
             var hiOffset = (uint) to >> 6;
             if (loBit == 0)
             {
-                var len = Math.Min(hiOffset - loOffset + 1, (uint) _bits.Length - loOffset);
+                var len = System.Math.Min(hiOffset - loOffset + 1, (uint) _bits.Length - loOffset);
                 Array.Copy(_bits, (int) loOffset, bs._bits, 0, (int) len);
                 if (hiOffset < _bits.Length)
                     bs._bits[hiOffset - loOffset] &= (1L << to) - 1;
                 return bs;
             }
 
-            var len2 = Math.Min(hiOffset, (uint) _bits.Length - 1);
+            var len2 = System.Math.Min(hiOffset, (uint) _bits.Length - 1);
             var reverse = 64 - loBit;
             int i;
             for (i = 0; loOffset < len2; loOffset++, i++)
@@ -398,7 +399,7 @@ namespace Nez
 	    /// <returns>true if the sets intersect</returns>
 	    public bool Intersects(BitSet set)
         {
-            var i = Math.Min(_bits.Length, set._bits.Length);
+            var i = System.Math.Min(_bits.Length, set._bits.Length);
             while (--i >= 0)
                 if ((_bits[i] & set._bits[i]) != 0)
                     return true;
@@ -666,7 +667,7 @@ namespace Nez
                 return false;
 
             var bs = (BitSet) obj;
-            var max = Math.Min(_bits.Length, bs._bits.Length);
+            var max = System.Math.Min(_bits.Length, bs._bits.Length);
             int i;
             for (i = 0; i < max; ++i)
                 if (_bits[i] != bs._bits[i])

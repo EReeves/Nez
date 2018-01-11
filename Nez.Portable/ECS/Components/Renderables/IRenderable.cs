@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Nez.Graphics;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     interface that when applied to a Component will register it to be rendered by the Scene Renderers. Implement this
@@ -73,13 +75,13 @@ namespace Nez
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
 	    /// <param name="camera">Camera.</param>
-	    void Render(Graphics graphics, Camera camera);
+	    void Render(Graphics.Graphics graphics, Camera camera);
 
 	    /// <summary>
 	    ///     renders the bounds only if there is no collider. Always renders a square on the origin.
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
-	    void DebugRender(Graphics graphics);
+	    void DebugRender(Graphics.Graphics graphics);
     }
 
 

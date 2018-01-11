@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-
-namespace Nez.TexturePackerImporter
+namespace Nez.PipelineImporter.TexturePacker
 {
 	public class TexturePackerRegion
 	{

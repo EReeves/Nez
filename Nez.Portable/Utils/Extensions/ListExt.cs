@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.Utils.Extensions
 {
     public static class ListExt
     {

@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
+using Nez.PipelineRuntime.LibGdxAtlases;
 
-
-namespace Nez.LibGdxAtlases
+namespace Nez.PipelineImporter.LibGdxAtlases
 {
 	[ContentTypeWriter]
 	public class LibGdxAtlasDWriter : ContentTypeWriter<LibGdxAtlasProcessorResult>
@@ -76,13 +75,13 @@ namespace Nez.LibGdxAtlases
 
 		public override string GetRuntimeType( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.LibGdxAtlases.LibGdxAtlas ).AssemblyQualifiedName;
+			return typeof( LibGdxAtlas ).AssemblyQualifiedName;
 		}
 
 
 		public override string GetRuntimeReader( TargetPlatform targetPlatform )
 		{
-			return typeof( Nez.LibGdxAtlases.LibGdxAtlasReader ).AssemblyQualifiedName;
+			return typeof( LibGdxAtlasReader ).AssemblyQualifiedName;
 		}
 	}
 }

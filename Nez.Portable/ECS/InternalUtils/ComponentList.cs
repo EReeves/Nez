@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Nez.ECS.Components;
+using Nez.ECS.Components.Renderables;
+using Nez.Utils;
+using Nez.Utils.Collections;
 
-namespace Nez
+namespace Nez.ECS.InternalUtils
 {
     public class ComponentList
     {
@@ -60,7 +64,7 @@ namespace Nez
 
         public void Remove(Component component)
         {
-            Debug.WarnIf(_componentsToRemove.Contains(component),
+            Debug.Debug.WarnIf(_componentsToRemove.Contains(component),
                 "You are trying to remove a Component ({0}) that you already removed", component);
 
             // this may not be a live Component so we have to watch out for if it hasnt been processed yet but it is being removed in the same frame
@@ -325,7 +329,7 @@ namespace Nez
         }
 
 
-        internal void DebugRender(Graphics graphics)
+        internal void DebugRender(Graphics.Graphics graphics)
         {
             for (var i = 0; i < _components.Length; i++)
                 if (_components.Buffer[i].Enabled)

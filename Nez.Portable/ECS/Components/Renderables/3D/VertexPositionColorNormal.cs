@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables._3D
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct VertexPositionColorNormal : IVertexType

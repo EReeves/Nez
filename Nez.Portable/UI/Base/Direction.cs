@@ -1,4 +1,4 @@
-﻿namespace Nez.UI
+﻿namespace Nez.UI.Base
 {
     public enum Direction
     {

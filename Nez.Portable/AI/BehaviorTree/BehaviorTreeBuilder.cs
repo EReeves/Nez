@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nez.AI.BehaviorTree.Actions;
+using Nez.AI.BehaviorTree.Composites;
+using Nez.AI.BehaviorTree.Conditionals;
+using Nez.AI.BehaviorTree.Decorators;
+using Nez.Debug;
 
-namespace Nez.AI.BehaviorTrees
+namespace Nez.AI.BehaviorTree
 {
 	/// <summary>
 	///     helper for building a BehaviorTree using a fluent API. Leaf nodes need to first have a parent added. Parents can be

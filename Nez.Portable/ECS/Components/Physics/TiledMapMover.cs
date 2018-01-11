@@ -1,10 +1,15 @@
 ﻿//#define DEBUG_MOVER
 
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Maths;
+using Nez.PipelineRuntime.Tiled;
+using Nez.Utils;
+using Nez.Utils.Extensions;
 
-namespace Nez.Tiled
+namespace Nez.ECS.Components.Physics
 {
 	/// <summary>
 	///     WIP
@@ -207,7 +212,7 @@ namespace Nez.Tiled
                     if (collisionState.Below && collisionState.LastGroundTile != null &&
                         collisionState.LastGroundTile.IsSlope())
                         collisionState.SlopeAngle =
-                            MathHelper.ToDegrees((float) Math.Atan(collisionState.LastGroundTile.GetSlope()));
+                            MathHelper.ToDegrees((float) System.Math.Atan(collisionState.LastGroundTile.GetSlope()));
                 }
                 else
                 {

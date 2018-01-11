@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nez.Tiled
+namespace Nez.PipelineRuntime.Tiled
 {
 	/// <summary>
 	///     these exist only for tiles with properties or animations

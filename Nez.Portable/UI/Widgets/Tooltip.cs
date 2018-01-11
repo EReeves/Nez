@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.UI.Base;
+using Nez.UI.Containers;
+using Nez.UI.Utils;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
 	/// <summary>
 	///     A listener that shows a tooltip Element when another Element is hovered over with the mouse.

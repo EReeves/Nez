@@ -1,15 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Xml.Serialization;
+﻿using System.IO;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using Nez.Overlap2D.Runtime;
+using Nez.PipelineImporter.Overlap2D.VOs;
 
-
-namespace Nez.Overlap2D
+namespace Nez.PipelineImporter.Overlap2D
 {
 	[ContentImporter( ".dt", DefaultProcessor = "Overlap2DProcessor", DisplayName = "Overlap2D Importer" )]
 	public class Overlap2DImporter : ContentImporter<SceneVO>

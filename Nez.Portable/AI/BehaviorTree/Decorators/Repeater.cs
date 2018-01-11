@@ -1,4 +1,6 @@
-﻿namespace Nez.AI.BehaviorTrees
+﻿using Nez.Debug;
+
+namespace Nez.AI.BehaviorTree.Decorators
 {
 	/// <summary>
 	///     will repeat execution of its child task until the child task has been run a specified number of times. It has the

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using Nez.PipelineImporter.ParticleDesigner.ConversionTypes;
 
-
-namespace Nez.ParticleDesignerImporter
+namespace Nez.PipelineImporter.ParticleDesigner
 {
 	[XmlRoot( "particleEmitterConfig" )]
 	public class ParticleDesignerEmitterConfig

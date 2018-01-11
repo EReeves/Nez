@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.ECS;
+using Nez.Utils.Tweens.Easing;
+using Nez.Utils.Tweens.Interfaces;
 
-namespace Nez.Tweens
+namespace Nez.Utils.Tweens
 {
 	/// <summary>
 	///     useful enum for any Transform related property tweens

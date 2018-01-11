@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.ECS;
+using Nez.Graphics.Effects;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics.Renderers.Reflections
 {
 	/// <summary>
 	///     used in conjunction with the ReflectionRenderer

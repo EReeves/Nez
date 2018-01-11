@@ -1,8 +1,4 @@
-﻿using System;
-using Nez.Overlap2D.Runtime;
-
-
-namespace Nez.Overlap2D.Runtime
+﻿namespace Nez.PipelineImporter.Overlap2D.VOs
 {
 	public class SceneInfoVO
 	{

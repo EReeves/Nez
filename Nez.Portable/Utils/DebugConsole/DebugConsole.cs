@@ -6,9 +6,13 @@ using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Nez.IEnumerableExtensions;
+using Nez.Debug.Inspector;
+using Nez.Graphics.Batcher;
+using Nez.Input;
+using Nez.Utils.Extensions;
+using Nez.Utils.Fonts;
 
-namespace Nez.Console
+namespace Nez.Utils.DebugConsole
 {
     public partial class DebugConsole
     {
@@ -128,12 +132,12 @@ namespace Nez.Console
             var maxWidth = Core.GraphicsDevice.PresentationParameters.BackBufferWidth - 40;
             var screenHeight = Core.GraphicsDevice.PresentationParameters.BackBufferHeight;
 
-            while (Graphics.Instance.BitmapFont.MeasureString(str).X * RenderScale > maxWidth)
+            while (Graphics.Graphics.Instance.BitmapFont.MeasureString(str).X * RenderScale > maxWidth)
             {
                 var split = -1;
                 for (var i = 0; i < str.Length; i++)
                     if (str[i] == ' ')
-                        if (Graphics.Instance.BitmapFont.MeasureString(str.Substring(0, i)).X * RenderScale <= maxWidth)
+                        if (Graphics.Graphics.Instance.BitmapFont.MeasureString(str.Substring(0, i)).X * RenderScale <= maxWidth)
                             split = i;
                         else
                             break;
@@ -171,14 +175,14 @@ namespace Nez.Console
             {
                 _canOpen = true;
             }
-            else if (Input.IsKeyPressed(Keys.OemTilde, Keys.Oem8))
+            else if (Input.Input.IsKeyPressed(Keys.OemTilde, Keys.Oem8))
             {
                 IsOpen = true;
                 _currentState = Keyboard.GetState();
             }
 
             for (var i = 0; i < _functionKeyActions.Length; i++)
-                if (Input.IsKeyPressed(Keys.F1 + i))
+                if (Input.Input.IsKeyPressed(Keys.F1 + i))
                     ExecuteFunctionKeyAction(i);
         }
 
@@ -506,7 +510,7 @@ namespace Nez.Console
             var screenHeight = Screen.Height;
             var workingWidth = screenWidth - 2 * HorizontalPadding;
 
-            Graphics.Instance.Batcher.Begin();
+            Graphics.Graphics.Instance.Batcher.Begin();
 
             // setup the rect that encompases the command entry section
             var commandEntryRect = RectangleExt.FromFloats(HorizontalPadding, screenHeight - LineHeight * RenderScale,
@@ -516,14 +520,14 @@ namespace Nez.Console
             commandEntryRect.Location -= new Point(0, TextPaddingY * 2);
             commandEntryRect.Height += TextPaddingY * 2;
 
-            Graphics.Instance.Batcher.DrawRect(commandEntryRect, Color.Black * Opacity);
+            Graphics.Graphics.Instance.Batcher.DrawRect(commandEntryRect, Color.Black * Opacity);
             var commandLineString = "> " + _currentText;
             if (_underscore)
                 commandLineString += "_";
 
             var commandTextPosition =
                 commandEntryRect.Location.ToVector2() + new Vector2(TextPaddingX, TextPaddingY);
-            Graphics.Instance.Batcher.DrawString(Graphics.Instance.BitmapFont, commandLineString, commandTextPosition,
+            Graphics.Graphics.Instance.Batcher.DrawString(Graphics.Graphics.Instance.BitmapFont, commandLineString, commandTextPosition,
                 Color.White, 0, Vector2.Zero, new Vector2(RenderScale), SpriteEffects.None, 0);
 
             if (_drawCommands.Count > 0)
@@ -533,7 +537,7 @@ namespace Nez.Console
                 height += (_drawCommands.Count + 1) * TextPaddingY;
 
                 var topOfHistoryRect = commandEntryRect.Y - height - CommandHistoryPadding;
-                Graphics.Instance.Batcher.DrawRect(HorizontalPadding, topOfHistoryRect, workingWidth, height,
+                Graphics.Graphics.Instance.Batcher.DrawRect(HorizontalPadding, topOfHistoryRect, workingWidth, height,
                     Color.Black * Opacity);
 
                 var yPosFirstLine = topOfHistoryRect + height - TextPaddingY - LineHeight * RenderScale;
@@ -543,12 +547,12 @@ namespace Nez.Console
                     var position = new Vector2(HorizontalPadding + TextPaddingX,
                         yPosFirstLine - yPosCurrentLineAddition);
                     var color = _drawCommands[i].IndexOf(">") == 0 ? Color.Yellow : Color.White;
-                    Graphics.Instance.Batcher.DrawString(Graphics.Instance.BitmapFont, _drawCommands[i], position,
+                    Graphics.Graphics.Instance.Batcher.DrawString(Graphics.Graphics.Instance.BitmapFont, _drawCommands[i], position,
                         color, 0, Vector2.Zero, new Vector2(RenderScale), SpriteEffects.None, 0);
                 }
             }
 
-            Graphics.Instance.Batcher.End();
+            Graphics.Graphics.Instance.Batcher.End();
         }
 
         #endregion
@@ -620,7 +624,7 @@ namespace Nez.Console
             }
             catch (Exception e)
             {
-                Debug.Log("DebugConsole pooped itself trying to get all the loaded assemblies. {0}", e);
+                Debug.Debug.Log("DebugConsole pooped itself trying to get all the loaded assemblies. {0}", e);
             }
 
 

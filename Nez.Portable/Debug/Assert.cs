@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Nez
+namespace Nez.Debug
 {
     public static class Assert
     {

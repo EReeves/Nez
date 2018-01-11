@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Textures;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics.PostProcessing.PostProcessors
 {
 	/// <summary>
 	///     this PostProcessor expects that the layerRenderTarget is the top-most layer and that it contains

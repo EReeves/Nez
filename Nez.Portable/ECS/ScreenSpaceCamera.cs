@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.ECS
 {
     public class ScreenSpaceCamera : Camera
     {

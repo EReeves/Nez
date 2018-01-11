@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez.Textures;
+using Nez.ECS;
+using Nez.Graphics.Textures;
 
-namespace Nez
+namespace Nez.Graphics.Renderers.Reflections
 {
 	/// <summary>
 	///     assists in creating a mirror effect. To use the ReflectionRenderer do the following:

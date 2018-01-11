@@ -1,4 +1,7 @@
-﻿namespace Nez.Sprites
+﻿using Nez.Maths;
+using Nez.Utils.Extensions;
+
+namespace Nez.ECS.Components.Renderables.Sprites
 {
 	/// <summary>
 	///     this component will draw the same frame of spriteToMime every frame. The only difference in rendering is that
@@ -34,7 +37,7 @@
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             graphics.Batcher.Draw(_spriteToMime.Subtexture, Entity.Transform.Position + localOffset, Color,
                 Entity.Transform.Rotation, _spriteToMime.Origin, Entity.Transform.Scale, _spriteToMime.SpriteEffects,

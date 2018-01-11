@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.ECS.InternalUtils;
+using Nez.Maths;
+using Nez.Utils;
 
-namespace Nez
+namespace Nez.ECS
 {
     public class Entity : IComparable<Entity>
     {
@@ -393,7 +397,7 @@ namespace Nez
 	    ///     called if Core.debugRenderEnabled is true by the default renderers. Custom renderers can choose to call it or not.
 	    /// </summary>
 	    /// <param name="graphics">Graphics.</param>
-	    public virtual void DebugRender(Graphics graphics)
+	    public virtual void DebugRender(Graphics.Graphics graphics)
         {
             Components.DebugRender(graphics);
         }

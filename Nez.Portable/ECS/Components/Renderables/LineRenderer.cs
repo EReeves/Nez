@@ -1,10 +1,14 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.PhysicsShapes;
+using Nez.Debug;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
+using Nez.Physics.Shapes.ShapeCollisions;
+using Nez.Utils.Collections;
+using Nez.Utils.Extensions;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables
 {
 	/// <summary>
 	///     Renders a trail behind a moving object
@@ -101,7 +105,7 @@ namespace Nez
             var minY = float.MaxValue;
 
             if (_useStartEndWidths)
-                _maxWidth = Math.Max(_startWidth, _endWidth);
+                _maxWidth = System.Math.Max(_startWidth, _endWidth);
 
             // calculate line length first and simulataneously get our min/max points for the bounds
             var lineLength = 0f;
@@ -199,7 +203,7 @@ namespace Nez
                 }
                 else
                 {
-                    Utils.Swap(ref _firstSegment, ref _secondSegment);
+                    Utils.Utils.Swap(ref _firstSegment, ref _secondSegment);
                     if (hasThirdPoint)
                         _secondSegment.SetPoints(ref secondPoint, ref thirdPoint);
                 }
@@ -433,7 +437,7 @@ namespace Nez
                 var deltaAngle = Mathf.DeltaAngle(angle1, angle2);
 
                 // figure out how many verts we are going to add to the joint
-                var totalNewVerts = Mathf.Ceil(Math.Abs(deltaAngle) / DegreesPerSubdivision);
+                var totalNewVerts = Mathf.Ceil(System.Math.Abs(deltaAngle) / DegreesPerSubdivision);
                 var angleIncrement = deltaAngle / (totalNewVerts + 1);
 
                 // first triangle will go from the tr vert of the last segment, to the point, to the first new vert
@@ -472,7 +476,7 @@ namespace Nez
                 var angle2 = Mathf.Atan2(b.Y - center.Y, b.X - center.X) * Mathf.Rad2Deg;
                 var deltaAngle = Mathf.DeltaAngle(angle1, angle2);
 
-                var totalNewVerts = Mathf.Ceil(Math.Abs(deltaAngle) / DegreesPerSubdivision);
+                var totalNewVerts = Mathf.Ceil(System.Math.Abs(deltaAngle) / DegreesPerSubdivision);
                 var angleIncrement = deltaAngle / (totalNewVerts + 1);
 
                 var firstSegmentOffset = vertIndex == 5 ? 1 : 0;
@@ -675,7 +679,7 @@ namespace Nez
 	    /// <param name="width">Width.</param>
 	    public LineRenderer AddPoint(Vector2 point, float width = 20)
         {
-            _maxWidth = Math.Max(_maxWidth, width);
+            _maxWidth = System.Math.Max(_maxWidth, width);
 
             _points.EnsureCapacity();
             _points.Buffer[_points.Length].Position = point;
@@ -698,7 +702,7 @@ namespace Nez
 	    /// <param name="color">Color.</param>
 	    public LineRenderer AddPoint(Vector2 point, float width, Color color)
         {
-            _maxWidth = Math.Max(_maxWidth, width);
+            _maxWidth = System.Math.Max(_maxWidth, width);
 
             _points.EnsureCapacity();
             _points.Buffer[_points.Length].Position = point;
@@ -749,7 +753,7 @@ namespace Nez
 	    /// <param name="width">Width.</param>
 	    public LineRenderer UpdatePoint(int index, Vector2 point, float width)
         {
-            _maxWidth = Math.Max(_maxWidth, width);
+            _maxWidth = System.Math.Max(_maxWidth, width);
 
             _points.Buffer[index].Position = point;
             _points.Buffer[index].Width = width;
@@ -769,7 +773,7 @@ namespace Nez
 	    /// <param name="color">Color.</param>
 	    public LineRenderer UpdatePoint(int index, Vector2 point, float width, Color color)
         {
-            _maxWidth = Math.Max(_maxWidth, width);
+            _maxWidth = System.Math.Max(_maxWidth, width);
 
             _points.Buffer[index].Position = point;
             _points.Buffer[index].Width = width;
@@ -829,7 +833,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             if (_points.Length < 2)
                 return;
@@ -848,7 +852,7 @@ namespace Nez
         }
 
 
-        public override void DebugRender(Graphics graphics)
+        public override void DebugRender(Graphics.Graphics graphics)
         {
             for (var i = 0; i < _vertices.Length; i++)
             {
@@ -856,7 +860,7 @@ namespace Nez
                 graphics.Batcher.DrawPixel(v.Position.X, v.Position.Y, Color.GhostWhite, 4);
             }
 
-            graphics.Batcher.DrawHollowRect(Bounds, Debug.Colors.ColliderBounds);
+            graphics.Batcher.DrawHollowRect(Bounds, Debug.Debug.Colors.ColliderBounds);
         }
 
         #endregion

@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables._3D
 {
     public class Torus3D : GeometricPrimitive3D
     {
@@ -22,8 +21,8 @@ namespace Nez
                 {
                     var innerAngle = j * MathHelper.TwoPi / tessellation;
 
-                    var dx = (float) Math.Cos(innerAngle);
-                    var dy = (float) Math.Sin(innerAngle);
+                    var dx = (float) System.Math.Cos(innerAngle);
+                    var dy = (float) System.Math.Sin(innerAngle);
 
                     // Create a vertex. 
                     var normal = new Vector3(dx, dy, 0);

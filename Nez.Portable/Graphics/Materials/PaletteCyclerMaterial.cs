@@ -1,4 +1,7 @@
-﻿namespace Nez
+﻿using Nez.ECS;
+using Nez.Graphics.Effects;
+
+namespace Nez.Graphics.Materials
 {
     public class PaletteCyclerMaterial : Material<PaletteCyclerEffect>
     {

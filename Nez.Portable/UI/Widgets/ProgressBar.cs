@@ -1,7 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.Debug;
+using Nez.Input;
+using Nez.Maths;
+using Nez.UI.Base;
+using Nez.UI.Drawable;
+using IDrawable = Nez.UI.Drawable.IDrawable;
 
-namespace Nez.UI
+namespace Nez.UI.Widgets
 {
     public class ProgressBar : Element
     {
@@ -48,7 +54,7 @@ namespace Nez.UI
             get
             {
                 if (Vertical)
-                    return Math.Max(_style.Knob == null ? 0 : _style.Knob.MinWidth,
+                    return System.Math.Max(_style.Knob == null ? 0 : _style.Knob.MinWidth,
                         _style.Background != null ? _style.Background.MinWidth : 0);
                 return 140;
             }
@@ -60,7 +66,7 @@ namespace Nez.UI
             {
                 if (Vertical)
                     return 140;
-                return Math.Max(_style.Knob == null ? 0 : _style.Knob.MinHeight,
+                return System.Math.Max(_style.Knob == null ? 0 : _style.Knob.MinHeight,
                     _style.Background != null ? _style.Background.MinHeight : 0);
             }
         }
@@ -128,7 +134,7 @@ namespace Nez.UI
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             var knob = GetKnobDrawable();
             var bg = Disabled && _style.DisabledBackground != null ? _style.DisabledBackground : _style.Background;
@@ -163,16 +169,16 @@ namespace Nez.UI
                     {
                         knobHeightHalf = knobBefore == null ? 0 : knobBefore.MinHeight * 0.5f;
                         Position = (positionHeight - knobHeightHalf) * percent;
-                        Position = Math.Min(positionHeight - knobHeightHalf, Position);
+                        Position = System.Math.Min(positionHeight - knobHeightHalf, Position);
                     }
                     else
                     {
                         var bgBottomHeight = bg != null ? bg.BottomHeight : 0;
                         knobHeightHalf = knobHeight * 0.5f;
                         Position = (positionHeight - knobHeight) * percent;
-                        Position = Math.Min(positionHeight - knobHeight, Position) + bgBottomHeight;
+                        Position = System.Math.Min(positionHeight - knobHeight, Position) + bgBottomHeight;
                     }
-                    Position = Math.Max(0, Position);
+                    Position = System.Math.Max(0, Position);
                 }
 
                 if (knobBefore != null)
@@ -211,15 +217,15 @@ namespace Nez.UI
                     {
                         knobWidthHalf = knobBefore == null ? 0 : knobBefore.MinWidth * 0.5f;
                         Position = (positionWidth - knobWidthHalf) * percent;
-                        Position = Math.Min(positionWidth - knobWidthHalf, Position);
+                        Position = System.Math.Min(positionWidth - knobWidthHalf, Position);
                     }
                     else
                     {
                         knobWidthHalf = knobWidth * 0.5f;
                         Position = (positionWidth - knobWidth) * percent;
-                        Position = Math.Min(positionWidth - knobWidth, Position) + bgLeftWidth;
+                        Position = System.Math.Min(positionWidth - knobWidth, Position) + bgLeftWidth;
                     }
-                    Position = Math.Max(0, Position);
+                    Position = System.Math.Max(0, Position);
                 }
 
                 if (knobBefore != null)
@@ -259,7 +265,7 @@ namespace Nez.UI
                 return value;
 
             for (var i = 0; i < SnapValues.Length; i++)
-                if (Math.Abs(value - SnapValues[i]) <= SnapThreshold)
+                if (System.Math.Abs(value - SnapValues[i]) <= SnapThreshold)
                     return SnapValues[i];
             return value;
         }

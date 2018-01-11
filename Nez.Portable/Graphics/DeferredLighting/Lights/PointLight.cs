@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez.Graphics.Batcher;
+using Nez.Maths;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Lights
 {
 	/// <summary>
 	///     PointLights radiate light in a circle. Note that PointLights are affected by Transform.scale. The Transform.scale.X

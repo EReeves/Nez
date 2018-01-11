@@ -1,4 +1,7 @@
-﻿namespace Nez.UI
+﻿using Nez.Maths;
+using Nez.UI.Containers;
+
+namespace Nez.UI.Widgets
 {
 	/// <summary>
 	///     Displays a dialog, which is a modal window containing a content table with a button table underneath it. Methods

@@ -1,4 +1,4 @@
-﻿namespace Nez
+﻿namespace Nez.Utils
 {
 	/// <summary>
 	///     global manager that can be added to Core

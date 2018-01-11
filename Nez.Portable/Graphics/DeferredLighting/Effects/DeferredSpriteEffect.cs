@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Nez.Graphics.Effects;
 
-namespace Nez.DeferredLighting
+namespace Nez.Graphics.DeferredLighting.Effects
 {
 	/// <summary>
 	///     effect used to render sprites that take part in deferred lighting. A normal map is required. The normal map can

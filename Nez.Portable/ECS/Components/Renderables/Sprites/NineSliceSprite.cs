@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Nez.Sprites;
-using Nez.Textures;
+using Nez.Graphics.Textures;
+using Nez.Maths;
 
-namespace Nez
+namespace Nez.ECS.Components.Renderables.Sprites
 {
     public class NineSliceSprite : Sprite
     {
@@ -74,7 +74,7 @@ namespace Nez
         }
 
 
-        public override void Render(Graphics graphics, Camera camera)
+        public override void Render(Graphics.Graphics graphics, Camera camera)
         {
             if (_destRectsDirty)
             {

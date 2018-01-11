@@ -2,6 +2,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using Nez.ECS;
+using Nez.Input;
+using Nez.UI.Base;
+using Nez.UI.Containers;
+using Nez.Utils;
+using Nez.Utils.Extensions;
+using Nez.Utils.Timers;
+using Direction = Nez.UI.Base.Direction;
 
 namespace Nez.UI
 {
@@ -69,7 +77,7 @@ namespace Nez.UI
         }
 
 
-        public void Render(Graphics graphics, Camera camera)
+        public void Render(Graphics.Graphics graphics, Camera camera)
         {
             if (!_root.IsVisible())
                 return;
@@ -89,7 +97,7 @@ namespace Nez.UI
         {
             if (_debugUnderMouse || _debugParentUnderMouse || _debugTableUnderMouse != Table.TableDebug.None)
             {
-                var mousePos = ScreenToStageCoordinates(Input.RawMousePosition.ToVector2());
+                var mousePos = ScreenToStageCoordinates(Input.Input.RawMousePosition.ToVector2());
                 var element = Hit(mousePos);
                 if (element == null)
                 {
@@ -313,7 +321,7 @@ namespace Nez.UI
 	    /// <returns>The mouse position.</returns>
 	    public Vector2 GetMousePosition()
         {
-            return Entity != null && !IsFullScreen ? Input.ScaledMousePosition : Input.RawMousePosition.ToVector2();
+            return Entity != null && !IsFullScreen ? Input.Input.ScaledMousePosition : Input.Input.RawMousePosition.ToVector2();
         }
 
 
@@ -325,7 +333,7 @@ namespace Nez.UI
             UpdateInputMouse();
 
 #if !FNA
-            if (Input.Touch.IsConnected && Input.Touch.CurrentTouches.Count > 0)
+            if (Input.Input.Touch.IsConnected && Input.Input.Touch.CurrentTouches.Count > 0)
                 UpdateInputTouch();
 #endif
         }
@@ -348,7 +356,7 @@ namespace Nez.UI
 
             var inputPos = ScreenToStageCoordinates(currentMousePosition);
 
-            UpdateInputPoint(inputPos, Input.LeftMouseButtonPressed, Input.LeftMouseButtonReleased,
+            UpdateInputPoint(inputPos, Input.Input.LeftMouseButtonPressed, Input.Input.LeftMouseButtonReleased,
                 mouseMoved, ref _mouseOverElement);
         }
 
@@ -359,7 +367,7 @@ namespace Nez.UI
 	    private void UpdateInputTouch()
         {
 #if !FNA
-            foreach (var touch in Input.Touch.CurrentTouches)
+            foreach (var touch in Input.Input.Touch.CurrentTouches)
             {
                 var inputPos = ScreenToStageCoordinates(touch.Position);
                 var inputPressed = touch.State == TouchLocationState.Pressed;
@@ -474,19 +482,19 @@ namespace Nez.UI
 	    private void HandleMouseWheel(Element mouseOverElement)
         {
             // bail out if we have no mouse wheel motion
-            if (Input.MouseWheelDelta == 0)
+            if (Input.Input.MouseWheelDelta == 0)
                 return;
 
             // check the deepest Element first then check all of its parents that are IInputListeners
             var listener = mouseOverElement as IInputListener;
-            if (listener != null && listener.OnMouseScrolled(Input.MouseWheelDelta))
+            if (listener != null && listener.OnMouseScrolled(Input.Input.MouseWheelDelta))
                 return;
 
             while (mouseOverElement.Parent != null)
             {
                 mouseOverElement = mouseOverElement.Parent;
                 listener = mouseOverElement as IInputListener;
-                if (listener != null && listener.OnMouseScrolled(Input.MouseWheelDelta))
+                if (listener != null && listener.OnMouseScrolled(Input.Input.MouseWheelDelta))
                     return;
             }
         }
@@ -498,7 +506,7 @@ namespace Nez.UI
             if (_keyboardFocusElement == null)
                 return;
 
-            var currentPressedKeys = Input.CurrentKeyboardState.GetPressedKeys();
+            var currentPressedKeys = Input.Input.CurrentKeyboardState.GetPressedKeys();
 
             // keys down
             for (var i = 0; i < currentPressedKeys.Length; i++)
@@ -551,26 +559,26 @@ namespace Nez.UI
         private void UpdateGamepadState()
         {
             if (_gamepadFocusElement != null)
-                if (Input.GamePads[0].IsButtonPressed(GamepadActionButton) ||
-                    KeyboardEmulatesGamepad && Input.IsKeyPressed(KeyboardActionKey))
+                if (Input.Input.GamePads[0].IsButtonPressed(GamepadActionButton) ||
+                    KeyboardEmulatesGamepad && Input.Input.IsKeyPressed(KeyboardActionKey))
                     _gamepadFocusElement.OnActionButtonPressed();
-                else if (Input.GamePads[0].IsButtonReleased(GamepadActionButton) ||
-                         KeyboardEmulatesGamepad && Input.IsKeyReleased(KeyboardActionKey))
+                else if (Input.Input.GamePads[0].IsButtonReleased(GamepadActionButton) ||
+                         KeyboardEmulatesGamepad && Input.Input.IsKeyReleased(KeyboardActionKey))
                     _gamepadFocusElement.OnActionButtonReleased();
 
             IGamepadFocusable nextElement = null;
             var direction = Direction.None;
-            if (Input.GamePads[0].DpadLeftPressed || Input.GamePads[0].IsLeftStickLeftPressed() ||
-                KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Left))
+            if (Input.Input.GamePads[0].DpadLeftPressed || Input.Input.GamePads[0].IsLeftStickLeftPressed() ||
+                KeyboardEmulatesGamepad && Input.Input.IsKeyPressed(Keys.Left))
                 direction = Direction.Left;
-            else if (Input.GamePads[0].DpadRightPressed || Input.GamePads[0].IsLeftStickRightPressed() ||
-                     KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Right))
+            else if (Input.Input.GamePads[0].DpadRightPressed || Input.Input.GamePads[0].IsLeftStickRightPressed() ||
+                     KeyboardEmulatesGamepad && Input.Input.IsKeyPressed(Keys.Right))
                 direction = Direction.Right;
-            else if (Input.GamePads[0].DpadUpPressed || Input.GamePads[0].IsLeftStickUpPressed() ||
-                     KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Up))
+            else if (Input.Input.GamePads[0].DpadUpPressed || Input.Input.GamePads[0].IsLeftStickUpPressed() ||
+                     KeyboardEmulatesGamepad && Input.Input.IsKeyPressed(Keys.Up))
                 direction = Direction.Up;
-            else if (Input.GamePads[0].DpadDownPressed || Input.GamePads[0].IsLeftStickDownPressed() ||
-                     KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Down))
+            else if (Input.Input.GamePads[0].DpadDownPressed || Input.Input.GamePads[0].IsLeftStickDownPressed() ||
+                     KeyboardEmulatesGamepad && Input.Input.IsKeyPressed(Keys.Down))
                 direction = Direction.Down;
 
             // make sure we have a valid direction

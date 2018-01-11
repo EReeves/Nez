@@ -1,4 +1,8 @@
-﻿namespace Nez.UI
+﻿using Nez.Debug;
+using Nez.UI.Base;
+using Nez.UI.Drawable;
+
+namespace Nez.UI.Widgets
 {
 	/// <summary>
 	///     A button with a child {@link Image} to display an image. This is useful when the button must be larger than the
@@ -93,7 +97,7 @@
         }
 
 
-        public override void Draw(Graphics graphics, float parentAlpha)
+        public override void Draw(Graphics.Graphics graphics, float parentAlpha)
         {
             UpdateImage();
             base.Draw(graphics, parentAlpha);
