@@ -141,6 +141,19 @@ namespace Nez.Utils.Collections
                 Array.Resize(ref Buffer, System.Math.Max(Buffer.Length << 1, Length + additionalItemCount));
         }
 
+	    /// <summary>
+	    /// returns a list of items in the buffer up to length
+	    /// </summary>
+	    public List<T> ToList()
+	    {
+		    var list = new List<T>(Length);
+		    for (var i = 0; i < Length; ++i)
+		    {
+			    list.Add(Buffer[i]);
+		    }
+
+		    return list;
+	    }
 
 	    /// <summary>
 	    ///     adds all items from array

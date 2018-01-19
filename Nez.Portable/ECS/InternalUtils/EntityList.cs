@@ -27,7 +27,7 @@ namespace Nez.ECS.InternalUtils
 	    /// <summary>
 	    ///     tracks entities by tag for easy retrieval
 	    /// </summary>
-	    private readonly Dictionary<int, List<Entity>> _entityDict = new Dictionary<int, List<Entity>>();
+	    private readonly Dictionary<int, FastList<Entity>> _entityDict = new Dictionary<int, FastList<Entity>>();
 
 	    /// <summary>
 	    ///     flag used to determine if we need to sort our entities this frame
@@ -37,7 +37,7 @@ namespace Nez.ECS.InternalUtils
         // used in updateLists to double buffer so that the original lists can be modified elsewhere
         private List<Entity> _tempEntityList = new List<Entity>();
 
-        private readonly List<int> _unsortedTags = new List<int>();
+        private readonly List<int> GetTagL_unsortedTags = new List<int>();
         public Scene Scene;
 
 
@@ -128,14 +128,14 @@ namespace Nez.ECS.InternalUtils
 
         private List<Entity> GetTagList(int tag)
         {
-            List<Entity> list = null;
+            FastList<Entity> list = null;
             if (!_entityDict.TryGetValue(tag, out list))
             {
-                list = new List<Entity>();
+                list = new FastList<Entity>();
                 _entityDict[tag] = list;
             }
 
-            return _entityDict[tag];
+            return _entityDict[tag].ToList();
         }
 
 
