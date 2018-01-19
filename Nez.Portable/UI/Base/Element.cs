@@ -24,8 +24,27 @@ namespace Nez.UI.Base
         internal float Width, Height;
 
         internal float X, Y;
+        
+        //C# style properties.
+        public Vector2 Position
+        {
+            get => new Vector2(X, Y);
+            set => SetPosition(value.X, value.Y);
+        }
 
-	    /// <summary>
+        public Vector2 Size
+        {
+            get => new Vector2(Width, Height);
+            set => SetSize(value.X,value.Y);
+        }
+
+        public Color Colour
+        {
+            get => GetColor();
+            set => SetColor(value);
+        }
+
+        /// <summary>
 	    ///     true if the widget's layout has been {@link #invalidate() invalidated}.
 	    /// </summary>
 	    /// <value><c>true</c> if needs layout; otherwise, <c>false</c>.</value>
