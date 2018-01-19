@@ -9,7 +9,7 @@ namespace Nez.AI.Pathfinding.BreadthFirst
 	/// </summary>
 	public class UnweightedGridGraph : IUnweightedGraph<Point>
     {
-        private static readonly Point[] Dirs =
+        private static readonly Point[] CardinalDirections =
         {
             new Point(1, 0),
             new Point(0, -1),
@@ -17,18 +17,32 @@ namespace Nez.AI.Pathfinding.BreadthFirst
             new Point(0, 1)
         };
 
+	    static readonly Point[] CompassDirections = new[]
+	    {
+		    new Point(1, 0),
+		    new Point(1, -1),
+		    new Point(0, -1),
+		    new Point(-1, -1),
+		    new Point(-1, 0),
+		    new Point(-1, 1),
+		    new Point(0, 1),
+		    new Point(1, 1),
+	    };
+
         private readonly List<Point> _neighbors = new List<Point>(4);
 
         private readonly int _width;
         private readonly int _height;
+	    private Point[] _directions;
 
         public HashSet<Point> Walls = new HashSet<Point>();
 
 
-        public UnweightedGridGraph(int width, int height)
+        public UnweightedGridGraph(int width, int height,  bool allowDiagonalSearch = false)
         {
             _width = width;
             _height = height;
+	        this._directions = allowDiagonalSearch ? CompassDirections : CardinalDirections;
         }
 
 
@@ -36,6 +50,7 @@ namespace Nez.AI.Pathfinding.BreadthFirst
         {
             _width = tiledLayer.Width;
             _height = tiledLayer.Height;
+	        _directions = CardinalDirections;
 
             for (var y = 0; y < tiledLayer.TiledMap.Height; y++)
             for (var x = 0; x < tiledLayer.TiledMap.Width; x++)
@@ -48,7 +63,7 @@ namespace Nez.AI.Pathfinding.BreadthFirst
         {
             _neighbors.Clear();
 
-            foreach (var dir in Dirs)
+            foreach (var dir in _directions)
             {
                 var next = new Point(node.X + dir.X, node.Y + dir.Y);
                 if (IsNodeInBounds(next) && IsNodePassable(next))
