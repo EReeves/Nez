@@ -28,6 +28,7 @@ namespace Nez.ECS.InternalUtils
 	    ///     tracks entities by tag for easy retrieval
 	    /// </summary>
 	    private readonly Dictionary<int, FastList<Entity>> _entityDict = new Dictionary<int, FastList<Entity>>();
+        List<int> _unsortedTags = new List<int>();
 
 	    /// <summary>
 	    ///     flag used to determine if we need to sort our entities this frame
@@ -126,7 +127,7 @@ namespace Nez.ECS.InternalUtils
         }
 
 
-        private List<Entity> GetTagList(int tag)
+        private FastList<Entity> GetTagList(int tag)
         {
             FastList<Entity> list = null;
             if (!_entityDict.TryGetValue(tag, out list))
@@ -135,7 +136,7 @@ namespace Nez.ECS.InternalUtils
                 _entityDict[tag] = list;
             }
 
-            return _entityDict[tag].ToList();
+            return _entityDict[tag];
         }
 
 
@@ -279,7 +280,11 @@ namespace Nez.ECS.InternalUtils
             var list = GetTagList(tag);
 
             var returnList = ListPool<Entity>.Obtain();
-            returnList.AddRange(list);
+            returnList.Capacity = _entities.Length;
+            for (var i = 0; i < list.Length; i++)
+            {
+                returnList.Add(_entities.Buffer[i]);
+            }
 
             return returnList;
         }
