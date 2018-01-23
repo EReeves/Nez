@@ -56,7 +56,7 @@ namespace Nez.UI.Base
             set => SetHeight(value);
         }
 
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         /// <summary>
 	    ///     true if the widget's layout has been {@link #invalidate() invalidated}.
