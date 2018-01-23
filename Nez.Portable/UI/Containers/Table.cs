@@ -71,6 +71,12 @@ namespace Nez.UI.Containers
             Transform = false;
             Touchable = Touchable.ChildrenOnly;
         }
+        
+        public IDrawable BackgroundDrawable
+        {
+            get => GetBackground();
+            set => SetBackground(value);
+        }
 
         public override float MinWidth
         {

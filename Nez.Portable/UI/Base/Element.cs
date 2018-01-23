@@ -12,7 +12,6 @@ namespace Nez.UI.Base
         protected bool layoutEnabled = true;
 
         protected bool needsLayout = true;
-        protected bool Visible = true;
         internal Color Color = Color.White;
 
         protected float OriginX, OriginY;
@@ -21,7 +20,8 @@ namespace Nez.UI.Base
         protected float ScaleX = 1, ScaleY = 1;
         protected Stage Stage;
         protected Touchable Touchable = Touchable.Enabled;
-        internal float Width, Height;
+        protected internal float Width;
+        protected internal float Height;
 
         internal float X, Y;
         
@@ -43,6 +43,20 @@ namespace Nez.UI.Base
             get => GetColor();
             set => SetColor(value);
         }
+        
+        public float SizeX
+        {
+            get => GetWidth();
+            set => SetWidth(value);
+        }
+        
+        public float SizeY
+        {
+            get => GetHeight();
+            set => SetHeight(value);
+        }
+
+        public bool Visible { get; set; }
 
         /// <summary>
 	    ///     true if the widget's layout has been {@link #invalidate() invalidated}.
@@ -395,7 +409,7 @@ namespace Nez.UI.Base
                 SizeChanged();
             }
         }
-
+        
 
         public float GetHeight()
         {
