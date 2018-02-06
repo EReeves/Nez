@@ -126,6 +126,7 @@
     <Compile Include="PipelineRuntime\Tiled\TiledIsometricTiledLayer.cs" />
     <Compile Include="UI\Base\ICullable.cs" />
     <Compile Include="Utils\Emitter.cs" />
+    <Compile Include="Utils\Extensions\TextureExt.cs" />
     <Compile Include="Utils\Time.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="CoreEvents.cs" />
@@ -582,8 +583,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.7.0.1232, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\MonoGame.Framework.Portable.3.7.0.1232-develop\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.7.0.1235, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\MonoGame.Framework.Portable.3.7.0.1235-develop\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
