@@ -1,13 +1,16 @@
 
 ##  Fork Notes
-This fork is used by me personally, I update it to work with the latest Monogame dev nugget package every now and then. Nez currently only supports Monogame 3.5.
+This fork is used by me personally, I update it to work with the latest Monogame dev nugget package every now and then. It also uses Microsoft C# naming conventions where possible. Nez currently only supports Monogame 3.5.
+
+### Unstable
+There may be bugs caused by the bulk renaming, though they should hopefully all be squashed. If you want a stable version use the official fork.
 
 ### Inconclusive summary of changes
 
 - Support for Monogame 3.7.x
 - Updated naming conventions to fit Microsoft standards.
-- There may be removal of components I dislike, unless someone wants it.
 - Several properties on components have been made public for ease of use. e.g. DebugConsole.IsOpen
+- Namespaces reflect directory structure more closely.
 
 -------
 
