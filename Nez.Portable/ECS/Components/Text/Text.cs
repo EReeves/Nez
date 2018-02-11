@@ -36,12 +36,12 @@ namespace Nez.ECS.Components.Text
             {
                 if (AreBoundsDirty)
                 {
-                    Bounds.CalculateBounds(Entity.Transform.Position, localOffset, Origin, Entity.Transform.Scale,
+                    _bounds.CalculateBounds(Entity.Transform.Position, localOffset, Origin, Entity.Transform.Scale,
                         Entity.Transform.Rotation, _size.X, _size.Y);
                     AreBoundsDirty = false;
                 }
 
-                return Bounds;
+                return _bounds;
             }
         }
 
