@@ -11,7 +11,7 @@ There may be bugs caused by the bulk renaming, though they should hopefully all 
 - Updated naming conventions to fit Microsoft standards.
 - Several properties on components have been made public for ease of use. e.g. DebugConsole.IsOpen
 - Namespaces reflect directory structure more closely.
-- Added a FixedUpdate method to the Core and Scenes. There's also an interface for components IUpdatableFixed that works much like IUpdatable.
+- Added a FixedUpdate method to the Core and Scenes. There's also an interface for components IUpdatableFixed that works much like IUpdatable. See https://github.com/EReeves/Nez/commit/90ea9c66b33bd3b5e07432c7b68f67dc3e01fd95
 
 -------
 
