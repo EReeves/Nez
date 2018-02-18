@@ -15,6 +15,12 @@ namespace Nez.ECS.Components
         void Update();
     }
 
+	public interface IUpdatableFixed
+	{
+		bool Enabled { get; }
+		void FixedUpdate();
+	}
+
 
 	/// <summary>
 	///     Comparer for sorting IUpdatables

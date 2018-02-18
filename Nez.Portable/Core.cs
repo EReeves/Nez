@@ -8,6 +8,7 @@ using Nez.Debug;
 using Nez.ECS;
 using Nez.Graphics.Textures;
 using Nez.Graphics.Transitions;
+using Nez.UI.Base;
 using Nez.Utils;
 using Nez.Utils.Analysis;
 using Nez.Utils.Collections;
@@ -252,6 +253,12 @@ namespace Nez
             }
 
 	        _scene?.Update();
+	        if (Time.ResettingUnscaledDeltaTime >= 1.0)
+	        {
+		        this.FixedUpdate();
+		        _scene?.FixedUpdate();
+	        }
+	        	
 
 	        if (_scene != _nextScene)
             {
@@ -275,6 +282,11 @@ namespace Nez
 			FrameworkDispatcher.Update();
 			#endif
         }
+
+	    protected virtual void FixedUpdate()
+	    {
+		    
+	    }
 
 
         protected override void Draw(GameTime gameTime)

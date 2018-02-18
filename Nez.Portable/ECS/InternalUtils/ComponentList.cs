@@ -42,6 +42,11 @@ namespace Nez.ECS.InternalUtils
 	    ///     list of all Components that want update called
 	    /// </summary>
 	    private readonly FastList<IUpdatable> _updatableComponents = new FastList<IUpdatable>();
+        
+        /// <summary>
+        ///     list of all Components that want fixedupdate called
+        /// </summary>
+        private readonly FastList<IUpdatableFixed> _updatableFixedComponents = new FastList<IUpdatableFixed>();
 
 
         public ComponentList(Entity entity)
@@ -161,8 +166,12 @@ namespace Nez.ECS.InternalUtils
                     if (component is RenderableComponent)
                         _entity.Scene.RenderableComponents.Add(component as RenderableComponent);
 
-                    if (component is IUpdatable)
-                        _updatableComponents.Add(component as IUpdatable);
+                    if(component is IUpdatable updateComponent)
+                        _updatableComponents.Add(updateComponent);
+
+                    if(component is IUpdatableFixed fixedUpdateComponent)
+                        _updatableFixedComponents.Add(fixedUpdateComponent);
+                        
 
                     if (Core.EntitySystemsEnabled)
                     {
@@ -291,7 +300,7 @@ namespace Nez.ECS.InternalUtils
             return components;
         }
 
-
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void Update()
         {
@@ -299,6 +308,13 @@ namespace Nez.ECS.InternalUtils
             for (var i = 0; i < _updatableComponents.Length; i++)
                 if (_updatableComponents.Buffer[i].Enabled)
                     _updatableComponents.Buffer[i].Update();
+
+            if (Time.ResettingUnscaledDeltaTime >= 1.0) //Fixed frame
+            {
+                for (var i = 0; i < _updatableFixedComponents.Length; i++)
+                    if(_updatableFixedComponents.Buffer[i].Enabled)
+                        _updatableFixedComponents.Buffer[i].FixedUpdate();
+            }
         }
 
 

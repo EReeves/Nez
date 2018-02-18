@@ -18,6 +18,11 @@ namespace Nez.Utils
 	    public static float DeltaTime;
 
 	    /// <summary>
+	    ///     delta time from the previous frame to the current, when >= 1.0 it will be reduced by 1.0. Used for Fixed TimeStep.
+	    /// </summary>
+	    public static double ResettingUnscaledDeltaTime;
+
+	    /// <summary>
 	    ///     unscaled version of deltaTime. Not affected by timeScale
 	    /// </summary>
 	    public static float UnscaledDeltaTime;
@@ -46,7 +51,11 @@ namespace Nez.Utils
 	    ///     total number of frames that have passed
 	    /// </summary>
 	    public static uint FrameCount;
-
+	    
+	    /// <summary>
+	    ///     total number of fixed frames that have passed
+	    /// </summary>
+	    public static uint FixedFrameCount;
 
         internal static void Update(float dt)
         {
@@ -54,8 +63,15 @@ namespace Nez.Utils
             DeltaTime = dt * TimeScale;
             AltDeltaTime = dt * AltTimeScale;
             UnscaledDeltaTime = dt;
-            TimeSinceSceneLoad += dt;
+	        TimeSinceSceneLoad += dt;              
             FrameCount++;
+	        
+	        //Quick Fixed Implementation
+	        if (ResettingUnscaledDeltaTime >= 1.0)
+		        ResettingUnscaledDeltaTime -= 1f;
+	        ResettingUnscaledDeltaTime += (dt * 60.0);
+	        if (ResettingUnscaledDeltaTime >= 1.0)
+		        FixedFrameCount++;
         }
 
 
