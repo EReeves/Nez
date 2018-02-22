@@ -725,12 +725,33 @@ namespace Nez.Utils.DebugConsole
                         else if (parameters[i].ParameterType == typeof(bool))
                             param[i] = ArgBool(args[i]);
 
+                    if (StrictlyThrowExceptions)
+                    {
                         method.Invoke(null, param);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            method.Invoke(null, param);
+                        }
+                        catch (Exception e)
+                        {
+                            Log(e);
+                        }                                      
+                    }
+
                 }
             };
 
             _commands[attr.Name] = info;
         }
+        
+        /// <summary>
+        /// If true, debug console commands won't be surrounded by a Try/Catch
+        /// May annoying as typo's in parameters might throw an exception.
+        /// </summary>
+        public bool StrictlyThrowExceptions { get; set; } = false;
 
 
         private struct CommandInfo
