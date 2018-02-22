@@ -725,14 +725,7 @@ namespace Nez.Utils.DebugConsole
                         else if (parameters[i].ParameterType == typeof(bool))
                             param[i] = ArgBool(args[i]);
 
-                    try
-                    {
                         method.Invoke(null, param);
-                    }
-                    catch (Exception e)
-                    {
-                        Log(e);
-                    }
                 }
             };
 
