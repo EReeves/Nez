@@ -26,7 +26,7 @@ namespace Nez.Utils.Extensions
 	    /// </summary>
 	    /// <param name="vec">Vec.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Normalize(Vector2 vec)
+        public static Vector2 Normalize(this Vector2 vec)
         {
             var magnitude = Mathf.Sqrt(vec.X * vec.X + vec.Y * vec.Y);
             if (magnitude > Mathf.Epsilon)
@@ -70,7 +70,7 @@ namespace Nez.Utils.Extensions
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Floor(Vector2 val)
+        public static Vector2 Floor(this Vector2 val)
         {
             return new Vector2((int) val.X, (int) val.Y);
         }
@@ -93,7 +93,7 @@ namespace Nez.Utils.Extensions
 	    /// <param name="u">U.</param>
 	    /// <param name="v">V.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Cross(Vector2 u, Vector2 v)
+        public static float Cross(this Vector2 u, Vector2 v)
         {
             return u.Y * v.X - u.X * v.Y;
         }
@@ -128,7 +128,7 @@ namespace Nez.Utils.Extensions
 	    /// </summary>
 	    /// <param name="original">Original.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Perpendicular(Vector2 original)
+        public static Vector2 Perpendicular(this Vector2 original)
         {
             return new Vector2(-original.Y, original.X);
         }
@@ -140,7 +140,7 @@ namespace Nez.Utils.Extensions
 	    /// <param name="from">From.</param>
 	    /// <param name="to">To.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Angle(Vector2 from, Vector2 to)
+        public static float Angle(this Vector2 from, Vector2 to)
         {
             Normalize(ref from);
             Normalize(ref to);
@@ -189,7 +189,7 @@ namespace Nez.Utils.Extensions
             var y = a.Y + dy1 / dx1 * (x - a.X);
 
             intersection = new Vector2(x, y);
-            return true;
+            return true; 
         }
 
 
@@ -227,7 +227,7 @@ namespace Nez.Utils.Extensions
 	    /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
 	    /// <returns>Transformed <see cref="Vector2" />.</returns>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Transform(Vector2 position, Matrix2D matrix)
+        public static Vector2 Transform(this Vector2 position, Matrix2D matrix)
         {
             return new Vector2(position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M31,
                 position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M32);
@@ -242,7 +242,7 @@ namespace Nez.Utils.Extensions
 	    /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
 	    /// <param name="result">Transformed <see cref="Vector2" /> as an output parameter.</param>
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Transform(ref Vector2 position, ref Matrix2D matrix, out Vector2 result)
+        public static void Transform(this Vector2 position, ref Matrix2D matrix, out Vector2 result)
         {
             var x = position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M31;
             var y = position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M32;
@@ -256,7 +256,7 @@ namespace Nez.Utils.Extensions
 	    ///     places the results in an another array.
 	    /// </summary>
 	    /// <param name="sourceArray">Source array.</param>
-	    /// <param name="sourceIndex">The starting index of transformation in the source array.</param>
+	    /// <param name="sourceIndex">The starting index of transformation in thhis e source array.</param>
 	    /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
 	    /// <param name="destinationArray">Destination array.</param>
 	    /// <param name="destinationIndex">
@@ -291,5 +291,37 @@ namespace Nez.Utils.Extensions
         {
             Transform(sourceArray, 0, ref matrix, destinationArray, 0, sourceArray.Length);
         }
+	    
+	    /// <summary>
+	    /// True if both of a's X and Y values are less than b.
+	    /// </summary>t
+	    /// <param name="a"></param>
+	    /// <param name="b"></param>
+	    /// <returns></returns>
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+	    public static bool LessThan(this Vector2 a, Vector2 b)
+	    {
+		    return a.X < b.X && a.Y < b.Y;
+	    }
+
+	    /// <summary>
+	    /// True if both of a's X and Y values are more than b.
+	    /// </summary>
+	    /// <param name="a"></param>
+	    /// <param name="b"></param>
+	    /// <returns></returns>
+	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+	    public static bool MoreThan(this Vector2 a, Vector2 b)
+	    {
+		    return a.X > b.X && a.Y > b.Y;
+	    }
+
+	    public static void Transform(ref Vector2 position, ref Matrix2D matrix, out Vector2 result)
+	    {
+		    var x = position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M31;
+		    var y = position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M32;
+		    result.X = x;
+		    result.Y = y;
+	    }
     }
 }
