@@ -37,6 +37,8 @@
     <Folder Include="Input\" />
     <Folder Include="Maths\" />
     <Folder Include="Physics\" />
+    <Folder Include="UI\bin\Debug" />
+    <Folder Include="UI\obj\Debug" />
     <Folder Include="Utils\" />
     <Folder Include="PipelineRuntime\" />
     <Folder Include="Utils\DebugConsole\" />
@@ -105,6 +107,56 @@
     <Compile Include="Physics\Ray2D.cs" />
     <Compile Include="Physics\SpatialHash.cs" />
     <Compile Include="PipelineRuntime\Tiled\TiledIsometricTiledLayer.cs" />
+    <Compile Include="UI\Base\Align.cs" />
+    <Compile Include="UI\Base\Cell.cs" />
+    <Compile Include="UI\Base\DebugRectangleF.cs" />
+    <Compile Include="UI\Base\Direction.cs" />
+    <Compile Include="UI\Base\Element.cs" />
+    <Compile Include="UI\Base\Group.cs" />
+    <Compile Include="UI\Base\ICullable.cs" />
+    <Compile Include="UI\Base\IGamepadFocusable.cs" />
+    <Compile Include="UI\Base\IInputListener.cs" />
+    <Compile Include="UI\Base\IKeyboardListener.cs" />
+    <Compile Include="UI\Base\ILayout.cs" />
+    <Compile Include="UI\Base\Scaling.cs" />
+    <Compile Include="UI\Base\Touchable.cs" />
+    <Compile Include="UI\Base\Value.cs" />
+    <Compile Include="UI\Containers\Container.cs" />
+    <Compile Include="UI\Containers\HorizontalGroup.cs" />
+    <Compile Include="UI\Containers\ScrollPane.cs" />
+    <Compile Include="UI\Containers\SplitPane.cs" />
+    <Compile Include="UI\Containers\Stack.cs" />
+    <Compile Include="UI\Containers\Table.cs" />
+    <Compile Include="UI\Containers\VerticalGroup.cs" />
+    <Compile Include="UI\Drawable\IDrawable.cs" />
+    <Compile Include="UI\Drawable\NinePatchDrawable.cs" />
+    <Compile Include="UI\Drawable\PrimitiveDrawable.cs" />
+    <Compile Include="UI\Drawable\SubtextureDrawable.cs" />
+    <Compile Include="UI\Drawable\TiledDrawable.cs" />
+    <Compile Include="UI\IMGUI.cs" />
+    <Compile Include="UI\Skin.cs" />
+    <Compile Include="UI\Stage.cs" />
+    <Compile Include="UI\Utils\ArraySelection.cs" />
+    <Compile Include="UI\Utils\Selection.cs" />
+    <Compile Include="UI\Utils\TooltipManager.cs" />
+    <Compile Include="UI\Widgets\Button.cs" />
+    <Compile Include="UI\Widgets\ButtonGroup.cs" />
+    <Compile Include="UI\Widgets\CheckBox.cs" />
+    <Compile Include="UI\Widgets\Dialog.cs" />
+    <Compile Include="UI\Widgets\Image.cs" />
+    <Compile Include="UI\Widgets\ImageButton.cs" />
+    <Compile Include="UI\Widgets\ImageTextButton.cs" />
+    <Compile Include="UI\Widgets\Label.cs" />
+    <Compile Include="UI\Widgets\ListBox.cs" />
+    <Compile Include="UI\Widgets\ProgressBar.cs" />
+    <Compile Include="UI\Widgets\SelectBox.cs" />
+    <Compile Include="UI\Widgets\SelectBoxList.cs" />
+    <Compile Include="UI\Widgets\Slider.cs" />
+    <Compile Include="UI\Widgets\TextButton.cs" />
+    <Compile Include="UI\Widgets\TextField.cs" />
+    <Compile Include="UI\Widgets\TextTooltip.cs" />
+    <Compile Include="UI\Widgets\Tooltip.cs" />
+    <Compile Include="UI\Widgets\Window.cs" />
     <Compile Include="Utils\Emitter.cs" />
     <Compile Include="Utils\Extensions\TextureExt.cs" />
     <Compile Include="Utils\Time.cs" />
@@ -457,5 +509,8 @@
       <Project>{bad86c42-066e-4514-9f9f-6a77859b2333}</Project>
       <Name>Nez.UI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UI\packages.config" />
   </ItemGroup>
 </Project>
