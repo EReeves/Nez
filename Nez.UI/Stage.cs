@@ -381,6 +381,9 @@ namespace Nez.UI
                 Element lastOver;
                 _touchOverElement.TryGetValue(touch.Id, out lastOver);
 
+                if (Entity != null && !IsFullScreen)
+                    inputPos = Input.Input.ScaledPosition(inputPos);
+
                 UpdateInputPoint(inputPos, inputPressed, inputReleased, inputMoved, ref lastOver);
 
                 if (inputReleased)
