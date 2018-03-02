@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
 using Nez.UI.Base;
 using IDrawable = Nez.UI.Drawable.IDrawable;
 
