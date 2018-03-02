@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Globalization;
+using Microsoft.Xna.Framework;
 using Nez.UI;
 using Nez.UI.Containers;
 using Nez.UI.Widgets;
@@ -17,12 +18,11 @@ namespace Nez.Debug.Inspector.Inspectors
             var label = CreateNameLabel(table, skin);
 
             var labelX = new Label("x", skin);
-            _textFieldX = new TextField(value.X.ToString(), skin);
+            _textFieldX = new TextField(value.X.ToString(CultureInfo.InvariantCulture), skin);
             _textFieldX.SetTextFieldFilter(new FloatFilter()).SetPreferredWidth(50);
             _textFieldX.OnTextChanged += (field, str) =>
             {
-                float newX;
-                if (float.TryParse(str, out newX))
+                if (float.TryParse(str,NumberStyles.Float,CultureInfo.InvariantCulture, out var newX))
                 {
                     var newValue = GetValue<Vector2>();
                     newValue.X = newX;
@@ -31,7 +31,7 @@ namespace Nez.Debug.Inspector.Inspectors
             };
 
             var labelY = new Label("y", skin);
-            _textFieldY = new TextField(value.Y.ToString(), skin);
+            _textFieldY = new TextField(value.Y.ToString(CultureInfo.InvariantCulture), skin);
             _textFieldY.SetTextFieldFilter(new FloatFilter()).SetPreferredWidth(50);
             _textFieldY.OnTextChanged += (field, str) =>
             {
@@ -58,8 +58,8 @@ namespace Nez.Debug.Inspector.Inspectors
         public override void Update()
         {
             var value = GetValue<Vector2>();
-            _textFieldX.SetText(value.X.ToString());
-            _textFieldY.SetText(value.Y.ToString());
+            _textFieldX.SetText(value.X.ToString(CultureInfo.InvariantCulture));
+            _textFieldY.SetText(value.Y.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Nez.Debug.Inspector.Attributes;
+﻿using System.Globalization;
+using Nez.Debug.Inspector.Attributes;
 using Nez.UI;
 using Nez.UI.Containers;
 using Nez.UI.Widgets;
@@ -26,12 +27,12 @@ namespace Nez.Debug.Inspector.Inspectors
         private void SetupTextField(Table table, Skin skin)
         {
             var label = CreateNameLabel(table, skin);
-            _textField = new TextField(GetValue<float>().ToString(), skin);
+            _textField = new TextField(GetValue<float>().ToString(CultureInfo.InvariantCulture), skin);
             _textField.SetTextFieldFilter(new FloatFilter());
             _textField.OnTextChanged += (field, str) =>
             {
-                float newValue;
-                if (float.TryParse(str, out newValue))
+                if (float.TryParse(str, out var newValue))
+                if(float.TryParse(str, NumberStyles.Float, CultureInfo.InvariantCulture, out newValue))
                     SetValue(newValue);
             };
 
