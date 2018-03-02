@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BAD86C42-066E-4514-9F9F-6A77859B2333}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nez.UI</RootNamespace>
+    <AssemblyName>Nez.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.7.0.1352, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\MonoGame.Framework.Portable.3.7.0.1352-develop\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\Align.cs" />
+    <Compile Include="Base\Cell.cs" />
+    <Compile Include="Base\DebugRectangleF.cs" />
+    <Compile Include="Base\Direction.cs" />
+    <Compile Include="Base\Element.cs" />
+    <Compile Include="Base\Group.cs" />
+    <Compile Include="Base\ICullable.cs" />
+    <Compile Include="Base\IGamepadFocusable.cs" />
+    <Compile Include="Base\IInputListener.cs" />
+    <Compile Include="Base\IKeyboardListener.cs" />
+    <Compile Include="Base\ILayout.cs" />
+    <Compile Include="Base\Scaling.cs" />
+    <Compile Include="Base\Touchable.cs" />
+    <Compile Include="Base\Value.cs" />
+    <Compile Include="Containers\Container.cs" />
+    <Compile Include="Containers\HorizontalGroup.cs" />
+    <Compile Include="Containers\ScrollPane.cs" />
+    <Compile Include="Containers\SplitPane.cs" />
+    <Compile Include="Containers\Stack.cs" />
+    <Compile Include="Containers\Table.cs" />
+    <Compile Include="Containers\VerticalGroup.cs" />
+    <Compile Include="Drawable\IDrawable.cs" />
+    <Compile Include="Drawable\NinePatchDrawable.cs" />
+    <Compile Include="Drawable\PrimitiveDrawable.cs" />
+    <Compile Include="Drawable\SubtextureDrawable.cs" />
+    <Compile Include="Drawable\TiledDrawable.cs" />
+    <Compile Include="IMGUI.cs" />
+    <Compile Include="Skin.cs" />
+    <Compile Include="Stage.cs" />
+    <Compile Include="Utils\ArraySelection.cs" />
+    <Compile Include="Utils\Selection.cs" />
+    <Compile Include="Utils\TooltipManager.cs" />
+    <Compile Include="Widgets\Button.cs" />
+    <Compile Include="Widgets\ButtonGroup.cs" />
+    <Compile Include="Widgets\CheckBox.cs" />
+    <Compile Include="Widgets\Dialog.cs" />
+    <Compile Include="Widgets\Image.cs" />
+    <Compile Include="Widgets\ImageButton.cs" />
+    <Compile Include="Widgets\ImageTextButton.cs" />
+    <Compile Include="Widgets\Label.cs" />
+    <Compile Include="Widgets\ListBox.cs" />
+    <Compile Include="Widgets\ProgressBar.cs" />
+    <Compile Include="Widgets\SelectBox.cs" />
+    <Compile Include="Widgets\SelectBoxList.cs" />
+    <Compile Include="Widgets\Slider.cs" />
+    <Compile Include="Widgets\TextButton.cs" />
+    <Compile Include="Widgets\TextField.cs" />
+    <Compile Include="Widgets\TextTooltip.cs" />
+    <Compile Include="Widgets\Tooltip.cs" />
+    <Compile Include="Widgets\Window.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nez.Portable\Nez.csproj">
+      <Project>{60b7197d-d0d5-405c-90a2-a56903e9b039}</Project>
+      <Name>Nez</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+</Project>

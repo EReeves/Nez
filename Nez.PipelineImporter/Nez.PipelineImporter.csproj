@@ -57,24 +57,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="Tiled\TiledMapImporter.cs" />
-    <Compile Include="Tiled\TiledMapProcessor.cs" />
-    <Compile Include="Tiled\TiledMapWriter.cs" />
-    <Compile Include="Tiled\TmxData.cs" />
-    <Compile Include="Tiled\TmxDataTile.cs" />
-    <Compile Include="Tiled\TmxImage.cs" />
-    <Compile Include="Tiled\TmxImageLayer.cs" />
-    <Compile Include="Tiled\TmxLayer.cs" />
-    <Compile Include="Tiled\TmxMap.cs" />
-    <Compile Include="Tiled\TmxObject.cs" />
-    <Compile Include="Tiled\TmxObjectGroup.cs" />
-    <Compile Include="Tiled\TmxOrientation.cs" />
-    <Compile Include="Tiled\TmxProperty.cs" />
-    <Compile Include="Tiled\TmxRenderOrder.cs" />
-    <Compile Include="Tiled\TmxTerrain.cs" />
-    <Compile Include="Tiled\TmxTileLayer.cs" />
-    <Compile Include="Tiled\TmxTileOffset.cs" />
-    <Compile Include="Tiled\TmxTileset.cs" />
     <Compile Include="BitmapFonts\BitmapFontChar.cs" />
     <Compile Include="BitmapFonts\BitmapFontCommon.cs" />
     <Compile Include="BitmapFonts\BitmapFontFile.cs" />
@@ -123,8 +105,6 @@
     <Compile Include="ParticleDesigner\ParticleDesignerProcessorResult.cs" />
     <Compile Include="ParticleDesigner\ParticleDesignerWriter.cs" />
     <Compile Include="ParticleDesigner\ParticleDesignerEmitterConfig.cs" />
-    <Compile Include="Tiled\TmxTilesetTile.cs" />
-    <Compile Include="Tiled\TmxTilesetTileAnimationFrame.cs" />
     <Compile Include="Overlap2D\VOs\CompositeItemVO.cs" />
     <Compile Include="Overlap2D\VOs\CompositeVO.cs" />
     <Compile Include="Overlap2D\VOs\MainItemVO.cs" />
@@ -162,6 +142,10 @@
     <ProjectReference Include="..\Nez.Portable\Nez.csproj">
       <Project>{60B7197D-D0D5-405C-90A2-A56903E9B039}</Project>
       <Name>Nez</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nez.UI\Nez.UI.csproj">
+      <Project>{bad86c42-066e-4514-9f9f-6a77859b2333}</Project>
+      <Name>Nez.UI</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

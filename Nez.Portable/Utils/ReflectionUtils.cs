@@ -8,7 +8,7 @@ namespace Nez.Utils
 	/// <summary>
 	///     helper class to fetch property delegates
 	/// </summary>
-	internal class ReflectionUtils
+	public class ReflectionUtils
     {
         public static Assembly GetAssembly(Type type)
         {
