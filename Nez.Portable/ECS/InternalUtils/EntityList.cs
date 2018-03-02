@@ -28,7 +28,7 @@ namespace Nez.ECS.InternalUtils
 	    ///     tracks entities by tag for easy retrieval
 	    /// </summary>
 	    private readonly Dictionary<int, FastList<Entity>> _entityDict = new Dictionary<int, FastList<Entity>>();
-        List<int> _unsortedTags = new List<int>();
+        HashSet<int> _unsortedTags = new HashSet<int>();
 
 	    /// <summary>
 	    ///     flag used to determine if we need to sort our entities this frame
@@ -228,11 +228,9 @@ namespace Nez.ECS.InternalUtils
             // sort our tagList if needed
             if (_unsortedTags.Count > 0)
             {
-                for (int i = 0, count = _unsortedTags.Count; i < count; i++)
-                {
-                    var tag = _unsortedTags[i];
+                foreach( var tag in _unsortedTags )
                     _entityDict[tag].Sort();
-                }
+             				
                 _unsortedTags.Clear();
             }
         }
