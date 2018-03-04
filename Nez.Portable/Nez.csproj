@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;LINUX;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -28,6 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DefineConstants>LINUX;</DefineConstants>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -106,7 +107,6 @@
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Ray2D.cs" />
     <Compile Include="Physics\SpatialHash.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledIsometricTiledLayer.cs" />
     <Compile Include="UI\Base\Align.cs" />
     <Compile Include="UI\Base\Cell.cs" />
     <Compile Include="UI\Base\DebugRectangleF.cs" />
@@ -167,17 +167,6 @@
     <Compile Include="PipelineRuntime\BitmapFonts\BitmapFontRegion.cs" />
     <Compile Include="PipelineRuntime\ContentExtensions\ContentManagerExtensions.cs" />
     <Compile Include="PipelineRuntime\ContentExtensions\ContentReaderExtensions.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledImageLayer.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledLayer.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledMap.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledMapOrientation.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledMapReader.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledObject.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledObjectGroup.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledRenderOrder.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledTile.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledTileLayer.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledTileSet.cs" />
     <Compile Include="Utils\DebugConsole\DebugConsole.cs" />
     <Compile Include="Utils\DebugConsole\DefaultCommands.cs" />
     <Compile Include="Utils\Tweens\Easing\EaseType.cs" />
@@ -289,10 +278,6 @@
     <Compile Include="Utils\Tweens\TransformVector2Tween.cs" />
     <Compile Include="Utils\Tweens\TweenExt.cs" />
     <Compile Include="ECS\Components\Renderables\SpringGrid.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledLayerType.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledTilesetTile.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledTileAnimationFrame.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledAnimatedTile.cs" />
     <Compile Include="ECS\Components\Renderables\Mesh.cs" />
     <Compile Include="PipelineRuntime\Overlap2D\O2DComposite.cs" />
     <Compile Include="PipelineRuntime\Overlap2D\O2DCompositeItem.cs" />
@@ -314,8 +299,6 @@
     <Compile Include="Input\Virtual\VirtualInput.cs" />
     <Compile Include="Input\Virtual\VirtualIntegerAxis.cs" />
     <Compile Include="Input\Virtual\VirtualJoystick.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledImageTile.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledImageCollectionTileset.cs" />
     <Compile Include="Graphics\Effects\SpriteAlphaTestEffect.cs" />
     <Compile Include="ECS\Components\Renderables\Sprites\SpriteMime.cs" />
     <Compile Include="Graphics\Textures\RenderTexture.cs" />
@@ -365,7 +348,6 @@
     <Compile Include="Utils\Collections\PriorityQueueNode.cs" />
     <Compile Include="Utils\Collections\PriorityQueue.cs" />
     <Compile Include="Maths\Axis.cs" />
-    <Compile Include="PipelineRuntime\Tiled\TiledTileExt.cs" />
     <Compile Include="ECS\Systems\EntitySystem.cs" />
     <Compile Include="Graphics\Effects\SpriteEffect.cs" />
     <Compile Include="Utils\Extensions\ArrayExt.cs" />

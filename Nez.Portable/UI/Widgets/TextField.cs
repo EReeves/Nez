@@ -49,6 +49,8 @@ namespace Nez.UI.Widgets
         private ITextFieldFilter _filter;
         private bool _focusTraversal = true, _onlyFontChars = true, _disabled;
 
+        public event EventHandler<EventArgs> OnClick;
+
         protected float FontOffset, TextHeight, TextOffset;
         private readonly List<float> _glyphPositions = new List<float>(15);
         protected bool HasSelection;
@@ -593,6 +595,8 @@ namespace Nez.UI.Widgets
         {
             if (_disabled)
                 return false;
+
+            OnClick?.Invoke(this, new EventArgs());
 
             IsPressed = true;
             SetCursorPosition(mousePos.X, mousePos.Y);

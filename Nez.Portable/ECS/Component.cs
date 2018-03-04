@@ -12,31 +12,39 @@ namespace Nez.ECS
 	///     - onRemovedFromEntity
 	/// </summary>
 	public class Component : IComparable<Component>
-    {
-	    /// <summary>
-	    ///     the Entity this Component is attached to
-	    /// </summary>
-	    public Entity Entity;
+	{
+		/// <summary>
+		///     the Entity this Component is attached to
+		/// </summary>
+		public Entity Entity;
 
-	    /// <summary>
-	    ///     shortcut to entity.transform
-	    /// </summary>
-	    /// <value>The transform.</value>
-	    public Transform Transform
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return Entity.Transform; }
-        }
+		/// <summary>
+		///     shortcut to entity.transform
+		/// </summary>
+		/// <value>The transform.</value>
+		public Transform Transform
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get { return Entity.Transform; }
+		}
 
-	    /// <summary>
-	    ///     true if the Component is enabled and the Entity is enabled. When enabled this Components lifecycle methods will be
-	    ///     called.
-	    ///     Changes in state result in onEnabled/onDisable being called.
-	    /// </summary>
-	    /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-	    public bool Enabled
-	    {
-		    get => Entity?.Enabled ?? false;
-		    set => SetEnabled(value);
+		private bool _enabled = true;
+		/// <summary>
+		///     true if the Component is enabled and the Entity is enabled. When enabled this Components lifecycle methods will be
+		///     called.
+		///     Changes in state result in onEnabled/onDisable being called.
+		/// </summary>
+		/// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
+		public bool Enabled
+		{
+			get
+			{
+				if (Entity == null || Entity.Enabled == false)
+					return false;
+			
+				return _enabled;
+			}
+				set => SetEnabled(value);
 	    }
 
 	    /// <summary>
@@ -139,11 +147,11 @@ namespace Nez.ECS
 
         public Component SetEnabled(bool isEnabled)
         {
-            if (Enabled != isEnabled)
+            if (_enabled != isEnabled)
             {
-                Enabled = isEnabled;
+                _enabled = isEnabled;
 
-                if (Enabled)
+                if (_enabled)
                     OnEnabled();
                 else
                     OnDisabled();
