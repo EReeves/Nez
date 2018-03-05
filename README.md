@@ -1,23 +1,3 @@
-
-##  Fork Notes
-Not recommended, use the official repo.
-This fork is used by me personally, I update it to work with the latest Monogame dev nugget package every now and then. It also uses Microsoft C# naming conventions where possible.
-
-### Unstable
-There may be bugs caused by the bulk renaming, though they should hopefully all be squashed. If you want a stable version use the official fork.
-
-### Inconclusive summary of changes
-- Focusing on just the core of Nez. Removed Tiled importers and classes as well as AI and farseer physics. UI is still there but it's in a separate project.
-- Support for Monogame 3.7.x
-- Updated naming conventions to fit Microsoft standards.
-- Several properties on components have been made public for ease of use. e.g. DebugConsole.IsOpen
-- Namespaces reflect directory structure more closely.
-- Added a FixedUpdate method to the Core and Scenes. There's also an interface for components IUpdatableFixed that works much like IUpdatable. See https://github.com/EReeves/Nez/commit/90ea9c66b33bd3b5e07432c7b68f67dc3e01fd95
-
--------
-
-
-
 ![Nez](FAQs/images/nez-logo-black.png)
 
 [![Join the chat at https://gitter.im/Nez-Devs/Lobby](https://badges.gitter.im/Nez-Devs/Lobby.svg)](https://gitter.im/Nez-Devs/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
