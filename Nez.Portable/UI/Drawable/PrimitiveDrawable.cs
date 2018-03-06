@@ -50,6 +50,9 @@ namespace Nez.UI.Drawable
             var col = this.Color.HasValue ? this.Color.Value : color;
             if (color.A != 255)
                 col *= color.A / 255f;
+            
+            if (col.A != 255)
+                col *= col.A / 255f;
 
             if (UseFilledRect)
                 graphics.Batcher.DrawRect(x, y, width, height, col);

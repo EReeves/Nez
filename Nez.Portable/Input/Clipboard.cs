@@ -9,27 +9,18 @@ namespace Nez.Input
 	public class Clipboard : IClipboard
     {
         private static IClipboard _instance;
-        private string _text;
 
-        [DllImport("./x64/libSDL2-2.0.so.0",EntryPoint = "SDL_SetClipboardText")]
-        private static extern int SDL_SetClipboardTextLinux(string text);
-        [DllImport("./x64/libSDL2-2.0.so.0",EntryPoint = "SDL_GetClipboardText")]
-        private static extern string SDL_GetClipboardTextLinux();
-        [DllImport("./x64/SDL2.dll",EntryPoint = "SDL_SetClipboardText")]
-        private static extern int SDL_SetClipboardTextWin(string text);
-        [DllImport("./x64/SDL2.dll",EntryPoint = "SDL_GetClipboardText")]
-        private static extern string SDL_GetClipboardTextWin();
+            //The Monogame.Framework.dll.config maps SDL2.dll to platform specific libraries
+            [DllImport("SDL2.dll")]
+        		private static extern int SDL_SetClipboardText(string text);
+            [DllImport("SDL2.dll")]
+        		private static extern string SDL_GetClipboardText();
 
         public static string GetContents()
         {
             if (_instance == null)
                 _instance = new Clipboard();
-           #if LINUX
-            return SDL_GetClipboardTextLinux();
-           #elif WIN
-            return SDL_GetClipboardTextWin();
-           #endif
-            throw new Exception("Platform not defined? WIN/LINUX");
+            return _instance.GetContents();
         }
 
 
@@ -37,14 +28,7 @@ namespace Nez.Input
         {
             if (_instance == null)
                 _instance = new Clipboard();
-            #if LINUX
-             SDL_SetClipboardTextLinux(text);
-            return;
-           #elif WIN
-             SDL_SetClipboardTextWin(text);
-            return;
-           #endif
-            throw new Exception("Platform not defined? WIN/LINUX");
+            _instance.SetContents(text);
         }
 
 
@@ -52,13 +36,13 @@ namespace Nez.Input
 
         string IClipboard.GetContents()
         {
-            return _text;
+            return SDL_GetClipboardText();
         }
 
 
         void IClipboard.SetContents(string text)
         {
-            _text = text;
+            SDL_SetClipboardText(text);
         }
 
         #endregion
