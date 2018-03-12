@@ -20,6 +20,15 @@ namespace Nez.Utils.Extensions
                 vec.X = vec.Y = 0;
         }
 
+	    public static Vector2 FlipX(this Vector2 vec)
+	    {
+		    return new Vector2(-vec.X, vec.Y);
+	    }
+
+	    public static Vector2 FlipY(this Vector2 vec)
+	    {
+		    return new Vector2(vec.X, -vec.Y);
+	    }
 
 	    /// <summary>
 	    ///     temporary workaround to Vector2.Normalize screwing up the 0,0 vector

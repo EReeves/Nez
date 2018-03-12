@@ -169,7 +169,7 @@ namespace Nez.ECS
 	    /// <summary>
 	    ///     if true, everytime position is set it will be rounded automatically
 	    /// </summary>
-	    public static bool ShouldRoundPosition = true;
+	    public static bool ShouldRoundPosition = false;
 
 	    /// <summary>
 	    ///     the Entity associated with this transform

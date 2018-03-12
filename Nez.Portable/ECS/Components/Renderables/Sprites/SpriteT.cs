@@ -230,14 +230,15 @@ namespace Nez.ECS.Components.Renderables.Sprites
 	    /// </summary>
 	    /// <param name="animationKey">Animation key.</param>
 	    /// <param name="startFrame">Start frame.</param>
-	    public SpriteAnimation Play(TEnum animationKey, int startFrame = 0)
-        {
-            Assert.IsTrue(_animations.ContainsKey(animationKey), "Attempted to play an animation that doesnt exist");
+	    public SpriteAnimation Play(TEnum? animationKey = null, int startFrame = 0)
+	    {
+	        if (animationKey == null) animationKey = _currentAnimationKey;
+            Assert.IsTrue(_animations.ContainsKey(animationKey.Value), "Attempted to play an animation that doesnt exist");
 
-            var animation = _animations[animationKey];
+            var animation = _animations[animationKey.Value];
             animation.PrepareForUse();
 
-            _currentAnimationKey = animationKey;
+            _currentAnimationKey = animationKey.Value;
             _currentAnimation = animation;
             IsPlaying = true;
             _isReversed = false;
