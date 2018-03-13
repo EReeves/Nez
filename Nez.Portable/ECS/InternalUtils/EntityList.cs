@@ -281,7 +281,7 @@ namespace Nez.ECS.InternalUtils
             returnList.Capacity = _entities.Length;
             for (var i = 0; i < list.Length; i++)
             {
-                returnList.Add(_entities.Buffer[i]);
+                returnList.Add(list[i]);
             }
 
             return returnList;
